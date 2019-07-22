@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;netcoreapp2.0;netcoreapp1.1;netcoreapp1.0;net40;net35;net20</TargetFrameworks>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Enums.NET" Version="2.3.2" />
+    <PackageReference Include="nunit" Version="3.11.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Genumerics\Genumerics.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' != 'net35' And '$(TargetFramework)' != 'net20'">
+    <DefineConstants>BIG_INTEGER</DefineConstants>
+  </PropertyGroup>
+
+</Project>

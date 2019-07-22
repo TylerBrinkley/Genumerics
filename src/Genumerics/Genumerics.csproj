@@ -1,0 +1,75 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;netcoreapp2.0;netstandard2.0;netstandard1.3;netstandard1.1;netstandard1.0;net40;net35;net20</TargetFrameworks>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionSufix></VersionSufix>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Tyler Brinkley</Authors>
+    <Description>Genumerics is a library that provides generic numeric operations</Description>
+    <Copyright>Copyright © Tyler Brinkley 2019</Copyright>
+    <Summary>Genumerics is a library that provides generic numeric operations</Summary>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageId>Genumerics</PackageId>
+    <PackageTags>generic numerics number math</PackageTags>
+    <PackageProjectUrl>https://github.com/TylerBrinkley/Genumerics</PackageProjectUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PublishRepositoryUrl>True</PublishRepositoryUrl>
+    <RootNamespace>Genumerics</RootNamespace>
+    <AssemblyName>Genumerics</AssemblyName>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/TylerBrinkley/Genumerics</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>genumerics.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
+    <AssemblyTitle>Genumerics .NET Core 2.1</AssemblyTitle>
+    <DefineConstants>TYPE_CODE;BIG_INTEGER;MATHF;CLAMP;SPAN</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
+    <AssemblyTitle>Genumerics .NET Core 2.0</AssemblyTitle>
+    <DefineConstants>TYPE_CODE;BIG_INTEGER;MATHF;CLAMP</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <AssemblyTitle>Genumerics .NET Standard 2.0</AssemblyTitle>
+    <DefineConstants>TYPE_CODE;BIG_INTEGER</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
+    <AssemblyTitle>Genumerics .NET Standard 1.3</AssemblyTitle>
+    <DefineConstants>TYPE_CODE;BIG_INTEGER</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.1'">
+    <AssemblyTitle>Genumerics .NET Standard 1.1</AssemblyTitle>
+    <DefineConstants>BIG_INTEGER</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.0'">
+    <AssemblyTitle>Genumerics .NET Standard 1.0</AssemblyTitle>
+    <DefineConstants></DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net40'">
+    <AssemblyTitle>Genumerics .NET 4.0</AssemblyTitle>
+    <DefineConstants>TYPE_CODE;BIG_INTEGER</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net35'">
+    <AssemblyTitle>Genumerics .NET 3.5</AssemblyTitle>
+    <DefineConstants>TYPE_CODE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net20'">
+    <AssemblyTitle>Genumerics .NET 2.0</AssemblyTitle>
+    <DefineConstants>TYPE_CODE</DefineConstants>
+  </PropertyGroup>
+
+</Project>

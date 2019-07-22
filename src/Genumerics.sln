@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genumerics", "Genumerics\Genumerics.csproj", "{B87A3B68-DF70-466E-8D04-50DC27BF9644}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genumerics.Tests", "Genumerics.Tests\Genumerics.Tests.csproj", "{91E84D20-A0CA-4E7B-8990-0634EC19347E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B87A3B68-DF70-466E-8D04-50DC27BF9644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B87A3B68-DF70-466E-8D04-50DC27BF9644}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B87A3B68-DF70-466E-8D04-50DC27BF9644}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B87A3B68-DF70-466E-8D04-50DC27BF9644}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91E84D20-A0CA-4E7B-8990-0634EC19347E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91E84D20-A0CA-4E7B-8990-0634EC19347E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91E84D20-A0CA-4E7B-8990-0634EC19347E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91E84D20-A0CA-4E7B-8990-0634EC19347E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {04C2CB3C-58A4-4B41-9837-ABFA67135BEC}
+	EndGlobalSection
+EndGlobal
