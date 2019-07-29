@@ -44,7 +44,7 @@ namespace Genumerics
         T MinusOne { get; }
         T MaxValue { get; }
         T MinValue { get; }
-#if TYPE_CODE
+#if ICONVERTIBLE
         TypeCode TypeCode { get; }
 #endif
         bool Equals(T left, T right);

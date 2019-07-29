@@ -185,7 +185,7 @@ namespace Genumerics
         #endregion
 
         #region TypeCode
-#if TYPE_CODE
+#if ICONVERTIBLE
         TypeCode INumericOperations<sbyte>.TypeCode => TypeCode.SByte;
 
         TypeCode INumericOperations<byte>.TypeCode => TypeCode.Byte;
@@ -691,27 +691,27 @@ namespace Genumerics
         #endregion
 
         #region Convert
-        sbyte INumericOperations<sbyte>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>().ToSByte(value);
+        sbyte INumericOperations<sbyte>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToSByte(value);
 
-        byte INumericOperations<byte>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>().ToByte(value);
+        byte INumericOperations<byte>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToByte(value);
 
-        short INumericOperations<short>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>().ToInt16(value);
+        short INumericOperations<short>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToInt16(value);
 
-        ushort INumericOperations<ushort>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>().ToUInt16(value);
+        ushort INumericOperations<ushort>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToUInt16(value);
 
-        int INumericOperations<int>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>().ToInt32(value);
+        int INumericOperations<int>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToInt32(value);
 
-        uint INumericOperations<uint>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>().ToUInt32(value);
+        uint INumericOperations<uint>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToUInt32(value);
 
-        long INumericOperations<long>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>().ToInt64(value);
+        long INumericOperations<long>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToInt64(value);
 
-        ulong INumericOperations<ulong>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>().ToUInt64(value);
+        ulong INumericOperations<ulong>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToUInt64(value);
 
-        float INumericOperations<float>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>().ToSingle(value);
+        float INumericOperations<float>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToSingle(value);
 
-        double INumericOperations<double>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>().ToDouble(value);
+        double INumericOperations<double>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToDouble(value);
 
-        decimal INumericOperations<decimal>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>().ToDecimal(value);
+        decimal INumericOperations<decimal>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToDecimal(value);
         #endregion
 
         #region ToSByte
@@ -1587,7 +1587,7 @@ namespace Genumerics
 
         BigInteger INumericOperations<BigInteger>.MinValue => throw new NotSupportedException("there is no MinValue for BigInteger");
 
-#if TYPE_CODE
+#if ICONVERTIBLE
         TypeCode INumericOperations<BigInteger>.TypeCode => TypeCode.Object;
 #endif
 
@@ -1631,7 +1631,7 @@ namespace Genumerics
 
         public bool TryParse(ParseType value, NumberStyles? style, IFormatProvider provider, out BigInteger result) => BigInteger.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
-        BigInteger INumericOperations<BigInteger>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>().ToBigInteger(value);
+        BigInteger INumericOperations<BigInteger>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToBigInteger(value);
 
         public BigInteger Round(BigInteger value, int digits, MidpointRounding mode) => value;
 

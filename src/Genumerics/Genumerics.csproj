@@ -29,22 +29,22 @@
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
     <AssemblyTitle>Genumerics .NET Core 2.1</AssemblyTitle>
-    <DefineConstants>TYPE_CODE;BIG_INTEGER;MATHF;CLAMP;SPAN</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;SPAN</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <AssemblyTitle>Genumerics .NET Core 2.0</AssemblyTitle>
-    <DefineConstants>TYPE_CODE;BIG_INTEGER;MATHF;CLAMP</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <AssemblyTitle>Genumerics .NET Standard 2.0</AssemblyTitle>
-    <DefineConstants>TYPE_CODE;BIG_INTEGER</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
     <AssemblyTitle>Genumerics .NET Standard 1.3</AssemblyTitle>
-    <DefineConstants>TYPE_CODE;BIG_INTEGER</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.1'">
@@ -59,17 +59,17 @@
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net40'">
     <AssemblyTitle>Genumerics .NET 4.0</AssemblyTitle>
-    <DefineConstants>TYPE_CODE;BIG_INTEGER</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net35'">
     <AssemblyTitle>Genumerics .NET 3.5</AssemblyTitle>
-    <DefineConstants>TYPE_CODE</DefineConstants>
+    <DefineConstants>ICONVERTIBLE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net20'">
     <AssemblyTitle>Genumerics .NET 2.0</AssemblyTitle>
-    <DefineConstants>TYPE_CODE</DefineConstants>
+    <DefineConstants>ICONVERTIBLE</DefineConstants>
   </PropertyGroup>
 
 </Project>
