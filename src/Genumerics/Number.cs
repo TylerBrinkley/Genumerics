@@ -26,6 +26,10 @@
 using System;
 using System.Globalization;
 
+#if BIG_INTEGER
+using System.Numerics;
+#endif
+
 namespace Genumerics
 {
     /// <summary>
@@ -33,13 +37,43 @@ namespace Genumerics
     /// </summary>
     public static class Number
     {
+        // Ensures default numeric operations are populated
+        internal static readonly bool Initialized = Initialize();
+
+        private static bool Initialize()
+        {
+            SetDefaultOperations<sbyte, DefaultNumericOperations>();
+            SetDefaultOperations<byte, DefaultNumericOperations>();
+            SetDefaultOperations<short, DefaultNumericOperations>();
+            SetDefaultOperations<ushort, DefaultNumericOperations>();
+            SetDefaultOperations<int, DefaultNumericOperations>();
+            SetDefaultOperations<uint, DefaultNumericOperations>();
+            SetDefaultOperations<long, DefaultNumericOperations>();
+            SetDefaultOperations<ulong, DefaultNumericOperations>();
+            SetDefaultOperations<float, DefaultNumericOperations>();
+            SetDefaultOperations<double, DefaultNumericOperations>();
+            SetDefaultOperations<decimal, DefaultNumericOperations>();
+#if BIG_INTEGER
+            SetDefaultOperations<BigInteger, DefaultNumericOperations>();
+#endif
+            return true;
+        }
+
+        private static void SetDefaultOperations<T, TNumericOperations>()
+            where T : struct
+            where TNumericOperations : struct, INumericOperations<T>
+        {
+            Number<T>.s_operations = new DefaultNumericOperations<T, TNumericOperations>();
+            Number<T?>.s_operations = new NullableNumericOperations<T>();
+        }
+
         /// <summary>
         /// Gets a value that represents the number zero (0).
         /// </summary>
         /// <typeparam name="T">The numeric type.</typeparam>
         /// <returns>An object whose value is zero (0).</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Zero<T>() => Number<T>.Operations.Zero;
+        public static T Zero<T>() => Number<T>.GetOperations().Zero;
 
         /// <summary>
         /// Gets a value that represents the number one (1).
@@ -47,7 +81,7 @@ namespace Genumerics
         /// <typeparam name="T">The numeric type.</typeparam>
         /// <returns>An object whose value is one (1).</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T One<T>() => Number<T>.Operations.One;
+        public static T One<T>() => Number<T>.GetOperations().One;
 
         /// <summary>
         /// Gets a value that represents the number negative one (-1).
@@ -57,7 +91,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type doesn't support negative values.</exception>
-        public static T MinusOne<T>() => Number<T>.Operations.MinusOne;
+        public static T MinusOne<T>() => Number<T>.GetOperations().MinusOne;
 
         /// <summary>
         /// Gets the largest possible value of <typeparamref name="T"/>.
@@ -67,7 +101,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type isn't bounded.</exception>
-        public static T MaxValue<T>() => Number<T>.Operations.MaxValue;
+        public static T MaxValue<T>() => Number<T>.GetOperations().MaxValue;
 
         /// <summary>
         /// Gets the smallest possible value of <typeparamref name="T"/>.
@@ -77,7 +111,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type isn't bounded.</exception>
-        public static T MinValue<T>() => Number<T>.Operations.MinValue;
+        public static T MinValue<T>() => Number<T>.GetOperations().MinValue;
 
 #if ICONVERTIBLE
         /// <summary>
@@ -86,7 +120,7 @@ namespace Genumerics
         /// <typeparam name="T">The numeric type.</typeparam>
         /// <returns>The <see cref="TypeCode"/> for <typeparamref name="T"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static TypeCode GetTypeCode<T>() => Number<T>.Operations.TypeCode;
+        public static TypeCode GetTypeCode<T>() => Number<T>.GetOperations().TypeCode;
 #endif
 
         /// <summary>
@@ -97,7 +131,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if the <paramref name="left"/> and <paramref name="right"/> parameters have the same value; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool Equals<T>(T left, T right) => Number<T>.Operations.Equals(left, right);
+        public static bool Equals<T>(T left, T right) => Number<T>.GetOperations().Equals(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether the two objects have different values.
@@ -107,7 +141,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool NotEquals<T>(T left, T right) => Number<T>.Operations.NotEquals(left, right);
+        public static bool NotEquals<T>(T left, T right) => Number<T>.GetOperations().NotEquals(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a value is less than another value.
@@ -117,7 +151,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool LessThan<T>(T left, T right) => Number<T>.Operations.LessThan(left, right);
+        public static bool LessThan<T>(T left, T right) => Number<T>.GetOperations().LessThan(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a value is less than or equal to another value.
@@ -127,7 +161,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool LessThanOrEquals<T>(T left, T right) => Number<T>.Operations.LessThanOrEquals(left, right);
+        public static bool LessThanOrEquals<T>(T left, T right) => Number<T>.GetOperations().LessThanOrEquals(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a value is greater than another value.
@@ -137,7 +171,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool GreaterThan<T>(T left, T right) => Number<T>.Operations.GreaterThan(left, right);
+        public static bool GreaterThan<T>(T left, T right) => Number<T>.GetOperations().GreaterThan(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a value is greater than or equal to another value.
@@ -147,7 +181,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool GreaterThanOrEquals<T>(T left, T right) => Number<T>.Operations.GreaterThanOrEquals(left, right);
+        public static bool GreaterThanOrEquals<T>(T left, T right) => Number<T>.GetOperations().GreaterThanOrEquals(left, right);
 
         /// <summary>
         /// Adds two values and returns the result.
@@ -157,7 +191,7 @@ namespace Genumerics
         /// <param name="right">The second value to add.</param>
         /// <returns>The sum of <paramref name="left"/> and <paramref name="right"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Add<T>(T left, T right) => Number<T>.Operations.Add(left, right);
+        public static T Add<T>(T left, T right) => Number<T>.GetOperations().Add(left, right);
 
         /// <summary>
         /// Subtracts one value from another and returns the result.
@@ -167,7 +201,7 @@ namespace Genumerics
         /// <param name="right">The value to subtract (the subtrahend).</param>
         /// <returns>The result of subtracting <paramref name="right"/> from <paramref name="left"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Subtract<T>(T left, T right) => Number<T>.Operations.Subtract(left, right);
+        public static T Subtract<T>(T left, T right) => Number<T>.GetOperations().Subtract(left, right);
 
         /// <summary>
         /// Returns the product of two values.
@@ -177,7 +211,7 @@ namespace Genumerics
         /// <param name="right">The second number to multiply.</param>
         /// <returns>The product of the <paramref name="left"/> and <paramref name="right"/> parameters.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Multiply<T>(T left, T right) => Number<T>.Operations.Multiply(left, right);
+        public static T Multiply<T>(T left, T right) => Number<T>.GetOperations().Multiply(left, right);
 
         /// <summary>
         /// Divides one value by another and returns the result.
@@ -188,7 +222,7 @@ namespace Genumerics
         /// <returns>The quotient of the division.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="DivideByZeroException"><paramref name="divisor"/> is zero (0).</exception>
-        public static T Divide<T>(T dividend, T divisor) => Number<T>.Operations.Divide(dividend, divisor);
+        public static T Divide<T>(T dividend, T divisor) => Number<T>.GetOperations().Divide(dividend, divisor);
 
         /// <summary>
         /// Performs division on two values and returns the remainder.
@@ -199,7 +233,7 @@ namespace Genumerics
         /// <returns>The remainder after dividing <paramref name="dividend"/> by <paramref name="divisor"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="DivideByZeroException"><paramref name="divisor"/> is zero (0).</exception>
-        public static T Remainder<T>(T dividend, T divisor) => Number<T>.Operations.Remainder(dividend, divisor);
+        public static T Remainder<T>(T dividend, T divisor) => Number<T>.GetOperations().Remainder(dividend, divisor);
 
         /// <summary>
         /// Negates a specified value.
@@ -210,7 +244,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type doesn't support negative values.</exception>
-        public static T Negate<T>(T value) => Number<T>.Operations.Negate(value);
+        public static T Negate<T>(T value) => Number<T>.GetOperations().Negate(value);
 
         /// <summary>
         /// Returns the larger of two values.
@@ -220,7 +254,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns>The <paramref name="left"/> or <paramref name="right"/> parameter, whichever is larger.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Max<T>(T left, T right) => Number<T>.Operations.Max(left, right);
+        public static T Max<T>(T left, T right) => Number<T>.GetOperations().Max(left, right);
 
         /// <summary>
         /// Returns the smaller of two values.
@@ -230,7 +264,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns>The <paramref name="left"/> or <paramref name="right"/> parameter, whichever is smaller.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Min<T>(T left, T right) => Number<T>.Operations.Min(left, right);
+        public static T Min<T>(T left, T right) => Number<T>.GetOperations().Min(left, right);
 
         /// <summary>
         /// Performs a bitwise And operation on two values.
@@ -242,7 +276,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T And<T>(T left, T right) => Number<T>.Operations.And(left, right);
+        public static T And<T>(T left, T right) => Number<T>.GetOperations().And(left, right);
 
         /// <summary>
         /// Performs a bitwise Or operation on two values.
@@ -254,7 +288,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T Or<T>(T left, T right) => Number<T>.Operations.Or(left, right);
+        public static T Or<T>(T left, T right) => Number<T>.GetOperations().Or(left, right);
 
         /// <summary>
         /// Performs a bitwise exclusive Or operation on two values.
@@ -266,7 +300,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T Xor<T>(T left, T right) => Number<T>.Operations.Xor(left, right);
+        public static T Xor<T>(T left, T right) => Number<T>.GetOperations().Xor(left, right);
 
         /// <summary>
         /// Returns the bitwise one's complement of a value.
@@ -277,7 +311,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T Not<T>(T value) => Number<T>.Operations.Not(value);
+        public static T Not<T>(T value) => Number<T>.GetOperations().Not(value);
 
         /// <summary>
         /// Shifts a value a specified number of bits to the left.
@@ -289,7 +323,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T LeftShift<T>(T value, int shift) => Number<T>.Operations.LeftShift(value, shift);
+        public static T LeftShift<T>(T value, int shift) => Number<T>.GetOperations().LeftShift(value, shift);
 
         /// <summary>
         /// Shifts a value a specified number of bits to the right.
@@ -301,7 +335,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T RightShift<T>(T value, int shift) => Number<T>.Operations.RightShift(value, shift);
+        public static T RightShift<T>(T value, int shift) => Number<T>.GetOperations().RightShift(value, shift);
 
         /// <summary>
         /// Converts the string representation of a number to its <typeparamref name="T"/> equivalent.
@@ -312,7 +346,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         /// <exception cref="FormatException"><paramref name="value"/> is not in the correct format.</exception>
-        public static T Parse<T>(string value) => Number<T>.Operations.Parse(value, null, NumberFormatInfo.CurrentInfo);
+        public static T Parse<T>(string value) => Number<T>.GetOperations().Parse(value, null, NumberFormatInfo.CurrentInfo);
 
         /// <summary>
         /// Converts the string representation of a number in a specified culture-specific format to its <typeparamref name="T"/> equivalent.
@@ -324,7 +358,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         /// <exception cref="FormatException"><paramref name="value"/> is not in the correct format.</exception>
-        public static T Parse<T>(string value, IFormatProvider provider) => Number<T>.Operations.Parse(value, null, provider);
+        public static T Parse<T>(string value, IFormatProvider provider) => Number<T>.GetOperations().Parse(value, null, provider);
 
         /// <summary>
         /// Converts the string representation of a number in a specified <paramref name="style"/> to its <typeparamref name="T"/> equivalent.
@@ -339,7 +373,7 @@ namespace Genumerics
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         /// <exception cref="FormatException"><paramref name="value"/> is not in the correct format.</exception>
-        public static T Parse<T>(string value, NumberStyles style) => Number<T>.Operations.Parse(value, style, NumberFormatInfo.CurrentInfo);
+        public static T Parse<T>(string value, NumberStyles style) => Number<T>.GetOperations().Parse(value, style, NumberFormatInfo.CurrentInfo);
 
         /// <summary>
         /// Converts the string representation of a number in a specified <paramref name="style"/> and culture-specific format to its <typeparamref name="T"/> equivalent.
@@ -355,7 +389,7 @@ namespace Genumerics
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         /// <exception cref="FormatException"><paramref name="value"/> is not in the correct format.</exception>
-        public static T Parse<T>(string value, NumberStyles style, IFormatProvider provider) => Number<T>.Operations.Parse(value, style, provider);
+        public static T Parse<T>(string value, NumberStyles style, IFormatProvider provider) => Number<T>.GetOperations().Parse(value, style, provider);
 
 #if SPAN
         /// <summary>
@@ -366,7 +400,7 @@ namespace Genumerics
         /// <returns>A value that is equivalent to the number specified in the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="FormatException"><paramref name="value"/> is not in the correct format.</exception>
-        public static T Parse<T>(ReadOnlySpan<char> value) => Number<T>.Operations.Parse(value, null, NumberFormatInfo.CurrentInfo);
+        public static T Parse<T>(ReadOnlySpan<char> value) => Number<T>.GetOperations().Parse(value, null, NumberFormatInfo.CurrentInfo);
 
         /// <summary>
         /// Converts the string representation of a number in a specified culture-specific format to its <typeparamref name="T"/> equivalent.
@@ -377,7 +411,7 @@ namespace Genumerics
         /// <returns>A value that is equivalent to the number specified in the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="FormatException"><paramref name="value"/> is not in the correct format.</exception>
-        public static T Parse<T>(ReadOnlySpan<char> value, IFormatProvider provider) => Number<T>.Operations.Parse(value, null, provider);
+        public static T Parse<T>(ReadOnlySpan<char> value, IFormatProvider provider) => Number<T>.GetOperations().Parse(value, null, provider);
 
         /// <summary>
         /// Converts the string representation of a number in a specified <paramref name="style"/> to its <typeparamref name="T"/> equivalent.
@@ -391,7 +425,7 @@ namespace Genumerics
         /// -or-
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
         /// <exception cref="FormatException"><paramref name="value"/> is not in the correct format.</exception>
-        public static T Parse<T>(ReadOnlySpan<char> value, NumberStyles style) => Number<T>.Operations.Parse(value, style, NumberFormatInfo.CurrentInfo);
+        public static T Parse<T>(ReadOnlySpan<char> value, NumberStyles style) => Number<T>.GetOperations().Parse(value, style, NumberFormatInfo.CurrentInfo);
 
         /// <summary>
         /// Converts the string representation of a number in a specified <paramref name="style"/> and culture-specific format to its <typeparamref name="T"/> equivalent.
@@ -407,7 +441,7 @@ namespace Genumerics
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         /// <exception cref="FormatException"><paramref name="value"/> is not in the correct format.</exception>
-        public static T Parse<T>(ReadOnlySpan<char> value, NumberStyles style, IFormatProvider provider) => Number<T>.Operations.Parse(value, style, provider);
+        public static T Parse<T>(ReadOnlySpan<char> value, NumberStyles style, IFormatProvider provider) => Number<T>.GetOperations().Parse(value, style, provider);
 #endif
 
         /// <summary>
@@ -421,7 +455,7 @@ namespace Genumerics
         /// format. This parameter is passed uninitialized.</param>
         /// <returns><c>true</c> if value was converted successfully; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool TryParse<T>(string value, out T result) => Number<T>.Operations.TryParse(value, null, NumberFormatInfo.CurrentInfo, out result);
+        public static bool TryParse<T>(string value, out T result) => Number<T>.GetOperations().TryParse(value, null, NumberFormatInfo.CurrentInfo, out result);
 
         /// <summary>
         /// Tries to convert the string representation of a number in a culture-specific format to its <typeparamref name="T"/> equivalent, and returns a value that indicates whether the conversion succeeded.
@@ -435,7 +469,7 @@ namespace Genumerics
         /// format. This parameter is passed uninitialized.</param>
         /// <returns><c>true</c> if value was converted successfully; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool TryParse<T>(string value, IFormatProvider provider, out T result) => Number<T>.Operations.TryParse(value, null, provider, out result);
+        public static bool TryParse<T>(string value, IFormatProvider provider, out T result) => Number<T>.GetOperations().TryParse(value, null, provider, out result);
 
         /// <summary>
         /// Tries to convert the string representation of a number in a specified <paramref name="style"/> to its <typeparamref name="T"/> equivalent, and returns
@@ -454,7 +488,7 @@ namespace Genumerics
         /// <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="NumberStyles"/> value.
         /// -or-
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
-        public static bool TryParse<T>(string value, NumberStyles style, out T result) => Number<T>.Operations.TryParse(value, style, NumberFormatInfo.CurrentInfo, out result);
+        public static bool TryParse<T>(string value, NumberStyles style, out T result) => Number<T>.GetOperations().TryParse(value, style, NumberFormatInfo.CurrentInfo, out result);
 
         /// <summary>
         /// Tries to convert the string representation of a number in a specified <paramref name="style"/> and
@@ -475,7 +509,7 @@ namespace Genumerics
         /// <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="NumberStyles"/> value.
         /// -or-
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
-        public static bool TryParse<T>(string value, NumberStyles style, IFormatProvider provider, out T result) => Number<T>.Operations.TryParse(value, style, provider, out result);
+        public static bool TryParse<T>(string value, NumberStyles style, IFormatProvider provider, out T result) => Number<T>.GetOperations().TryParse(value, style, provider, out result);
 
 #if SPAN
         /// <summary>
@@ -489,7 +523,7 @@ namespace Genumerics
         /// format. This parameter is passed uninitialized.</param>
         /// <returns><c>true</c> if value was converted successfully; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool TryParse<T>(ReadOnlySpan<char> value, out T result) => Number<T>.Operations.TryParse(value, null, NumberFormatInfo.CurrentInfo, out result);
+        public static bool TryParse<T>(ReadOnlySpan<char> value, out T result) => Number<T>.GetOperations().TryParse(value, null, NumberFormatInfo.CurrentInfo, out result);
 
         /// <summary>
         /// Tries to convert the string representation of a number in a culture-specific format to its <typeparamref name="T"/> equivalent, and returns a value that indicates whether the conversion succeeded.
@@ -503,7 +537,7 @@ namespace Genumerics
         /// format. This parameter is passed uninitialized.</param>
         /// <returns><c>true</c> if value was converted successfully; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool TryParse<T>(ReadOnlySpan<char> value, IFormatProvider provider, out T result) => Number<T>.Operations.TryParse(value, null, provider, out result);
+        public static bool TryParse<T>(ReadOnlySpan<char> value, IFormatProvider provider, out T result) => Number<T>.GetOperations().TryParse(value, null, provider, out result);
 
         /// <summary>
         /// Tries to convert the string representation of a number in a specified <paramref name="style"/> to its <typeparamref name="T"/> equivalent, and returns
@@ -522,7 +556,7 @@ namespace Genumerics
         /// <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="NumberStyles"/> value.
         /// -or-
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
-        public static bool TryParse<T>(ReadOnlySpan<char> value, NumberStyles style, out T result) => Number<T>.Operations.TryParse(value, style, NumberFormatInfo.CurrentInfo, out result);
+        public static bool TryParse<T>(ReadOnlySpan<char> value, NumberStyles style, out T result) => Number<T>.GetOperations().TryParse(value, style, NumberFormatInfo.CurrentInfo, out result);
 
         /// <summary>
         /// Tries to convert the string representation of a number in a specified <paramref name="style"/> and
@@ -543,7 +577,7 @@ namespace Genumerics
         /// <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="NumberStyles"/> value.
         /// -or-
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
-        public static bool TryParse<T>(ReadOnlySpan<char> value, NumberStyles style, IFormatProvider provider, out T result) => Number<T>.Operations.TryParse(value, style, provider, out result);
+        public static bool TryParse<T>(ReadOnlySpan<char> value, NumberStyles style, IFormatProvider provider, out T result) => Number<T>.GetOperations().TryParse(value, style, provider, out result);
 #endif
 
         /// <summary>
@@ -557,13 +591,8 @@ namespace Genumerics
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="TTo"/>'s MaxValue or less than <typeparamref name="TTo"/>'s MinValue.</exception>
         public static TTo Convert<TFrom, TTo>(TFrom value)
         {
-            var operations = Number<TTo>.Operations;
-            if (value != null)
-            {
-                return operations.Convert(value);
-            }
-            _ = Number<TFrom>.Operations; // Necessary to validate conversion types
-            return default;
+            var operations = Number<TTo>.GetOperations();
+            return value != null ? operations.Convert(value) : default;
         }
 
         /// <summary>
@@ -574,7 +603,7 @@ namespace Genumerics
         /// <returns>The integer nearest <paramref name="value"/>. If the fractional component of <paramref name="value"/> is halfway between two
         /// integers, one of which is even and the other odd, then the even number is returned.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Round<T>(T value) => Number<T>.Operations.Round(value, 0, MidpointRounding.ToEven);
+        public static T Round<T>(T value) => Number<T>.GetOperations().Round(value, 0, MidpointRounding.ToEven);
 
         /// <summary>
         /// Rounds a value to a specified number of fractional digits.
@@ -585,7 +614,7 @@ namespace Genumerics
         /// <returns>The number nearest to <paramref name="value"/> that contains a number of fractional digits equal to <paramref name="digits"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="digits"/> is less than 0 or greater than a max value for the numeric type.</exception>
-        public static T Round<T>(T value, int digits) => Number<T>.Operations.Round(value, digits, MidpointRounding.ToEven);
+        public static T Round<T>(T value, int digits) => Number<T>.GetOperations().Round(value, digits, MidpointRounding.ToEven);
 
         /// <summary>
         /// Rounds a value to the nearest integer. A parameter specifies how to round the value if it is midway between two numbers.
@@ -597,7 +626,7 @@ namespace Genumerics
         /// then <paramref name="mode"/> determines which of the two is returned.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="ArgumentException"><paramref name="mode"/> is not a valid value of <see cref="MidpointRounding"/>.</exception>
-        public static T Round<T>(T value, MidpointRounding mode) => Number<T>.Operations.Round(value, 0, mode);
+        public static T Round<T>(T value, MidpointRounding mode) => Number<T>.GetOperations().Round(value, 0, mode);
 
         /// <summary>
         /// Rounds a value to a specified number of fractional digits. A parameter specifies how to round the value if it is midway between two numbers.
@@ -611,7 +640,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="digits"/> is less than 0 or greater than a max value for the numeric type.</exception>
         /// <exception cref="ArgumentException"><paramref name="mode"/> is not a valid value of <see cref="MidpointRounding"/>.</exception>
-        public static T Round<T>(T value, int digits, MidpointRounding mode) => Number<T>.Operations.Round(value, digits, mode);
+        public static T Round<T>(T value, int digits, MidpointRounding mode) => Number<T>.GetOperations().Round(value, digits, mode);
 
         /// <summary>
         /// Returns the largest integer less than or equal to the specified number.
@@ -620,7 +649,7 @@ namespace Genumerics
         /// <param name="value">A number.</param>
         /// <returns>The largest integer less than or equal to <paramref name="value"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Floor<T>(T value) => Number<T>.Operations.Floor(value);
+        public static T Floor<T>(T value) => Number<T>.GetOperations().Floor(value);
 
         /// <summary>
         /// Returns the smallest integral value that is greater than or equal to the specified number.
@@ -629,7 +658,7 @@ namespace Genumerics
         /// <param name="value">A number.</param>
         /// <returns>The smallest integral value that is greater than or equal to <paramref name="value"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Ceiling<T>(T value) => Number<T>.Operations.Ceiling(value);
+        public static T Ceiling<T>(T value) => Number<T>.GetOperations().Ceiling(value);
 
         /// <summary>
         /// Calculates the integral part of a specified number.
@@ -638,7 +667,7 @@ namespace Genumerics
         /// <param name="value">A number to truncate.</param>
         /// <returns>The integral part of <paramref name="value"/>; that is, the number that remains after any fractional digits have been discarded.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Truncate<T>(T value) => Number<T>.Operations.Truncate(value);
+        public static T Truncate<T>(T value) => Number<T>.GetOperations().Truncate(value);
 
         /// <summary>
         /// Compares two values and returns an integer that indicates whether the first value is less than, equal to, or greater than the second value.
@@ -651,7 +680,7 @@ namespace Genumerics
         /// zero if <paramref name="left"/> equals <paramref name="right"/>,
         /// and greater than zero if <paramref name="left"/> is greater than <paramref name="right"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static int Compare<T>(T left, T right) => Number<T>.Operations.Compare(left, right);
+        public static int Compare<T>(T left, T right) => Number<T>.GetOperations().Compare(left, right);
 
         /// <summary>
         /// Gets a number that indicates the sign (negative, positive, or zero) of the current object.
@@ -662,7 +691,7 @@ namespace Genumerics
         /// is negative, 0 if the value of this object is zero (0), and 1 if the value of this object
         /// is positive.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static int Sign<T>(T value) => Number<T>.Operations.Sign(value);
+        public static int Sign<T>(T value) => Number<T>.GetOperations().Sign(value);
 
         /// <summary>
         /// Gets the absolute value of a number.
@@ -671,7 +700,7 @@ namespace Genumerics
         /// <param name="value">A number.</param>
         /// <returns>The absolute value of <paramref name="value"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Abs<T>(T value) => Number<T>.Operations.Abs(value);
+        public static T Abs<T>(T value) => Number<T>.GetOperations().Abs(value);
 
         /// <summary>
         /// Converts the specified numeric value to its equivalent string representation.
@@ -680,7 +709,7 @@ namespace Genumerics
         /// <param name="value">A number.</param>
         /// <returns>The string representation of <paramref name="value"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static string ToString<T>(T value) => Number<T>.Operations.ToString(value, null, null);
+        public static string ToString<T>(T value) => Number<T>.GetOperations().ToString(value, null, null);
 
         /// <summary>
         /// Converts the specified numeric value to its equivalent string representation by using the specified format.
@@ -691,7 +720,7 @@ namespace Genumerics
         /// <returns>The string representation of <paramref name="value"/> in the format specified by the <paramref name="format"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="FormatException"><paramref name="format"/> is not a valid format string.</exception>
-        public static string ToString<T>(T value, string format) => Number<T>.Operations.ToString(value, format, null);
+        public static string ToString<T>(T value, string format) => Number<T>.GetOperations().ToString(value, format, null);
 
         /// <summary>
         /// Converts the specified numeric value to its equivalent string representation by using the specified culture-specific formatting information.
@@ -701,7 +730,7 @@ namespace Genumerics
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns>The string representation of <paramref name="value"/> in the format specified by the <paramref name="provider"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static string ToString<T>(T value, IFormatProvider provider) => Number<T>.Operations.ToString(value, null, provider);
+        public static string ToString<T>(T value, IFormatProvider provider) => Number<T>.GetOperations().ToString(value, null, provider);
 
         /// <summary>
         /// Converts the specified numeric value to its equivalent string representation by using the specified format and culture-specific format information.
@@ -713,7 +742,7 @@ namespace Genumerics
         /// <returns>The string representation of <paramref name="value"/> as specified by the <paramref name="format"/> and <paramref name="provider"/> parameters.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="FormatException"><paramref name="format"/> is not a valid format string.</exception>
-        public static string ToString<T>(T value, string format, IFormatProvider provider) => Number<T>.Operations.ToString(value, format, provider);
+        public static string ToString<T>(T value, string format, IFormatProvider provider) => Number<T>.GetOperations().ToString(value, format, provider);
 
         /// <summary>
         /// Indicates whether the specified value is an even number.
@@ -724,7 +753,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static bool IsEven<T>(T value) => Number<T>.Operations.IsEven(value);
+        public static bool IsEven<T>(T value) => Number<T>.GetOperations().IsEven(value);
 
         /// <summary>
         /// Indicates whether the specified value is an odd number.
@@ -735,7 +764,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static bool IsOdd<T>(T value) => Number<T>.Operations.IsOdd(value);
+        public static bool IsOdd<T>(T value) => Number<T>.GetOperations().IsOdd(value);
 
         /// <summary>
         /// Indicates whether the specified integral value is a power of two.
@@ -746,7 +775,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static bool IsPowerOfTwo<T>(T value) => Number<T>.Operations.IsPowerOfTwo(value);
+        public static bool IsPowerOfTwo<T>(T value) => Number<T>.GetOperations().IsPowerOfTwo(value);
 
         /// <summary>
         /// Returns <paramref name="value"/> clamped to the inclusive range of <paramref name="min"/> and <paramref name="max"/>.
@@ -760,7 +789,7 @@ namespace Genumerics
         /// else <paramref name="value"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="ArgumentException"><paramref name="min"/> is greater than <paramref name="max"/>.</exception>
-        public static T Clamp<T>(T value, T min, T max) => Number<T>.Operations.Clamp(value, min, max);
+        public static T Clamp<T>(T value, T min, T max) => Number<T>.GetOperations().Clamp(value, min, max);
 
 
         /// <summary>

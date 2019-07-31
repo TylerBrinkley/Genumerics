@@ -17,8 +17,32 @@
     <ProjectReference Include="..\Genumerics\Genumerics.csproj" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' != 'net35' And '$(TargetFramework)' != 'net20'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
+    <DefineConstants>BIG_INTEGER;SPAN</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <DefineConstants>BIG_INTEGER</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp1.1'">
+    <DefineConstants>BIG_INTEGER</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp1.0'">
+    <DefineConstants>BIG_INTEGER</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net40'">
+    <DefineConstants>BIG_INTEGER</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net35'">
+    <DefineConstants></DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net20'">
+    <DefineConstants></DefineConstants>
   </PropertyGroup>
 
 </Project>

@@ -25,45 +25,24 @@
 
 using System;
 using System.Globalization;
+
 #if BIG_INTEGER
 using System.Numerics;
 #endif
 
-#if SPAN
-using ParseType = System.ReadOnlySpan<char>;
-#else
-using ParseType = System.String;
-#endif
-
 namespace Genumerics
 {
-    internal sealed class DefaultNumericOperations : INumericOperations<sbyte>, INumericOperations<byte>, INumericOperations<short>, INumericOperations<ushort>, INumericOperations<int>, INumericOperations<uint>, INumericOperations<long>, INumericOperations<ulong>, INumericOperations<float>, INumericOperations<double>, INumericOperations<decimal>
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member, type should only really be used through the interface as a type constraint.
+                               // I'd make all the members use explicit interface implementation but that would greatly increase the library's dll size.
+    /// <summary>
+    /// Defines all the default numeric operations.
+    /// </summary>
+    [CLSCompliant(false)]
+    public struct DefaultNumericOperations : INumericOperations<sbyte>, INumericOperations<byte>, INumericOperations<short>, INumericOperations<ushort>, INumericOperations<int>, INumericOperations<uint>, INumericOperations<long>, INumericOperations<ulong>, INumericOperations<float>, INumericOperations<double>, INumericOperations<decimal>
 #if BIG_INTEGER
         , INumericOperations<BigInteger>
 #endif
     {
-        internal static readonly DefaultNumericOperations Instance = GetInstance();
-
-        private static DefaultNumericOperations GetInstance()
-        {
-            var instance = new DefaultNumericOperations();
-            NullableNumericOperationsStore<sbyte?>.Instance = new NullableNumericOperations<sbyte>();
-            NullableNumericOperationsStore<byte?>.Instance = new NullableNumericOperations<byte>();
-            NullableNumericOperationsStore<short?>.Instance = new NullableNumericOperations<short>();
-            NullableNumericOperationsStore<ushort?>.Instance = new NullableNumericOperations<ushort>();
-            NullableNumericOperationsStore<int?>.Instance = new NullableNumericOperations<int>();
-            NullableNumericOperationsStore<uint?>.Instance = new NullableNumericOperations<uint>();
-            NullableNumericOperationsStore<long?>.Instance = new NullableNumericOperations<long>();
-            NullableNumericOperationsStore<ulong?>.Instance = new NullableNumericOperations<ulong>();
-            NullableNumericOperationsStore<float?>.Instance = new NullableNumericOperations<float>();
-            NullableNumericOperationsStore<double?>.Instance = new NullableNumericOperations<double>();
-            NullableNumericOperationsStore<decimal?>.Instance = new NullableNumericOperations<decimal>();
-#if BIG_INTEGER
-            NullableNumericOperationsStore<BigInteger?>.Instance = new NullableNumericOperations<BigInteger>();
-#endif
-            return instance;
-        }
-
         #region Zero
         sbyte INumericOperations<sbyte>.Zero => 0;
 
@@ -643,75 +622,125 @@ namespace Genumerics
         #endregion
 
         #region Parse
-        sbyte INumericOperations<sbyte>.Parse(ParseType value, NumberStyles? style, IFormatProvider provider) => sbyte.Parse(value, style ?? NumberStyles.Integer, provider);
+        sbyte INumericOperations<sbyte>.Parse(string value, NumberStyles? style, IFormatProvider provider) => sbyte.Parse(value, style ?? NumberStyles.Integer, provider);
 
-        byte INumericOperations<byte>.Parse(ParseType value, NumberStyles? style, IFormatProvider provider) => byte.Parse(value, style ?? NumberStyles.Integer, provider);
+        byte INumericOperations<byte>.Parse(string value, NumberStyles? style, IFormatProvider provider) => byte.Parse(value, style ?? NumberStyles.Integer, provider);
 
-        short INumericOperations<short>.Parse(ParseType value, NumberStyles? style, IFormatProvider provider) => short.Parse(value, style ?? NumberStyles.Integer, provider);
+        short INumericOperations<short>.Parse(string value, NumberStyles? style, IFormatProvider provider) => short.Parse(value, style ?? NumberStyles.Integer, provider);
 
-        ushort INumericOperations<ushort>.Parse(ParseType value, NumberStyles? style, IFormatProvider provider) => ushort.Parse(value, style ?? NumberStyles.Integer, provider);
+        ushort INumericOperations<ushort>.Parse(string value, NumberStyles? style, IFormatProvider provider) => ushort.Parse(value, style ?? NumberStyles.Integer, provider);
 
-        int INumericOperations<int>.Parse(ParseType value, NumberStyles? style, IFormatProvider provider) => int.Parse(value, style ?? NumberStyles.Integer, provider);
+        int INumericOperations<int>.Parse(string value, NumberStyles? style, IFormatProvider provider) => int.Parse(value, style ?? NumberStyles.Integer, provider);
 
-        uint INumericOperations<uint>.Parse(ParseType value, NumberStyles? style, IFormatProvider provider) => uint.Parse(value, style ?? NumberStyles.Integer, provider);
+        uint INumericOperations<uint>.Parse(string value, NumberStyles? style, IFormatProvider provider) => uint.Parse(value, style ?? NumberStyles.Integer, provider);
 
-        long INumericOperations<long>.Parse(ParseType value, NumberStyles? style, IFormatProvider provider) => long.Parse(value, style ?? NumberStyles.Integer, provider);
+        long INumericOperations<long>.Parse(string value, NumberStyles? style, IFormatProvider provider) => long.Parse(value, style ?? NumberStyles.Integer, provider);
 
-        ulong INumericOperations<ulong>.Parse(ParseType value, NumberStyles? style, IFormatProvider provider) => ulong.Parse(value, style ?? NumberStyles.Integer, provider);
+        ulong INumericOperations<ulong>.Parse(string value, NumberStyles? style, IFormatProvider provider) => ulong.Parse(value, style ?? NumberStyles.Integer, provider);
 
-        float INumericOperations<float>.Parse(ParseType value, NumberStyles? style, IFormatProvider provider) => float.Parse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider);
+        float INumericOperations<float>.Parse(string value, NumberStyles? style, IFormatProvider provider) => float.Parse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider);
 
-        double INumericOperations<double>.Parse(ParseType value, NumberStyles? style, IFormatProvider provider) => double.Parse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider);
+        double INumericOperations<double>.Parse(string value, NumberStyles? style, IFormatProvider provider) => double.Parse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider);
 
-        decimal INumericOperations<decimal>.Parse(ParseType value, NumberStyles? style, IFormatProvider provider) => decimal.Parse(value, style ?? NumberStyles.Number, provider);
+        decimal INumericOperations<decimal>.Parse(string value, NumberStyles? style, IFormatProvider provider) => decimal.Parse(value, style ?? NumberStyles.Number, provider);
         #endregion
 
         #region TryParse
-        public bool TryParse(ParseType value, NumberStyles? style, IFormatProvider provider, out sbyte result) => sbyte.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out sbyte result) => sbyte.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
-        public bool TryParse(ParseType value, NumberStyles? style, IFormatProvider provider, out byte result) => byte.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out byte result) => byte.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
-        public bool TryParse(ParseType value, NumberStyles? style, IFormatProvider provider, out short result) => short.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out short result) => short.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
-        public bool TryParse(ParseType value, NumberStyles? style, IFormatProvider provider, out ushort result) => ushort.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out ushort result) => ushort.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
-        public bool TryParse(ParseType value, NumberStyles? style, IFormatProvider provider, out int result) => int.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out int result) => int.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
-        public bool TryParse(ParseType value, NumberStyles? style, IFormatProvider provider, out uint result) => uint.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out uint result) => uint.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
-        public bool TryParse(ParseType value, NumberStyles? style, IFormatProvider provider, out long result) => long.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out long result) => long.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
-        public bool TryParse(ParseType value, NumberStyles? style, IFormatProvider provider, out ulong result) => ulong.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out ulong result) => ulong.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
-        public bool TryParse(ParseType value, NumberStyles? style, IFormatProvider provider, out float result) => float.TryParse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out float result) => float.TryParse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
 
-        public bool TryParse(ParseType value, NumberStyles? style, IFormatProvider provider, out double result) => double.TryParse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out double result) => double.TryParse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
 
-        public bool TryParse(ParseType value, NumberStyles? style, IFormatProvider provider, out decimal result) => decimal.TryParse(value, style ?? NumberStyles.Number, provider, out result);
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out decimal result) => decimal.TryParse(value, style ?? NumberStyles.Number, provider, out result);
         #endregion
 
+#if SPAN
+        #region Parse
+        sbyte INumericOperations<sbyte>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => sbyte.Parse(value, style ?? NumberStyles.Integer, provider);
+
+        byte INumericOperations<byte>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => byte.Parse(value, style ?? NumberStyles.Integer, provider);
+
+        short INumericOperations<short>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => short.Parse(value, style ?? NumberStyles.Integer, provider);
+
+        ushort INumericOperations<ushort>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => ushort.Parse(value, style ?? NumberStyles.Integer, provider);
+
+        int INumericOperations<int>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => int.Parse(value, style ?? NumberStyles.Integer, provider);
+
+        uint INumericOperations<uint>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => uint.Parse(value, style ?? NumberStyles.Integer, provider);
+
+        long INumericOperations<long>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => long.Parse(value, style ?? NumberStyles.Integer, provider);
+
+        ulong INumericOperations<ulong>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => ulong.Parse(value, style ?? NumberStyles.Integer, provider);
+
+        float INumericOperations<float>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => float.Parse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider);
+
+        double INumericOperations<double>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => double.Parse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider);
+
+        decimal INumericOperations<decimal>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => decimal.Parse(value, style ?? NumberStyles.Number, provider);
+        #endregion
+
+        #region TryParse
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out sbyte result) => sbyte.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out byte result) => byte.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out short result) => short.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out ushort result) => ushort.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out int result) => int.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out uint result) => uint.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out long result) => long.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out ulong result) => ulong.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out float result) => float.TryParse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
+
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out double result) => double.TryParse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
+
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out decimal result) => decimal.TryParse(value, style ?? NumberStyles.Number, provider, out result);
+        #endregion
+#endif
+
         #region Convert
-        sbyte INumericOperations<sbyte>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToSByte(value);
+        sbyte INumericOperations<sbyte>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToSByte(value) ?? Convert.ToSByte(value);
 
-        byte INumericOperations<byte>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToByte(value);
+        byte INumericOperations<byte>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToByte(value) ?? Convert.ToByte(value);
 
-        short INumericOperations<short>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToInt16(value);
+        short INumericOperations<short>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToInt16(value) ?? Convert.ToInt16(value);
 
-        ushort INumericOperations<ushort>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToUInt16(value);
+        ushort INumericOperations<ushort>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToUInt16(value) ?? Convert.ToUInt16(value);
 
-        int INumericOperations<int>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToInt32(value);
+        int INumericOperations<int>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToInt32(value) ?? Convert.ToInt32(value);
 
-        uint INumericOperations<uint>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToUInt32(value);
+        uint INumericOperations<uint>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToUInt32(value) ?? Convert.ToUInt32(value);
 
-        long INumericOperations<long>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToInt64(value);
+        long INumericOperations<long>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToInt64(value) ?? Convert.ToInt64(value);
 
-        ulong INumericOperations<ulong>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToUInt64(value);
+        ulong INumericOperations<ulong>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToUInt64(value) ?? Convert.ToUInt64(value);
 
-        float INumericOperations<float>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToSingle(value);
+        float INumericOperations<float>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToSingle(value) ?? Convert.ToSingle(value);
 
-        double INumericOperations<double>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToDouble(value);
+        double INumericOperations<double>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToDouble(value) ?? Convert.ToDouble(value);
 
-        decimal INumericOperations<decimal>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToDecimal(value);
+        decimal INumericOperations<decimal>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToDecimal(value) ?? Convert.ToDecimal(value);
         #endregion
 
         #region ToSByte
@@ -1627,11 +1656,17 @@ namespace Genumerics
 
         public BigInteger RightShift(BigInteger value, int shift) => value >> shift;
 
-        BigInteger INumericOperations<BigInteger>.Parse(ParseType value, NumberStyles? style, IFormatProvider provider) => BigInteger.Parse(value, style ?? NumberStyles.Integer, provider);
+        BigInteger INumericOperations<BigInteger>.Parse(string value, NumberStyles? style, IFormatProvider provider) => BigInteger.Parse(value, style ?? NumberStyles.Integer, provider);
 
-        public bool TryParse(ParseType value, NumberStyles? style, IFormatProvider provider, out BigInteger result) => BigInteger.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out BigInteger result) => BigInteger.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
-        BigInteger INumericOperations<BigInteger>.Convert<TFrom>(TFrom value) => Number<TFrom>.Operations.ToBigInteger(value);
+#if SPAN
+        BigInteger INumericOperations<BigInteger>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => BigInteger.Parse(value, style ?? NumberStyles.Integer, provider);
+
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out BigInteger result) => BigInteger.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+#endif
+
+        BigInteger INumericOperations<BigInteger>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations().ToBigInteger(value);
 
         public BigInteger Round(BigInteger value, int digits, MidpointRounding mode) => value;
 
@@ -1726,4 +1761,5 @@ namespace Genumerics
         #endregion
 #endif
     }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

@@ -25,14 +25,9 @@
 
 using System;
 using System.Globalization;
+
 #if BIG_INTEGER
 using System.Numerics;
-#endif
-
-#if SPAN
-using ParseType = System.ReadOnlySpan<char>;
-#else
-using ParseType = System.String;
 #endif
 
 namespace Genumerics
@@ -82,7 +77,7 @@ namespace Genumerics
 
         public T? Or(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.Or(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
-        public T? Parse(ParseType value, NumberStyles? styles, IFormatProvider provider) => Number<T>.s_operations.Parse(value, styles, provider);
+        public T? Parse(string value, NumberStyles? styles, IFormatProvider provider) => Number<T>.s_operations.Parse(value, styles, provider);
 
         public T? Remainder(T? dividend, T? divisor) => dividend.HasValue && divisor.HasValue ? Number<T>.s_operations.Remainder(dividend.GetValueOrDefault(), divisor.GetValueOrDefault()) : (T?)null;
 
@@ -90,12 +85,23 @@ namespace Genumerics
 
         public T? Subtract(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.Subtract(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
-        public bool TryParse(ParseType value, NumberStyles? styles, IFormatProvider provider, out T? result)
+        public bool TryParse(string value, NumberStyles? styles, IFormatProvider provider, out T? result)
         {
             var success = Number<T>.s_operations.TryParse(value, styles, provider, out T r);
             result = r;
             return success;
         }
+
+#if SPAN
+        public T? Parse(ReadOnlySpan<char> value, NumberStyles? styles, IFormatProvider provider) => Number<T>.s_operations.Parse(value, styles, provider);
+
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? styles, IFormatProvider provider, out T? result)
+        {
+            var success = Number<T>.s_operations.TryParse(value, styles, provider, out T r);
+            result = r;
+            return success;
+        }
+#endif
 
         public T? Xor(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.Xor(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
@@ -154,10 +160,5 @@ namespace Genumerics
         public bool IsPowerOfTwo(T? value) => value.HasValue ? Number<T>.s_operations.IsPowerOfTwo(value.GetValueOrDefault()) : false;
 
         public T? Clamp(T? value, T? min, T? max) => value.HasValue && min.HasValue && max.HasValue ? Number<T>.s_operations.Clamp(value.GetValueOrDefault(), min.GetValueOrDefault(), max.GetValueOrDefault()) : (T?)null;
-    }
-
-    internal static class NullableNumericOperationsStore<T>
-    {
-        internal static INumericOperations<T> Instance;
     }
 }

@@ -38,6 +38,11 @@ namespace Genumerics.Tests
 {
     public class NumberTests
     {
+        static NumberTests()
+        {
+            Number<IntWrapper>.Operations = new IntWrapperOperations();
+        }
+
         private static TestCaseData CreateTestCase<T>(object expectedResult, params object[] args) => new TestCaseData(new[] { (object)default(T) }.Concat(args ?? new object[] { null }).ToArray()) { ExpectedResult = expectedResult };
 
         private static TestCaseData CreateTestCase<T>() => new TestCaseData(default(T));
@@ -73,6 +78,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(BigInteger.Zero);
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(0));
         }
 
         [TestCaseSource(nameof(OneCases))]
@@ -101,6 +107,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(BigInteger.One);
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(1));
         }
 
         [TestCaseSource(nameof(MinusOneCases))]
@@ -125,6 +132,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(BigInteger.MinusOne);
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(-1));
         }
 
         [TestCaseSource(nameof(MinusOneThrowsCases))]
@@ -168,6 +176,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<float>(float.MaxValue);
             yield return CreateTestCase<double>(double.MaxValue);
             yield return CreateTestCase<decimal>(decimal.MaxValue);
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(int.MaxValue));
         }
 
 #if BIG_INTEGER
@@ -210,6 +219,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<float>(float.MinValue);
             yield return CreateTestCase<double>(double.MinValue);
             yield return CreateTestCase<decimal>(decimal.MinValue);
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(int.MinValue));
         }
 
 #if BIG_INTEGER
@@ -260,6 +270,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(TypeCode.Object);
 #endif
+            yield return CreateTestCase<IntWrapper>(TypeCode.Int32);
         }
 
         [TestCaseSource(nameof(EqualsCases))]
@@ -310,6 +321,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(true, BigInteger.One, BigInteger.One);
             yield return CreateTestCase<BigInteger>(false, BigInteger.One, BigInteger.Zero);
 #endif
+            yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MaxValue), new IntWrapper(int.MaxValue));
+            yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MaxValue), new IntWrapper(int.MinValue));
         }
 
         public static IEnumerable<TestCaseData> EqualsNullableCases() => EqualsCases().Concat(BinaryNullableCases(true, false, false));
@@ -362,6 +375,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(false, BigInteger.One, BigInteger.One);
             yield return CreateTestCase<BigInteger>(true, BigInteger.One, BigInteger.Zero);
 #endif
+            yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MaxValue), new IntWrapper(int.MaxValue));
+            yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MaxValue), new IntWrapper(int.MinValue));
         }
 
         public static IEnumerable<TestCaseData> NotEqualsNullableCases() => NotEqualsCases().Concat(BinaryNullableCases(false, true, true));
@@ -414,6 +429,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(false, BigInteger.Zero, BigInteger.Zero);
             yield return CreateTestCase<BigInteger>(true, BigInteger.Zero, BigInteger.One);
 #endif
+            yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MinValue), new IntWrapper(int.MinValue));
+            yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MinValue), new IntWrapper(int.MaxValue));
         }
 
         public static IEnumerable<TestCaseData> LessThanNullableCases() => LessThanCases().Concat(BinaryNullableCases(false, false, false));
@@ -466,6 +483,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(true, BigInteger.One, BigInteger.One);
             yield return CreateTestCase<BigInteger>(false, BigInteger.One, BigInteger.Zero);
 #endif
+            yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MaxValue), new IntWrapper(int.MaxValue));
+            yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MaxValue), new IntWrapper(int.MinValue));
         }
 
         public static IEnumerable<TestCaseData> LessThanOrEqualsNullableCases() => LessThanOrEqualsCases().Concat(BinaryNullableCases(false, false, false));
@@ -518,6 +537,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(false, BigInteger.One, BigInteger.One);
             yield return CreateTestCase<BigInteger>(true, BigInteger.One, BigInteger.Zero);
 #endif
+            yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MaxValue), new IntWrapper(int.MaxValue));
+            yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MaxValue), new IntWrapper(int.MinValue));
         }
 
         public static IEnumerable<TestCaseData> GreaterThanNullableCases() => GreaterThanCases().Concat(BinaryNullableCases(false, false, false));
@@ -570,6 +591,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(true, BigInteger.Zero, BigInteger.Zero);
             yield return CreateTestCase<BigInteger>(false, BigInteger.Zero, BigInteger.One);
 #endif
+            yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MinValue), new IntWrapper(int.MinValue));
+            yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MinValue), new IntWrapper(int.MaxValue));
         }
 
         public static IEnumerable<TestCaseData> GreaterThanOrEqualsNullableCases() => GreaterThanOrEqualsCases().Concat(BinaryNullableCases(false, false, false));
@@ -610,6 +633,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(5), new BigInteger(3), new BigInteger(2));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(5), new IntWrapper(3), new IntWrapper(2));
         }
 
         public static IEnumerable<TestCaseData> AddNullableCases() => AddCases().Concat(BinaryNullableCases());
@@ -650,6 +674,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(1), new BigInteger(3), new BigInteger(2));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(1), new IntWrapper(3), new IntWrapper(2));
         }
 
         public static IEnumerable<TestCaseData> SubtractNullableCases() => SubtractCases().Concat(BinaryNullableCases());
@@ -690,6 +715,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(6), new BigInteger(3), new BigInteger(2));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(6), new IntWrapper(3), new IntWrapper(2));
         }
 
         public static IEnumerable<TestCaseData> MultiplyNullableCases() => MultiplyCases().Concat(BinaryNullableCases());
@@ -730,6 +756,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(6), new BigInteger(2));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(6), new IntWrapper(2));
         }
 
         public static IEnumerable<TestCaseData> DivideNullableCases() => DivideCases().Concat(BinaryNullableCases());
@@ -770,6 +797,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(2), new BigInteger(5), new BigInteger(3));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(5), new IntWrapper(3));
         }
 
         public static IEnumerable<TestCaseData> RemainderNullableCases() => RemainderCases().Concat(BinaryNullableCases());
@@ -814,6 +842,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(-3), new BigInteger(3));
             yield return CreateTestCase<BigInteger>(new BigInteger(2), new BigInteger(-2));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(-3), new IntWrapper(3));
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(-2));
         }
 
         public static IEnumerable<TestCaseData> NegateNullableCases() => NegateCases().Concat(UnaryNullableCases(types: Types.Signed));
@@ -872,6 +902,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(3), new BigInteger(2));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3), new IntWrapper(2));
         }
 
         public static IEnumerable<TestCaseData> MaxNullableCases() => MaxCases().Concat(BinaryNullableCases());
@@ -902,6 +933,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(2), new BigInteger(3), new BigInteger(2));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(3), new IntWrapper(2));
         }
 
         public static IEnumerable<TestCaseData> MinNullableCases() => MinCases().Concat(BinaryNullableCases());
@@ -939,6 +971,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(2), new BigInteger(3), new BigInteger(6));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(3), new IntWrapper(6));
         }
 
         public static IEnumerable<TestCaseData> AndNullableCases() => AndCases().Concat(BinaryNullableCases(types: Types.Integral));
@@ -996,6 +1029,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(7), new BigInteger(3), new BigInteger(5));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(7), new IntWrapper(3), new IntWrapper(5));
         }
 
         public static IEnumerable<TestCaseData> OrNullableCases() => OrCases().Concat(BinaryNullableCases(types: Types.Integral));
@@ -1053,6 +1087,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(6), new BigInteger(3), new BigInteger(5));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(6), new IntWrapper(3), new IntWrapper(5));
         }
 
         public static IEnumerable<TestCaseData> XorNullableCases() => XorCases().Concat(BinaryNullableCases(types: Types.Integral));
@@ -1119,6 +1154,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(-4), new BigInteger(3));
             yield return CreateTestCase<BigInteger>(new BigInteger(1), new BigInteger(-2));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(-4), new IntWrapper(3));
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(1), new IntWrapper(-2));
         }
 
         public static IEnumerable<TestCaseData> NotNullableCases() => NotCases().Concat(UnaryNullableCases(types: Types.Integral));
@@ -1176,6 +1213,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(12), new BigInteger(3), 2);
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(12), new IntWrapper(3), 2);
         }
 
         [TestCaseSource(nameof(ShiftThrowsCases))]
@@ -1233,6 +1271,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(13), 2);
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(13), 2);
         }
 
         [TestCaseSource(nameof(ShiftThrowsCases))]
@@ -1296,6 +1335,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(false, new BigInteger(3));
             yield return CreateTestCase<BigInteger>(true, new BigInteger(2));
 #endif
+            yield return CreateTestCase<IntWrapper>(false, new IntWrapper(3));
+            yield return CreateTestCase<IntWrapper>(true, new IntWrapper(2));
         }
 
         public static IEnumerable<TestCaseData> IsEvenNullableCases() => IsEvenCases().Concat(UnaryNullableCases(false, types: Types.Integral));
@@ -1342,6 +1383,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(true, new BigInteger(3));
             yield return CreateTestCase<BigInteger>(false, new BigInteger(2));
 #endif
+            yield return CreateTestCase<IntWrapper>(true, new IntWrapper(3));
+            yield return CreateTestCase<IntWrapper>(false, new IntWrapper(2));
         }
 
         public static IEnumerable<TestCaseData> IsOddNullableCases() => IsOddCases().Concat(UnaryNullableCases(false, types: Types.Integral));
@@ -1388,6 +1431,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(false, new BigInteger(3));
             yield return CreateTestCase<BigInteger>(true, new BigInteger(2));
 #endif
+            yield return CreateTestCase<IntWrapper>(false, new IntWrapper(3));
+            yield return CreateTestCase<IntWrapper>(true, new IntWrapper(2));
         }
 
         public static IEnumerable<TestCaseData> IsPowerOfTwoNullableCases() => IsPowerOfTwoCases().Concat(UnaryNullableCases(false, types: Types.Integral));
@@ -1448,6 +1493,9 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(0, new BigInteger(0));
             yield return CreateTestCase<BigInteger>(-1, new BigInteger(-2));
 #endif
+            yield return CreateTestCase<IntWrapper>(1, new IntWrapper(3));
+            yield return CreateTestCase<IntWrapper>(0, new IntWrapper(0));
+            yield return CreateTestCase<IntWrapper>(-1, new IntWrapper(-2));
         }
 
         public static IEnumerable<TestCaseData> SignNullableCases() => SignCases().Concat(UnaryNullableCases(-2));
@@ -1486,6 +1534,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(3));
             yield return CreateTestCase<BigInteger>(new BigInteger(2), new BigInteger(-2));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3));
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(-2));
         }
 
         public static IEnumerable<TestCaseData> AbsNullableCases() => AbsCases().Concat(UnaryNullableCases());
@@ -1519,6 +1569,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(3));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3));
         }
 
         public static IEnumerable<TestCaseData> FloorNullableCases() => FloorCases().Concat(UnaryNullableCases());
@@ -1552,6 +1603,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(3));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3));
         }
 
         public static IEnumerable<TestCaseData> CeilingNullableCases() => CeilingCases().Concat(UnaryNullableCases());
@@ -1585,6 +1637,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(3));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3));
         }
 
         public static IEnumerable<TestCaseData> TruncateNullableCases() => TruncateCases().Concat(UnaryNullableCases());
@@ -1624,6 +1677,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(3), 0, MidpointRounding.ToEven);
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3), 0, MidpointRounding.ToEven);
         }
 
         public static IEnumerable<TestCaseData> RoundNullableCases() => RoundCases().Concat(UnaryNullableCases(additionalArgs: new object[] { 0, MidpointRounding.ToEven }));
@@ -1688,6 +1742,9 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(-1, new BigInteger(3), new BigInteger(6));
             yield return CreateTestCase<BigInteger>(0, new BigInteger(3), new BigInteger(3));
 #endif
+            yield return CreateTestCase<IntWrapper>(1, new IntWrapper(3), new IntWrapper(2));
+            yield return CreateTestCase<IntWrapper>(-1, new IntWrapper(3), new IntWrapper(6));
+            yield return CreateTestCase<IntWrapper>(0, new IntWrapper(3), new IntWrapper(3));
         }
 
         public static IEnumerable<TestCaseData> CompareNullableCases() => CompareCases().Concat(BinaryNullableCases(0, -1, 1));
@@ -1740,6 +1797,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             , TypeAndValue.Create(new BigInteger(1))
 #endif
+            , TypeAndValue.Create(new IntWrapper(1))
         };
 
         public static IEnumerable<TestCaseData> ConvertCases()
@@ -1838,6 +1896,9 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>("2", new BigInteger(2), "D");
             yield return CreateTestCase<BigInteger>("0F", new BigInteger(15), "X");
 #endif
+            yield return CreateTestCase<IntWrapper>("-3", new IntWrapper(-3), null);
+            yield return CreateTestCase<IntWrapper>("2", new IntWrapper(2), "D");
+            yield return CreateTestCase<IntWrapper>("F", new IntWrapper(15), "X");
         }
 
         public static IEnumerable<TestCaseData> ToStringNullableCases() => ToStringCases().Concat(UnaryNullableCases(additionalArgs: new object[] { null }));
@@ -1905,6 +1966,9 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(uint.MaxValue), " 00000000FFFFFFFF ", NumberStyles.HexNumber);
             yield return CreateTestCase<BigInteger>(new BigInteger(-1), " FFFFFFFF ", NumberStyles.HexNumber);
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(8), "8", null);
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(-128), " -128 ", NumberStyles.Integer);
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(-1), " FFFFFFFF ", NumberStyles.HexNumber);
         }
 
         [TestCaseSource(nameof(ParseFailCases))]
@@ -1960,6 +2024,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<ulong>(new object[] { long.MinValue.ToString(), null, typeof(OverflowException) });
             yield return CreateTestCase<float>(new object[] { double.MaxValue.ToString(), null, typeof(OverflowException) });
             yield return CreateTestCase<double>(new object[] { "1.79769313486232E+309", null, typeof(OverflowException) });
+            yield return CreateTestCase<IntWrapper>(new object[] { uint.MaxValue.ToString(), null, typeof(OverflowException) });
             yield return CreateTestCase<sbyte>(new object[] { "a", null, typeof(FormatException) });
             yield return CreateTestCase<byte>(new object[] { "a", null, typeof(FormatException) });
             yield return CreateTestCase<short>(new object[] { "a", null, typeof(FormatException) });
@@ -1973,6 +2038,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new object[] { "a", null, typeof(FormatException) });
 #endif
+            yield return CreateTestCase<IntWrapper>(new object[] { "a", null, typeof(FormatException) });
         }
 
         [TestCaseSource(nameof(ClampCases))]
@@ -2030,6 +2096,9 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(2), new BigInteger(1), new BigInteger(2), new BigInteger(5));
             yield return CreateTestCase<BigInteger>(new BigInteger(5), new BigInteger(8), new BigInteger(2), new BigInteger(5));
 #endif
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3), new IntWrapper(2), new IntWrapper(5));
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(1), new IntWrapper(2), new IntWrapper(5));
+            yield return CreateTestCase<IntWrapper>(new IntWrapper(5), new IntWrapper(8), new IntWrapper(2), new IntWrapper(5));
         }
 
         public static IEnumerable<TestCaseData> ClampNullableCases()
@@ -2076,6 +2145,9 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(null, new BigInteger(1), null, new BigInteger(5));
             yield return CreateTestCase<BigInteger>(null, new BigInteger(8), new BigInteger(2), null);
 #endif
+            yield return CreateTestCase<IntWrapper>(null, null, new IntWrapper(2), new IntWrapper(5));
+            yield return CreateTestCase<IntWrapper>(null, new IntWrapper(1), null, new IntWrapper(5));
+            yield return CreateTestCase<IntWrapper>(null, new IntWrapper(8), new IntWrapper(2), null);
         }
 
         public static IEnumerable<TestCaseData> ClampThrowsCases()
@@ -2094,6 +2166,7 @@ namespace Genumerics.Tests
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>(new object[] { new BigInteger(3), new BigInteger(8), new BigInteger(5) });
 #endif
+            yield return CreateTestCase<IntWrapper>(new object[] { new IntWrapper(3), new IntWrapper(8), new IntWrapper(5) });
         }
 
         public static IEnumerable<TestCaseData> BinaryBitwiseThrowsCases()
@@ -2186,6 +2259,12 @@ namespace Genumerics.Tests
                 yield return CreateTestCase<BigInteger>(secondNullResult, BigInteger.One, null);
             }
 #endif
+            if (types.HasAnyFlags(Types.IntWrapper))
+            {
+                yield return CreateTestCase<IntWrapper>(bothNullResult, null, null);
+                yield return CreateTestCase<IntWrapper>(firstNullResult, null, new IntWrapper(0));
+                yield return CreateTestCase<IntWrapper>(secondNullResult, new IntWrapper(1), null);
+            }
         }
 
         public static IEnumerable<TestCaseData> UnaryNullableCases(object nullResult = null, Types types = Types.All, params object[] additionalArgs)
@@ -2241,6 +2320,10 @@ namespace Genumerics.Tests
                 yield return CreateTestCase<BigInteger>(nullResult, args);
             }
 #endif
+            if (types.HasAnyFlags(Types.IntWrapper))
+            {
+                yield return CreateTestCase<IntWrapper>(nullResult, args);
+            }
         }
     }
 
@@ -2262,8 +2345,9 @@ namespace Genumerics.Tests
         Decimal = 1024,
         Floating = Single | Double | Decimal,
         BigInteger = 2048,
-        Integral = SByte | Byte | Int16 | UInt16 | Int32 | UInt32 | Int64 | UInt64 | BigInteger,
-        Signed = SByte | Int16 | Int32 | Int64 | Floating | BigInteger,
+        IntWrapper = 4096,
+        Integral = SByte | Byte | Int16 | UInt16 | Int32 | UInt32 | Int64 | UInt64 | BigInteger | IntWrapper,
+        Signed = SByte | Int16 | Int32 | Int64 | Floating | BigInteger | IntWrapper,
         All = Integral | Floating
     }
 
