@@ -1,5 +1,5 @@
 # Genumerics
-Genumerics is a .NET library for generic numeric operations. It is compatible with .NET Framework 2.0+ and .NET Standard 1.0+.
+Genumerics is a high-performance .NET library for generic numeric operations. It is compatible with .NET Framework 2.0+ and .NET Standard 1.0+.
 
 ## The Problem
 You may have come across a point while working in .NET where you would like to perform numeric or mathematical operations over a generic numeric type. Unfortunately .NET doesn't provide a way to do that natively and so you must either specialize each case of numeric type or figure out another way of accomplishing this.
