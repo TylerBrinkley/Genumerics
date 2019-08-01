@@ -43,6 +43,12 @@ namespace Genumerics.Tests
         public int Compare(IntWrapper left, IntWrapper right) => Number<int>.Operations.Compare(left, right);
         public IntWrapper Convert<TFrom>(TFrom value) => Number<int>.Operations.Convert(value);
         public IntWrapper Divide(IntWrapper dividend, IntWrapper divisor) => Number<int>.Operations.Divide(dividend, divisor);
+        public IntWrapper DivRem(IntWrapper dividend, IntWrapper divisor, out IntWrapper remainder)
+        {
+            var result = Number<int>.Operations.DivRem(dividend, divisor, out var intRemainder);
+            remainder = intRemainder;
+            return result;
+        }
         public bool Equals(IntWrapper left, IntWrapper right) => Number<int>.Operations.Equals(left, right);
         public IntWrapper Floor(IntWrapper value) => Number<int>.Operations.Floor(value);
         public bool GreaterThan(IntWrapper left, IntWrapper right) => Number<int>.Operations.GreaterThan(left, right);
@@ -85,6 +91,9 @@ namespace Genumerics.Tests
         public uint ToUInt32(IntWrapper value) => Number<int>.Operations.ToUInt32(value);
         public ulong ToUInt64(IntWrapper value) => Number<int>.Operations.ToUInt64(value);
         public IntWrapper Truncate(IntWrapper value) => Number<int>.Operations.Truncate(value);
+#if SPAN
+        public bool TryFormat(IntWrapper value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => Number<int>.Operations.TryFormat(value, destination, out charsWritten, format, provider);
+#endif
         public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out IntWrapper result)
         {
             var success = Number<int>.Operations.TryParse(value, style, provider, out var intResult);

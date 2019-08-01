@@ -160,6 +160,15 @@ namespace Genumerics
         T Remainder(T dividend, T divisor);
 
         /// <summary>
+        /// Calculates the quotient of two values and also returns the remainder in an output parameter.
+        /// </summary>
+        /// <param name="dividend">The dividend.</param>
+        /// <param name="divisor">The divisor.</param>
+        /// <param name="remainder">The remainder.</param>
+        /// <returns>The quotient of the specified numbers.</returns>
+        T DivRem(T dividend, T divisor, out T remainder);
+
+        /// <summary>
         /// Negates a specified value.
         /// </summary>
         /// <param name="value">The value to negate.</param>
@@ -263,6 +272,17 @@ namespace Genumerics
         /// uninitialized.</param>
         /// <returns><c>true</c> if the value parameter was converted successfully; otherwise, <c>false</c>.</returns>
         bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out T result);
+
+        /// <summary>
+        /// Tries to convert the specified numeric value to its equivalent string representation into the destination <see cref="Span{T}"/> by using the specified format and culture-specific format information.
+        /// </summary>
+        /// <param name="value">A number.</param>
+        /// <param name="destination">The <see cref="Span{T}"/> to write the string representation to.</param>
+        /// <param name="charsWritten">The number of characters written to <paramref name="destination"/>.</param>
+        /// <param name="format">A standard or custom numeric format string.</param>
+        /// <param name="provider">An object that supplies culture-specific formatting information.</param>
+        /// <returns><c>true</c> if the value's string representation was successfully written to <paramref name="destination"/>; otherwise, <c>false</c>.</returns>
+        bool TryFormat(T value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null);
 #endif
 
         /// <summary>

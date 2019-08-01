@@ -143,6 +143,19 @@ namespace Genumerics
         /// <exception cref="FormatException"><paramref name="format"/> is not a valid format string.</exception>
         public string ToString(string format, IFormatProvider provider) => GetOperations().ToString(Value, format, provider);
 
+#if SPAN
+        /// <summary>
+        /// Tries to convert the specified numeric value to its equivalent string representation into the destination <see cref="Span{T}"/> by using the specified format and culture-specific format information.
+        /// </summary>
+        /// <param name="destination">The <see cref="Span{T}"/> to write the string representation to.</param>
+        /// <param name="charsWritten">The number of characters written to <paramref name="destination"/>.</param>
+        /// <param name="format">A standard or custom numeric format string.</param>
+        /// <param name="provider">An object that supplies culture-specific formatting information.</param>
+        /// <returns><c>true</c> if the value's string representation was successfully written to <paramref name="destination"/>; otherwise, <c>false</c>.</returns>
+        /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
+        public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => GetOperations().TryFormat(Value, destination, out charsWritten, format, provider);
+#endif
+
         /// <summary>
         /// Returns a value that indicates whether the current instance and a specified object have the same value.
         /// </summary>

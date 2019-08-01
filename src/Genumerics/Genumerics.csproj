@@ -29,17 +29,17 @@
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
     <AssemblyTitle>Genumerics .NET Core 2.1</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;SPAN;TYPE_REFLECTION</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;SPAN;TYPE_REFLECTION;DIV_REM</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <AssemblyTitle>Genumerics .NET Core 2.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;TYPE_REFLECTION</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;TYPE_REFLECTION;DIV_REM</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <AssemblyTitle>Genumerics .NET Standard 2.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION;DIV_REM</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
@@ -59,17 +59,17 @@
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net40'">
     <AssemblyTitle>Genumerics .NET 4.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION;DIV_REM</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net35'">
     <AssemblyTitle>Genumerics .NET 3.5</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;TYPE_REFLECTION</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;TYPE_REFLECTION;DIV_REM</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net20'">
     <AssemblyTitle>Genumerics .NET 2.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;TYPE_REFLECTION</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;TYPE_REFLECTION;DIV_REM</DefineConstants>
   </PropertyGroup>
 
 </Project>

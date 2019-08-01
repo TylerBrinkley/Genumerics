@@ -453,6 +453,82 @@ namespace Genumerics
         public decimal Remainder(decimal dividend, decimal divisor) => dividend % divisor;
         #endregion
 
+        #region DivRem
+        public sbyte DivRem(sbyte dividend, sbyte divisor, out sbyte remainder)
+        {
+            remainder = (sbyte)(dividend % divisor);
+            return (sbyte)(dividend / divisor);
+        }
+
+        public byte DivRem(byte dividend, byte divisor, out byte remainder)
+        {
+            remainder = (byte)(dividend % divisor);
+            return (byte)(dividend / divisor);
+        }
+
+        public short DivRem(short dividend, short divisor, out short remainder)
+        {
+            remainder = (short)(dividend % divisor);
+            return (short)(dividend / divisor);
+        }
+
+        public ushort DivRem(ushort dividend, ushort divisor, out ushort remainder)
+        {
+            remainder = (ushort)(dividend % divisor);
+            return (ushort)(dividend / divisor);
+        }
+
+        public int DivRem(int dividend, int divisor, out int remainder)
+        {
+#if DIV_REM
+            return Math.DivRem(dividend, divisor, out remainder);
+#else
+            remainder = dividend % divisor;
+            return dividend / divisor;
+#endif
+        }
+
+        public uint DivRem(uint dividend, uint divisor, out uint remainder)
+        {
+            remainder = dividend % divisor;
+            return dividend / divisor;
+        }
+
+        public long DivRem(long dividend, long divisor, out long remainder)
+        {
+#if DIV_REM
+            return Math.DivRem(dividend, divisor, out remainder);
+#else
+            remainder = dividend % divisor;
+            return dividend / divisor;
+#endif
+        }
+
+        public ulong DivRem(ulong dividend, ulong divisor, out ulong remainder)
+        {
+            remainder = dividend % divisor;
+            return dividend / divisor;
+        }
+
+        public float DivRem(float dividend, float divisor, out float remainder)
+        {
+            remainder = dividend % divisor;
+            return dividend / divisor;
+        }
+
+        public double DivRem(double dividend, double divisor, out double remainder)
+        {
+            remainder = dividend % divisor;
+            return dividend / divisor;
+        }
+
+        public decimal DivRem(decimal dividend, decimal divisor, out decimal remainder)
+        {
+            remainder = dividend % divisor;
+            return dividend / divisor;
+        }
+        #endregion
+
         #region Negate
         public sbyte Negate(sbyte value) => (sbyte)-value;
 
@@ -716,6 +792,30 @@ namespace Genumerics
         public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out double result) => double.TryParse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
 
         public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out decimal result) => decimal.TryParse(value, style ?? NumberStyles.Number, provider, out result);
+        #endregion
+
+        #region TryFormat
+        public bool TryFormat(sbyte value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
+
+        public bool TryFormat(byte value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
+
+        public bool TryFormat(short value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
+
+        public bool TryFormat(ushort value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
+
+        public bool TryFormat(int value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
+
+        public bool TryFormat(uint value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
+
+        public bool TryFormat(long value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
+
+        public bool TryFormat(ulong value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
+
+        public bool TryFormat(float value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
+
+        public bool TryFormat(double value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
+
+        public bool TryFormat(decimal value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
         #endregion
 #endif
 
@@ -1642,6 +1742,8 @@ namespace Genumerics
 
         public BigInteger Remainder(BigInteger dividend, BigInteger divisor) => dividend % divisor;
 
+        public BigInteger DivRem(BigInteger dividend, BigInteger divisor, out BigInteger remainder) => BigInteger.DivRem(dividend, divisor, out remainder);
+
         public BigInteger Negate(BigInteger value) => -value;
 
         public BigInteger And(BigInteger left, BigInteger right) => left & right;
@@ -1664,6 +1766,8 @@ namespace Genumerics
         BigInteger INumericOperations<BigInteger>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => BigInteger.Parse(value, style ?? NumberStyles.Integer, provider);
 
         public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out BigInteger result) => BigInteger.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+
+        public bool TryFormat(BigInteger value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
 #endif
 
         BigInteger INumericOperations<BigInteger>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations().ToBigInteger(value);

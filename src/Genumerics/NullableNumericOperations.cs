@@ -55,6 +55,18 @@ namespace Genumerics
 
         public T? Divide(T? dividend, T? divisor) => dividend.HasValue && divisor.HasValue ? Number<T>.s_operations.Divide(dividend.GetValueOrDefault(), divisor.GetValueOrDefault()) : (T?)null;
 
+        public T? DivRem(T? dividend, T? divisor, out T? remainder)
+        {
+            if (dividend.HasValue && divisor.HasValue)
+            {
+                var result = Number<T>.s_operations.DivRem(dividend.GetValueOrDefault(), divisor.GetValueOrDefault(), out T r);
+                remainder = r;
+                return result;
+            }
+            remainder = null;
+            return null;
+        }
+
         public bool Equals(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.Equals(left.GetValueOrDefault(), right.GetValueOrDefault()) : !left.HasValue && !right.HasValue;
 
         public bool GreaterThan(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.GreaterThan(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
@@ -100,6 +112,16 @@ namespace Genumerics
             var success = Number<T>.s_operations.TryParse(value, styles, provider, out T r);
             result = r;
             return success;
+        }
+
+        public bool TryFormat(T? value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null)
+        {
+            if (value.HasValue)
+            {
+                return Number<T>.s_operations.TryFormat(value.GetValueOrDefault(), destination, out charsWritten, format, provider);
+            }
+            charsWritten = 0;
+            return false;
         }
 #endif
 

@@ -66,6 +66,8 @@ namespace Genumerics
 
         public T Divide(T dividend, T divisor) => default(TNumericOperations).Divide(dividend, divisor);
 
+        public T DivRem(T dividend, T divisor, out T remainder) => default(TNumericOperations).DivRem(dividend, divisor, out remainder);
+
         public bool Equals(T left, T right) => default(TNumericOperations).Equals(left, right);
 
         public T Floor(T value) => default(TNumericOperations).Floor(value);
@@ -150,6 +152,8 @@ namespace Genumerics
         public T Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => default(TNumericOperations).Parse(value, style, provider);
 
         public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out T result) => default(TNumericOperations).TryParse(value, style, provider, out result);
+
+        public bool TryFormat(T value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => default(TNumericOperations).TryFormat(value, destination, out charsWritten, format, provider);
 #endif
     }
 }
