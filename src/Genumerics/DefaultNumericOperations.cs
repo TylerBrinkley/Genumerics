@@ -820,27 +820,27 @@ namespace Genumerics
 #endif
 
         #region Convert
-        sbyte INumericOperations<sbyte>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToSByte(value) ?? Convert.ToSByte(value);
+        sbyte INumericOperations<sbyte>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToSByte(value) ?? Convert.ToSByte(value);
 
-        byte INumericOperations<byte>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToByte(value) ?? Convert.ToByte(value);
+        byte INumericOperations<byte>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToByte(value) ?? Convert.ToByte(value);
 
-        short INumericOperations<short>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToInt16(value) ?? Convert.ToInt16(value);
+        short INumericOperations<short>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToInt16(value) ?? Convert.ToInt16(value);
 
-        ushort INumericOperations<ushort>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToUInt16(value) ?? Convert.ToUInt16(value);
+        ushort INumericOperations<ushort>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToUInt16(value) ?? Convert.ToUInt16(value);
 
-        int INumericOperations<int>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToInt32(value) ?? Convert.ToInt32(value);
+        int INumericOperations<int>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToInt32(value) ?? Convert.ToInt32(value);
 
-        uint INumericOperations<uint>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToUInt32(value) ?? Convert.ToUInt32(value);
+        uint INumericOperations<uint>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToUInt32(value) ?? Convert.ToUInt32(value);
 
-        long INumericOperations<long>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToInt64(value) ?? Convert.ToInt64(value);
+        long INumericOperations<long>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToInt64(value) ?? Convert.ToInt64(value);
 
-        ulong INumericOperations<ulong>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToUInt64(value) ?? Convert.ToUInt64(value);
+        ulong INumericOperations<ulong>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToUInt64(value) ?? Convert.ToUInt64(value);
 
-        float INumericOperations<float>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToSingle(value) ?? Convert.ToSingle(value);
+        float INumericOperations<float>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToSingle(value) ?? Convert.ToSingle(value);
 
-        double INumericOperations<double>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToDouble(value) ?? Convert.ToDouble(value);
+        double INumericOperations<double>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToDouble(value) ?? Convert.ToDouble(value);
 
-        decimal INumericOperations<decimal>.Convert<TFrom>(TFrom value) => Number<TFrom>.s_operations?.ToDecimal(value) ?? Convert.ToDecimal(value);
+        decimal INumericOperations<decimal>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToDecimal(value) ?? Convert.ToDecimal(value);
         #endregion
 
         #region ToSByte

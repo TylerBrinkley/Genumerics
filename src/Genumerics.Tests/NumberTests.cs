@@ -79,6 +79,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(BigInteger.Zero);
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(0));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Sunday);
         }
 
         [TestCaseSource(nameof(OneCases))]
@@ -108,6 +109,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(BigInteger.One);
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(1));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Monday);
         }
 
         [TestCaseSource(nameof(MinusOneCases))]
@@ -133,6 +135,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(BigInteger.MinusOne);
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(-1));
+            yield return CreateTestCase<DayOfWeek>((DayOfWeek)(-1));
         }
 
         [TestCaseSource(nameof(MinusOneThrowsCases))]
@@ -177,6 +180,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(double.MaxValue);
             yield return CreateTestCase<decimal>(decimal.MaxValue);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(int.MaxValue));
+            yield return CreateTestCase<DayOfWeek>((DayOfWeek)int.MaxValue);
         }
 
 #if BIG_INTEGER
@@ -220,6 +224,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(double.MinValue);
             yield return CreateTestCase<decimal>(decimal.MinValue);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(int.MinValue));
+            yield return CreateTestCase<DayOfWeek>((DayOfWeek)int.MinValue);
         }
 
 #if BIG_INTEGER
@@ -271,6 +276,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(TypeCode.Object);
 #endif
             yield return CreateTestCase<IntWrapper>(TypeCode.Int32);
+            yield return CreateTestCase<DayOfWeek>(TypeCode.Int32);
         }
 
         [TestCaseSource(nameof(EqualsCases))]
@@ -323,6 +329,8 @@ namespace Genumerics.Tests
 #endif
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MaxValue), new IntWrapper(int.MaxValue));
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MaxValue), new IntWrapper(int.MinValue));
+            yield return CreateTestCase<DayOfWeek>(true, DayOfWeek.Monday, DayOfWeek.Monday);
+            yield return CreateTestCase<DayOfWeek>(false, DayOfWeek.Monday, DayOfWeek.Sunday);
         }
 
         public static IEnumerable<TestCaseData> EqualsNullableCases() => EqualsCases().Concat(BinaryNullableCases(true, false, false));
@@ -377,6 +385,8 @@ namespace Genumerics.Tests
 #endif
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MaxValue), new IntWrapper(int.MaxValue));
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MaxValue), new IntWrapper(int.MinValue));
+            yield return CreateTestCase<DayOfWeek>(false, DayOfWeek.Monday, DayOfWeek.Monday);
+            yield return CreateTestCase<DayOfWeek>(true, DayOfWeek.Monday, DayOfWeek.Sunday);
         }
 
         public static IEnumerable<TestCaseData> NotEqualsNullableCases() => NotEqualsCases().Concat(BinaryNullableCases(false, true, true));
@@ -431,6 +441,8 @@ namespace Genumerics.Tests
 #endif
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MinValue), new IntWrapper(int.MinValue));
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MinValue), new IntWrapper(int.MaxValue));
+            yield return CreateTestCase<DayOfWeek>(false, DayOfWeek.Sunday, DayOfWeek.Sunday);
+            yield return CreateTestCase<DayOfWeek>(true, DayOfWeek.Sunday, DayOfWeek.Monday);
         }
 
         public static IEnumerable<TestCaseData> LessThanNullableCases() => LessThanCases().Concat(BinaryNullableCases(false, false, false));
@@ -485,6 +497,8 @@ namespace Genumerics.Tests
 #endif
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MaxValue), new IntWrapper(int.MaxValue));
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MaxValue), new IntWrapper(int.MinValue));
+            yield return CreateTestCase<DayOfWeek>(true, DayOfWeek.Monday, DayOfWeek.Monday);
+            yield return CreateTestCase<DayOfWeek>(false, DayOfWeek.Monday, DayOfWeek.Sunday);
         }
 
         public static IEnumerable<TestCaseData> LessThanOrEqualsNullableCases() => LessThanOrEqualsCases().Concat(BinaryNullableCases(false, false, false));
@@ -539,6 +553,8 @@ namespace Genumerics.Tests
 #endif
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MaxValue), new IntWrapper(int.MaxValue));
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MaxValue), new IntWrapper(int.MinValue));
+            yield return CreateTestCase<DayOfWeek>(false, DayOfWeek.Monday, DayOfWeek.Monday);
+            yield return CreateTestCase<DayOfWeek>(true, DayOfWeek.Monday, DayOfWeek.Sunday);
         }
 
         public static IEnumerable<TestCaseData> GreaterThanNullableCases() => GreaterThanCases().Concat(BinaryNullableCases(false, false, false));
@@ -593,6 +609,8 @@ namespace Genumerics.Tests
 #endif
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MinValue), new IntWrapper(int.MinValue));
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MinValue), new IntWrapper(int.MaxValue));
+            yield return CreateTestCase<DayOfWeek>(true, DayOfWeek.Sunday, DayOfWeek.Sunday);
+            yield return CreateTestCase<DayOfWeek>(false, DayOfWeek.Sunday, DayOfWeek.Monday);
         }
 
         public static IEnumerable<TestCaseData> GreaterThanOrEqualsNullableCases() => GreaterThanOrEqualsCases().Concat(BinaryNullableCases(false, false, false));
@@ -634,6 +652,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(5), new BigInteger(3), new BigInteger(2));
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(5), new IntWrapper(3), new IntWrapper(2));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Friday, DayOfWeek.Wednesday, DayOfWeek.Tuesday);
         }
 
         public static IEnumerable<TestCaseData> AddNullableCases() => AddCases().Concat(BinaryNullableCases());
@@ -675,6 +694,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(1), new BigInteger(3), new BigInteger(2));
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(1), new IntWrapper(3), new IntWrapper(2));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Monday, DayOfWeek.Wednesday, DayOfWeek.Tuesday);
         }
 
         public static IEnumerable<TestCaseData> SubtractNullableCases() => SubtractCases().Concat(BinaryNullableCases());
@@ -716,6 +736,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(6), new BigInteger(3), new BigInteger(2));
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(6), new IntWrapper(3), new IntWrapper(2));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Saturday, DayOfWeek.Wednesday, DayOfWeek.Tuesday);
         }
 
         public static IEnumerable<TestCaseData> MultiplyNullableCases() => MultiplyCases().Concat(BinaryNullableCases());
@@ -757,6 +778,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(6), new BigInteger(2));
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(6), new IntWrapper(2));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Tuesday);
         }
 
         public static IEnumerable<TestCaseData> DivideNullableCases() => DivideCases().Concat(BinaryNullableCases());
@@ -798,6 +820,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(2), new BigInteger(5), new BigInteger(3));
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(5), new IntWrapper(3));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Tuesday, DayOfWeek.Friday, DayOfWeek.Wednesday);
         }
 
         public static IEnumerable<TestCaseData> RemainderNullableCases() => RemainderCases().Concat(BinaryNullableCases());
@@ -840,6 +863,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(1), new BigInteger(5), new BigInteger(3), new BigInteger(2));
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(1), new IntWrapper(5), new IntWrapper(3), new IntWrapper(2));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Monday, DayOfWeek.Friday, DayOfWeek.Wednesday, DayOfWeek.Tuesday);
         }
 
         public static IEnumerable<TestCaseData> DivRemNullableCases() => DivRemCases().Concat(BinaryNullableCases(additionalArgs: new object[] { null }));
@@ -886,9 +910,11 @@ namespace Genumerics.Tests
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(-3), new IntWrapper(3));
             yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(-2));
+            yield return CreateTestCase<DayOfWeek>((DayOfWeek)(-3), DayOfWeek.Wednesday);
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Tuesday, (DayOfWeek)(-2));
         }
 
-        public static IEnumerable<TestCaseData> NegateNullableCases() => NegateCases().Concat(UnaryNullableCases(types: Types.Signed));
+        public static IEnumerable<TestCaseData> NegateNullableCases() => NegateCases().Concat(UnaryNullableCases(types: TestTypes.Signed));
 
         [TestCaseSource(nameof(NegateThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -945,6 +971,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(3), new BigInteger(2));
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3), new IntWrapper(2));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Wednesday, DayOfWeek.Wednesday, DayOfWeek.Tuesday);
         }
 
         public static IEnumerable<TestCaseData> MaxNullableCases() => MaxCases().Concat(BinaryNullableCases());
@@ -976,6 +1003,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(2), new BigInteger(3), new BigInteger(2));
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(3), new IntWrapper(2));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Tuesday);
         }
 
         public static IEnumerable<TestCaseData> MinNullableCases() => MinCases().Concat(BinaryNullableCases());
@@ -1014,9 +1042,10 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(2), new BigInteger(3), new BigInteger(6));
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(3), new IntWrapper(6));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Saturday);
         }
 
-        public static IEnumerable<TestCaseData> AndNullableCases() => AndCases().Concat(BinaryNullableCases(types: Types.Integral));
+        public static IEnumerable<TestCaseData> AndNullableCases() => AndCases().Concat(BinaryNullableCases(types: TestTypes.Integral));
 
         [TestCaseSource(nameof(BinaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -1072,9 +1101,10 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(7), new BigInteger(3), new BigInteger(5));
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(7), new IntWrapper(3), new IntWrapper(5));
+            yield return CreateTestCase<DayOfWeek>((DayOfWeek)7, DayOfWeek.Wednesday, DayOfWeek.Friday);
         }
 
-        public static IEnumerable<TestCaseData> OrNullableCases() => OrCases().Concat(BinaryNullableCases(types: Types.Integral));
+        public static IEnumerable<TestCaseData> OrNullableCases() => OrCases().Concat(BinaryNullableCases(types: TestTypes.Integral));
 
         [TestCaseSource(nameof(BinaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -1130,9 +1160,10 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(6), new BigInteger(3), new BigInteger(5));
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(6), new IntWrapper(3), new IntWrapper(5));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Saturday, DayOfWeek.Wednesday, DayOfWeek.Friday);
         }
 
-        public static IEnumerable<TestCaseData> XorNullableCases() => XorCases().Concat(BinaryNullableCases(types: Types.Integral));
+        public static IEnumerable<TestCaseData> XorNullableCases() => XorCases().Concat(BinaryNullableCases(types: TestTypes.Integral));
 
         [TestCaseSource(nameof(BinaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -1198,9 +1229,11 @@ namespace Genumerics.Tests
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(-4), new IntWrapper(3));
             yield return CreateTestCase<IntWrapper>(new IntWrapper(1), new IntWrapper(-2));
+            yield return CreateTestCase<DayOfWeek>((DayOfWeek)(-4), DayOfWeek.Wednesday);
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Monday, (DayOfWeek)(-2));
         }
 
-        public static IEnumerable<TestCaseData> NotNullableCases() => NotCases().Concat(UnaryNullableCases(types: Types.Integral));
+        public static IEnumerable<TestCaseData> NotNullableCases() => NotCases().Concat(UnaryNullableCases(types: TestTypes.Integral));
 
         [TestCaseSource(nameof(UnaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -1256,6 +1289,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(12), new BigInteger(3), 2);
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(12), new IntWrapper(3), 2);
+            yield return CreateTestCase<DayOfWeek>((DayOfWeek)12, DayOfWeek.Wednesday, 2);
         }
 
         [TestCaseSource(nameof(ShiftThrowsCases))]
@@ -1278,7 +1312,7 @@ namespace Genumerics.Tests
         public void LeftShiftNullableThrowsNumber<T>(T valueToInferType, T? value, int shift) where T : struct => Assert.Throws<NotSupportedException>(() => _ = Number.Create(value) << shift);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        public static IEnumerable<TestCaseData> LeftShiftNullableCases() => LeftShiftCases().Concat(UnaryNullableCases(null, Types.Integral, 2));
+        public static IEnumerable<TestCaseData> LeftShiftNullableCases() => LeftShiftCases().Concat(UnaryNullableCases(null, TestTypes.Integral, 2));
 
         [TestCaseSource(nameof(RightShiftCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -1314,6 +1348,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(13), 2);
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(13), 2);
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Wednesday, (DayOfWeek)13, 2);
         }
 
         [TestCaseSource(nameof(ShiftThrowsCases))]
@@ -1336,7 +1371,7 @@ namespace Genumerics.Tests
         public void RightShiftNullableThrowsNumber<T>(T valueToInferType, T? value, int shift) where T : struct => Assert.Throws<NotSupportedException>(() => _ = Number.Create(value) >> shift);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        public static IEnumerable<TestCaseData> RightShiftNullableCases() => RightShiftCases().Concat(UnaryNullableCases(null, Types.Integral, 2));
+        public static IEnumerable<TestCaseData> RightShiftNullableCases() => RightShiftCases().Concat(UnaryNullableCases(null, TestTypes.Integral, 2));
 
         public static IEnumerable<TestCaseData> ShiftThrowsCases()
         {
@@ -1379,9 +1414,11 @@ namespace Genumerics.Tests
 #endif
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(3));
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(2));
+            yield return CreateTestCase<DayOfWeek>(false, DayOfWeek.Wednesday);
+            yield return CreateTestCase<DayOfWeek>(true, DayOfWeek.Tuesday);
         }
 
-        public static IEnumerable<TestCaseData> IsEvenNullableCases() => IsEvenCases().Concat(UnaryNullableCases(false, types: Types.Integral));
+        public static IEnumerable<TestCaseData> IsEvenNullableCases() => IsEvenCases().Concat(UnaryNullableCases(false, types: TestTypes.Integral));
 
         [TestCaseSource(nameof(UnaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -1427,9 +1464,11 @@ namespace Genumerics.Tests
 #endif
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(3));
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(2));
+            yield return CreateTestCase<DayOfWeek>(true, DayOfWeek.Wednesday);
+            yield return CreateTestCase<DayOfWeek>(false, DayOfWeek.Tuesday);
         }
 
-        public static IEnumerable<TestCaseData> IsOddNullableCases() => IsOddCases().Concat(UnaryNullableCases(false, types: Types.Integral));
+        public static IEnumerable<TestCaseData> IsOddNullableCases() => IsOddCases().Concat(UnaryNullableCases(false, types: TestTypes.Integral));
 
         [TestCaseSource(nameof(UnaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -1475,9 +1514,11 @@ namespace Genumerics.Tests
 #endif
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(3));
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(2));
+            yield return CreateTestCase<DayOfWeek>(false, DayOfWeek.Wednesday);
+            yield return CreateTestCase<DayOfWeek>(true, DayOfWeek.Tuesday);
         }
 
-        public static IEnumerable<TestCaseData> IsPowerOfTwoNullableCases() => IsPowerOfTwoCases().Concat(UnaryNullableCases(false, types: Types.Integral));
+        public static IEnumerable<TestCaseData> IsPowerOfTwoNullableCases() => IsPowerOfTwoCases().Concat(UnaryNullableCases(false, types: TestTypes.Integral));
 
         [TestCaseSource(nameof(UnaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -1538,6 +1579,9 @@ namespace Genumerics.Tests
             yield return CreateTestCase<IntWrapper>(1, new IntWrapper(3));
             yield return CreateTestCase<IntWrapper>(0, new IntWrapper(0));
             yield return CreateTestCase<IntWrapper>(-1, new IntWrapper(-2));
+            yield return CreateTestCase<DayOfWeek>(1, DayOfWeek.Wednesday);
+            yield return CreateTestCase<DayOfWeek>(0, DayOfWeek.Sunday);
+            yield return CreateTestCase<DayOfWeek>(-1, (DayOfWeek)(-2));
         }
 
         public static IEnumerable<TestCaseData> SignNullableCases() => SignCases().Concat(UnaryNullableCases(-2));
@@ -1578,6 +1622,8 @@ namespace Genumerics.Tests
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3));
             yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(-2));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Wednesday, DayOfWeek.Wednesday);
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Tuesday, (DayOfWeek)(-2));
         }
 
         public static IEnumerable<TestCaseData> AbsNullableCases() => AbsCases().Concat(UnaryNullableCases());
@@ -1612,6 +1658,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(3));
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Wednesday, DayOfWeek.Wednesday);
         }
 
         public static IEnumerable<TestCaseData> FloorNullableCases() => FloorCases().Concat(UnaryNullableCases());
@@ -1646,6 +1693,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(3));
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Wednesday, DayOfWeek.Wednesday);
         }
 
         public static IEnumerable<TestCaseData> CeilingNullableCases() => CeilingCases().Concat(UnaryNullableCases());
@@ -1680,6 +1728,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(3));
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Wednesday, DayOfWeek.Wednesday);
         }
 
         public static IEnumerable<TestCaseData> TruncateNullableCases() => TruncateCases().Concat(UnaryNullableCases());
@@ -1720,6 +1769,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(3), 0, MidpointRounding.ToEven);
 #endif
             yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3), 0, MidpointRounding.ToEven);
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Wednesday, DayOfWeek.Wednesday, 0, MidpointRounding.ToEven);
         }
 
         public static IEnumerable<TestCaseData> RoundNullableCases() => RoundCases().Concat(UnaryNullableCases(additionalArgs: new object[] { 0, MidpointRounding.ToEven }));
@@ -1787,6 +1837,9 @@ namespace Genumerics.Tests
             yield return CreateTestCase<IntWrapper>(1, new IntWrapper(3), new IntWrapper(2));
             yield return CreateTestCase<IntWrapper>(-1, new IntWrapper(3), new IntWrapper(6));
             yield return CreateTestCase<IntWrapper>(0, new IntWrapper(3), new IntWrapper(3));
+            yield return CreateTestCase<DayOfWeek>(1, DayOfWeek.Wednesday, DayOfWeek.Tuesday);
+            yield return CreateTestCase<DayOfWeek>(-1, DayOfWeek.Wednesday, DayOfWeek.Saturday);
+            yield return CreateTestCase<DayOfWeek>(0, DayOfWeek.Wednesday, DayOfWeek.Wednesday);
         }
 
         public static IEnumerable<TestCaseData> CompareNullableCases() => CompareCases().Concat(BinaryNullableCases(0, -1, 1));
@@ -1840,6 +1893,7 @@ namespace Genumerics.Tests
             , TypeAndValue.Create(new BigInteger(1))
 #endif
             , TypeAndValue.Create(new IntWrapper(1))
+            , TypeAndValue.Create(DayOfWeek.Monday)
         };
 
         public static IEnumerable<TestCaseData> ConvertCases()
@@ -1985,6 +2039,10 @@ namespace Genumerics.Tests
             yield return CreateTestCase<IntWrapper>("-3", new IntWrapper(-3), null);
             yield return CreateTestCase<IntWrapper>("2", new IntWrapper(2), "D");
             yield return CreateTestCase<IntWrapper>("F", new IntWrapper(15), "X");
+            yield return CreateTestCase<DayOfWeek>("-3", (DayOfWeek)(-3), null);
+            yield return CreateTestCase<DayOfWeek>("Wednesday", DayOfWeek.Wednesday, null);
+            yield return CreateTestCase<DayOfWeek>("2", DayOfWeek.Tuesday, "D");
+            yield return CreateTestCase<DayOfWeek>("0000000F", (DayOfWeek)15, "X");
         }
 
         public static IEnumerable<TestCaseData> ToStringNullableCases() => ToStringCases().Concat(UnaryNullableCases(additionalArgs: new object[] { null }));
@@ -2086,6 +2144,10 @@ namespace Genumerics.Tests
             yield return CreateTestCase<IntWrapper>(new IntWrapper(8), "8", null);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(-128), " -128 ", NumberStyles.Integer);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(-1), " FFFFFFFF ", NumberStyles.HexNumber);
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Saturday, "6", null);
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Tuesday, "Tuesday", null);
+            yield return CreateTestCase<DayOfWeek>((DayOfWeek)(-128), " -128 ", NumberStyles.Integer);
+            yield return CreateTestCase<DayOfWeek>((DayOfWeek)(-1), " FFFFFFFF ", NumberStyles.HexNumber);
         }
 
         [TestCaseSource(nameof(ParseFailCases))]
@@ -2185,6 +2247,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<float>(new object[] { double.MaxValue.ToString(), null, typeof(OverflowException) });
             yield return CreateTestCase<double>(new object[] { "1.79769313486232E+309", null, typeof(OverflowException) });
             yield return CreateTestCase<IntWrapper>(new object[] { uint.MaxValue.ToString(), null, typeof(OverflowException) });
+            yield return CreateTestCase<DayOfWeek>(new object[] { uint.MaxValue.ToString(), null, typeof(OverflowException) });
             yield return CreateTestCase<sbyte>(new object[] { "a", null, typeof(FormatException) });
             yield return CreateTestCase<byte>(new object[] { "a", null, typeof(FormatException) });
             yield return CreateTestCase<short>(new object[] { "a", null, typeof(FormatException) });
@@ -2199,6 +2262,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new object[] { "a", null, typeof(FormatException) });
 #endif
             yield return CreateTestCase<IntWrapper>(new object[] { "a", null, typeof(FormatException) });
+            yield return CreateTestCase<DayOfWeek>(new object[] { "a", null, typeof(ArgumentException) });
         }
 
         [TestCaseSource(nameof(ClampCases))]
@@ -2259,6 +2323,9 @@ namespace Genumerics.Tests
             yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3), new IntWrapper(2), new IntWrapper(5));
             yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(1), new IntWrapper(2), new IntWrapper(5));
             yield return CreateTestCase<IntWrapper>(new IntWrapper(5), new IntWrapper(8), new IntWrapper(2), new IntWrapper(5));
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Wednesday, DayOfWeek.Wednesday, DayOfWeek.Tuesday, DayOfWeek.Friday);
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Tuesday, DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Friday);
+            yield return CreateTestCase<DayOfWeek>(DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Tuesday, DayOfWeek.Friday);
         }
 
         public static IEnumerable<TestCaseData> ClampNullableCases()
@@ -2308,6 +2375,9 @@ namespace Genumerics.Tests
             yield return CreateTestCase<IntWrapper>(null, null, new IntWrapper(2), new IntWrapper(5));
             yield return CreateTestCase<IntWrapper>(null, new IntWrapper(1), null, new IntWrapper(5));
             yield return CreateTestCase<IntWrapper>(null, new IntWrapper(8), new IntWrapper(2), null);
+            yield return CreateTestCase<DayOfWeek>(null, null, DayOfWeek.Tuesday, DayOfWeek.Friday);
+            yield return CreateTestCase<DayOfWeek>(null, DayOfWeek.Monday, null, DayOfWeek.Friday);
+            yield return CreateTestCase<DayOfWeek>(null, DayOfWeek.Saturday, DayOfWeek.Tuesday, null);
         }
 
         public static IEnumerable<TestCaseData> ClampThrowsCases()
@@ -2327,6 +2397,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new object[] { new BigInteger(3), new BigInteger(8), new BigInteger(5) });
 #endif
             yield return CreateTestCase<IntWrapper>(new object[] { new IntWrapper(3), new IntWrapper(8), new IntWrapper(5) });
+            yield return CreateTestCase<DayOfWeek>(new object[] { DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Friday });
         }
 
         public static IEnumerable<TestCaseData> BinaryBitwiseThrowsCases()
@@ -2343,152 +2414,162 @@ namespace Genumerics.Tests
             yield return CreateTestCase<decimal>(new object[] { 3.2M });
         }
 
-        public static IEnumerable<TestCaseData> BinaryNullableCases(object bothNullResult = null, object firstNullResult = null, object secondNullResult = null, Types types = Types.All, params object[] additionalArgs)
+        public static IEnumerable<TestCaseData> BinaryNullableCases(object bothNullResult = null, object firstNullResult = null, object secondNullResult = null, TestTypes types = TestTypes.All, params object[] additionalArgs)
         {
-            if (types.HasAnyFlags(Types.SByte))
+            if (types.HasAnyFlags(TestTypes.SByte))
             {
                 yield return CreateTestCase<sbyte>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<sbyte>(firstNullResult, new object[] { null, sbyte.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<sbyte>(secondNullResult, new object[] { sbyte.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
-            if (types.HasAnyFlags(Types.Byte))
+            if (types.HasAnyFlags(TestTypes.Byte))
             {
                 yield return CreateTestCase<byte>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<byte>(firstNullResult, new object[] { null, byte.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<byte>(secondNullResult, new object[] { byte.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
-            if (types.HasAnyFlags(Types.Int16))
+            if (types.HasAnyFlags(TestTypes.Int16))
             {
                 yield return CreateTestCase<short>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<short>(firstNullResult, new object[] { null, short.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<short>(secondNullResult, new object[] { short.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
-            if (types.HasAnyFlags(Types.UInt16))
+            if (types.HasAnyFlags(TestTypes.UInt16))
             {
                 yield return CreateTestCase<ushort>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<ushort>(firstNullResult, new object[] { null, ushort.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<ushort>(secondNullResult, new object[] { ushort.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
-            if (types.HasAnyFlags(Types.Int32))
+            if (types.HasAnyFlags(TestTypes.Int32))
             {
                 yield return CreateTestCase<int>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<int>(firstNullResult, new object[] { null, int.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<int>(secondNullResult, new object[] { int.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
-            if (types.HasAnyFlags(Types.UInt32))
+            if (types.HasAnyFlags(TestTypes.UInt32))
             {
                 yield return CreateTestCase<uint>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<uint>(firstNullResult, new object[] { null, uint.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<uint>(secondNullResult, new object[] { uint.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
-            if (types.HasAnyFlags(Types.Int64))
+            if (types.HasAnyFlags(TestTypes.Int64))
             {
                 yield return CreateTestCase<short>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<short>(firstNullResult, new object[] { null, short.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<short>(secondNullResult, new object[] { short.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
-            if (types.HasAnyFlags(Types.UInt64))
+            if (types.HasAnyFlags(TestTypes.UInt64))
             {
                 yield return CreateTestCase<ulong>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<ulong>(firstNullResult, new object[] { null, ulong.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<ulong>(secondNullResult, new object[] { ulong.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
-            if (types.HasAnyFlags(Types.Single))
+            if (types.HasAnyFlags(TestTypes.Single))
             {
                 yield return CreateTestCase<float>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<float>(firstNullResult, new object[] { null, float.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<float>(secondNullResult, new object[] { float.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
-            if (types.HasAnyFlags(Types.Double))
+            if (types.HasAnyFlags(TestTypes.Double))
             {
                 yield return CreateTestCase<double>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<double>(firstNullResult, new object[] { null, double.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<double>(secondNullResult, new object[] { double.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
-            if (types.HasAnyFlags(Types.Decimal))
+            if (types.HasAnyFlags(TestTypes.Decimal))
             {
                 yield return CreateTestCase<decimal>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<decimal>(firstNullResult, new object[] { null, decimal.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<decimal>(secondNullResult, new object[] { decimal.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
 #if BIG_INTEGER
-            if (types.HasAnyFlags(Types.BigInteger))
+            if (types.HasAnyFlags(TestTypes.BigInteger))
             {
                 yield return CreateTestCase<BigInteger>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<BigInteger>(firstNullResult, new object[] { null, BigInteger.Zero }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<BigInteger>(secondNullResult, new object[] { BigInteger.One, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
 #endif
-            if (types.HasAnyFlags(Types.IntWrapper))
+            if (types.HasAnyFlags(TestTypes.IntWrapper))
             {
                 yield return CreateTestCase<IntWrapper>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<IntWrapper>(firstNullResult, new object[] { null, new IntWrapper(0) }.Concat(additionalArgs ?? new object[0]).ToArray());
                 yield return CreateTestCase<IntWrapper>(secondNullResult, new object[] { new IntWrapper(1), null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
+            if (types.HasAnyFlags(TestTypes.DayOfWeek))
+            {
+                yield return CreateTestCase<DayOfWeek>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<DayOfWeek>(firstNullResult, new object[] { null, DayOfWeek.Sunday }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<DayOfWeek>(secondNullResult, new object[] { DayOfWeek.Monday, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+            }
         }
 
-        public static IEnumerable<TestCaseData> UnaryNullableCases(object nullResult = null, Types types = Types.All, params object[] additionalArgs)
+        public static IEnumerable<TestCaseData> UnaryNullableCases(object nullResult = null, TestTypes types = TestTypes.All, params object[] additionalArgs)
         {
             var args = new object[] { null }.Concat(additionalArgs ?? new object[0]).ToArray();
-            if (types.HasAnyFlags(Types.SByte))
+            if (types.HasAnyFlags(TestTypes.SByte))
             {
                 yield return CreateTestCase<sbyte>(nullResult, args);
             }
-            if (types.HasAnyFlags(Types.Byte))
+            if (types.HasAnyFlags(TestTypes.Byte))
             {
                 yield return CreateTestCase<byte>(nullResult, args);
             }
-            if (types.HasAnyFlags(Types.Int16))
+            if (types.HasAnyFlags(TestTypes.Int16))
             {
                 yield return CreateTestCase<short>(nullResult, args);
             }
-            if (types.HasAnyFlags(Types.UInt16))
+            if (types.HasAnyFlags(TestTypes.UInt16))
             {
                 yield return CreateTestCase<ushort>(nullResult, args);
             }
-            if (types.HasAnyFlags(Types.Int32))
+            if (types.HasAnyFlags(TestTypes.Int32))
             {
                 yield return CreateTestCase<int>(nullResult, args);
             }
-            if (types.HasAnyFlags(Types.UInt32))
+            if (types.HasAnyFlags(TestTypes.UInt32))
             {
                 yield return CreateTestCase<uint>(nullResult, args);
             }
-            if (types.HasAnyFlags(Types.Int64))
+            if (types.HasAnyFlags(TestTypes.Int64))
             {
                 yield return CreateTestCase<long>(nullResult, args);
             }
-            if (types.HasAnyFlags(Types.UInt64))
+            if (types.HasAnyFlags(TestTypes.UInt64))
             {
                 yield return CreateTestCase<ulong>(nullResult, args);
             }
-            if (types.HasAnyFlags(Types.Single))
+            if (types.HasAnyFlags(TestTypes.Single))
             {
                 yield return CreateTestCase<float>(nullResult, args);
             }
-            if (types.HasAnyFlags(Types.Double))
+            if (types.HasAnyFlags(TestTypes.Double))
             {
                 yield return CreateTestCase<double>(nullResult, args);
             }
-            if (types.HasAnyFlags(Types.Decimal))
+            if (types.HasAnyFlags(TestTypes.Decimal))
             {
                 yield return CreateTestCase<decimal>(nullResult, args);
             }
 #if BIG_INTEGER
-            if (types.HasAnyFlags(Types.BigInteger))
+            if (types.HasAnyFlags(TestTypes.BigInteger))
             {
                 yield return CreateTestCase<BigInteger>(nullResult, args);
             }
 #endif
-            if (types.HasAnyFlags(Types.IntWrapper))
+            if (types.HasAnyFlags(TestTypes.IntWrapper))
             {
                 yield return CreateTestCase<IntWrapper>(nullResult, args);
+            }
+            if (types.HasAnyFlags(TestTypes.DayOfWeek))
+            {
+                yield return CreateTestCase<DayOfWeek>(nullResult, args);
             }
         }
     }
 
     [Flags]
-    public enum Types
+    public enum TestTypes
     {
         None = 0,
         SByte = 1,
@@ -2506,8 +2587,9 @@ namespace Genumerics.Tests
         Floating = Single | Double | Decimal,
         BigInteger = 2048,
         IntWrapper = 4096,
-        Integral = SByte | Byte | Int16 | UInt16 | Int32 | UInt32 | Int64 | UInt64 | BigInteger | IntWrapper,
-        Signed = SByte | Int16 | Int32 | Int64 | Floating | BigInteger | IntWrapper,
+        DayOfWeek = 8192,
+        Integral = SByte | Byte | Int16 | UInt16 | Int32 | UInt32 | Int64 | UInt64 | BigInteger | IntWrapper | DayOfWeek,
+        Signed = SByte | Int16 | Int32 | Int64 | Floating | BigInteger | IntWrapper | DayOfWeek,
         All = Integral | Floating
     }
 

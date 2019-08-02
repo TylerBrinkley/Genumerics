@@ -35,31 +35,38 @@ namespace Genumerics
     internal sealed class NullableNumericOperations<T> : INumericOperations<T?>
         where T : struct
     {
-        public T? Zero => Number<T>.s_operations.Zero;
+        private readonly INumericOperations<T> _operations;
 
-        public T? One => Number<T>.s_operations.One;
+        public NullableNumericOperations()
+        {
+            _operations = Number<T>.GetOperations();
+        }
 
-        public T? MinusOne => Number<T>.s_operations.MinusOne;
+        public T? Zero => _operations.Zero;
 
-        public T? MaxValue => Number<T>.s_operations.MaxValue;
+        public T? One => _operations.One;
 
-        public T? MinValue => Number<T>.s_operations.MinValue;
+        public T? MinusOne => _operations.MinusOne;
+
+        public T? MaxValue => _operations.MaxValue;
+
+        public T? MinValue => _operations.MinValue;
 
 #if ICONVERTIBLE
-        public TypeCode TypeCode => Number<T>.s_operations.TypeCode;
+        public TypeCode TypeCode => _operations.TypeCode;
 #endif
 
-        public T? Add(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.Add(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? Add(T? left, T? right) => left.HasValue && right.HasValue ? _operations.Add(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
-        public T? And(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.And(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? And(T? left, T? right) => left.HasValue && right.HasValue ? _operations.And(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
-        public T? Divide(T? dividend, T? divisor) => dividend.HasValue && divisor.HasValue ? Number<T>.s_operations.Divide(dividend.GetValueOrDefault(), divisor.GetValueOrDefault()) : (T?)null;
+        public T? Divide(T? dividend, T? divisor) => dividend.HasValue && divisor.HasValue ? _operations.Divide(dividend.GetValueOrDefault(), divisor.GetValueOrDefault()) : (T?)null;
 
         public T? DivRem(T? dividend, T? divisor, out T? remainder)
         {
             if (dividend.HasValue && divisor.HasValue)
             {
-                var result = Number<T>.s_operations.DivRem(dividend.GetValueOrDefault(), divisor.GetValueOrDefault(), out T r);
+                var result = _operations.DivRem(dividend.GetValueOrDefault(), divisor.GetValueOrDefault(), out T r);
                 remainder = r;
                 return result;
             }
@@ -67,49 +74,49 @@ namespace Genumerics
             return null;
         }
 
-        public bool Equals(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.Equals(left.GetValueOrDefault(), right.GetValueOrDefault()) : !left.HasValue && !right.HasValue;
+        public bool Equals(T? left, T? right) => left.HasValue && right.HasValue ? _operations.Equals(left.GetValueOrDefault(), right.GetValueOrDefault()) : !left.HasValue && !right.HasValue;
 
-        public bool GreaterThan(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.GreaterThan(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
+        public bool GreaterThan(T? left, T? right) => left.HasValue && right.HasValue ? _operations.GreaterThan(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
 
-        public bool GreaterThanOrEquals(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.GreaterThanOrEquals(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
+        public bool GreaterThanOrEquals(T? left, T? right) => left.HasValue && right.HasValue ? _operations.GreaterThanOrEquals(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
 
-        public T? LeftShift(T? value, int shift) => value.HasValue ? Number<T>.s_operations.LeftShift(value.GetValueOrDefault(), shift) : value;
+        public T? LeftShift(T? value, int shift) => value.HasValue ? _operations.LeftShift(value.GetValueOrDefault(), shift) : value;
 
-        public bool LessThan(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.LessThan(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
+        public bool LessThan(T? left, T? right) => left.HasValue && right.HasValue ? _operations.LessThan(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
 
-        public bool LessThanOrEquals(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.LessThanOrEquals(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
+        public bool LessThanOrEquals(T? left, T? right) => left.HasValue && right.HasValue ? _operations.LessThanOrEquals(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
 
-        public T? Multiply(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.Multiply(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? Multiply(T? left, T? right) => left.HasValue && right.HasValue ? _operations.Multiply(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
-        public T? Negate(T? value) => value.HasValue ? Number<T>.s_operations.Negate(value.GetValueOrDefault()) : value;
+        public T? Negate(T? value) => value.HasValue ? _operations.Negate(value.GetValueOrDefault()) : value;
 
-        public T? Not(T? value) => value.HasValue ? Number<T>.s_operations.Not(value.GetValueOrDefault()) : value;
+        public T? Not(T? value) => value.HasValue ? _operations.Not(value.GetValueOrDefault()) : value;
 
-        public bool NotEquals(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.NotEquals(left.GetValueOrDefault(), right.GetValueOrDefault()) : left.HasValue || right.HasValue;
+        public bool NotEquals(T? left, T? right) => left.HasValue && right.HasValue ? _operations.NotEquals(left.GetValueOrDefault(), right.GetValueOrDefault()) : left.HasValue || right.HasValue;
 
-        public T? Or(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.Or(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? Or(T? left, T? right) => left.HasValue && right.HasValue ? _operations.Or(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
-        public T? Parse(string value, NumberStyles? styles, IFormatProvider provider) => Number<T>.s_operations.Parse(value, styles, provider);
+        public T? Parse(string value, NumberStyles? styles, IFormatProvider provider) => _operations.Parse(value, styles, provider);
 
-        public T? Remainder(T? dividend, T? divisor) => dividend.HasValue && divisor.HasValue ? Number<T>.s_operations.Remainder(dividend.GetValueOrDefault(), divisor.GetValueOrDefault()) : (T?)null;
+        public T? Remainder(T? dividend, T? divisor) => dividend.HasValue && divisor.HasValue ? _operations.Remainder(dividend.GetValueOrDefault(), divisor.GetValueOrDefault()) : (T?)null;
 
-        public T? RightShift(T? value, int shift) => value.HasValue ? Number<T>.s_operations.RightShift(value.GetValueOrDefault(), shift) : value;
+        public T? RightShift(T? value, int shift) => value.HasValue ? _operations.RightShift(value.GetValueOrDefault(), shift) : value;
 
-        public T? Subtract(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.Subtract(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? Subtract(T? left, T? right) => left.HasValue && right.HasValue ? _operations.Subtract(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
         public bool TryParse(string value, NumberStyles? styles, IFormatProvider provider, out T? result)
         {
-            var success = Number<T>.s_operations.TryParse(value, styles, provider, out T r);
+            var success = _operations.TryParse(value, styles, provider, out T r);
             result = r;
             return success;
         }
 
 #if SPAN
-        public T? Parse(ReadOnlySpan<char> value, NumberStyles? styles, IFormatProvider provider) => Number<T>.s_operations.Parse(value, styles, provider);
+        public T? Parse(ReadOnlySpan<char> value, NumberStyles? styles, IFormatProvider provider) => _operations.Parse(value, styles, provider);
 
         public bool TryParse(ReadOnlySpan<char> value, NumberStyles? styles, IFormatProvider provider, out T? result)
         {
-            var success = Number<T>.s_operations.TryParse(value, styles, provider, out T r);
+            var success = _operations.TryParse(value, styles, provider, out T r);
             result = r;
             return success;
         }
@@ -118,69 +125,69 @@ namespace Genumerics
         {
             if (value.HasValue)
             {
-                return Number<T>.s_operations.TryFormat(value.GetValueOrDefault(), destination, out charsWritten, format, provider);
+                return _operations.TryFormat(value.GetValueOrDefault(), destination, out charsWritten, format, provider);
             }
             charsWritten = 0;
             return false;
         }
 #endif
 
-        public T? Xor(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.Xor(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? Xor(T? left, T? right) => left.HasValue && right.HasValue ? _operations.Xor(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
-        public T? Convert<TFrom>(TFrom value) => Number<T>.s_operations.Convert(value);
+        public T? Convert<TFrom>(TFrom value) => _operations.Convert(value);
 
-        public T? Round(T? value, int digits, MidpointRounding mode) => value.HasValue ? Number<T>.s_operations.Round(value.GetValueOrDefault(), digits, mode) : value;
+        public T? Round(T? value, int digits, MidpointRounding mode) => value.HasValue ? _operations.Round(value.GetValueOrDefault(), digits, mode) : value;
 
-        public T? Floor(T? value) => value.HasValue ? Number<T>.s_operations.Floor(value.GetValueOrDefault()) : value;
+        public T? Floor(T? value) => value.HasValue ? _operations.Floor(value.GetValueOrDefault()) : value;
 
-        public T? Ceiling(T? value) => value.HasValue ? Number<T>.s_operations.Ceiling(value.GetValueOrDefault()) : value;
+        public T? Ceiling(T? value) => value.HasValue ? _operations.Ceiling(value.GetValueOrDefault()) : value;
 
-        public T? Truncate(T? value) => value.HasValue ? Number<T>.s_operations.Truncate(value.GetValueOrDefault()) : value;
+        public T? Truncate(T? value) => value.HasValue ? _operations.Truncate(value.GetValueOrDefault()) : value;
 
-        public int Compare(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.Compare(left.GetValueOrDefault(), right.GetValueOrDefault()) : (left.HasValue ? 1 : (right.HasValue ? -1 : 0));
+        public int Compare(T? left, T? right) => left.HasValue && right.HasValue ? _operations.Compare(left.GetValueOrDefault(), right.GetValueOrDefault()) : (left.HasValue ? 1 : (right.HasValue ? -1 : 0));
 
-        public T? Abs(T? value) => value.HasValue ? Number<T>.s_operations.Abs(value.GetValueOrDefault()) : value;
+        public T? Abs(T? value) => value.HasValue ? _operations.Abs(value.GetValueOrDefault()) : value;
 
-        public T? Max(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.Max(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? Max(T? left, T? right) => left.HasValue && right.HasValue ? _operations.Max(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
-        public T? Min(T? left, T? right) => left.HasValue && right.HasValue ? Number<T>.s_operations.Min(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? Min(T? left, T? right) => left.HasValue && right.HasValue ? _operations.Min(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
-        public int Sign(T? value) => value.HasValue ? Number<T>.s_operations.Sign(value.GetValueOrDefault()) : -2;
+        public int Sign(T? value) => value.HasValue ? _operations.Sign(value.GetValueOrDefault()) : -2;
 
-        public string ToString(T? value, string format, IFormatProvider provider) => value.HasValue ? Number<T>.s_operations.ToString(value.GetValueOrDefault(), format, provider) : null;
+        public string ToString(T? value, string format, IFormatProvider provider) => value.HasValue ? _operations.ToString(value.GetValueOrDefault(), format, provider) : null;
 
-        public sbyte ToSByte(T? value) => value.HasValue ? Number<T>.s_operations.ToSByte(value.GetValueOrDefault()) : default;
+        public sbyte ToSByte(T? value) => value.HasValue ? _operations.ToSByte(value.GetValueOrDefault()) : default;
 
-        public byte ToByte(T? value) => value.HasValue ? Number<T>.s_operations.ToByte(value.GetValueOrDefault()) : default;
+        public byte ToByte(T? value) => value.HasValue ? _operations.ToByte(value.GetValueOrDefault()) : default;
 
-        public short ToInt16(T? value) => value.HasValue ? Number<T>.s_operations.ToInt16(value.GetValueOrDefault()) : default;
+        public short ToInt16(T? value) => value.HasValue ? _operations.ToInt16(value.GetValueOrDefault()) : default;
 
-        public ushort ToUInt16(T? value) => value.HasValue ? Number<T>.s_operations.ToUInt16(value.GetValueOrDefault()) : default;
+        public ushort ToUInt16(T? value) => value.HasValue ? _operations.ToUInt16(value.GetValueOrDefault()) : default;
 
-        public int ToInt32(T? value) => value.HasValue ? Number<T>.s_operations.ToInt32(value.GetValueOrDefault()) : default;
+        public int ToInt32(T? value) => value.HasValue ? _operations.ToInt32(value.GetValueOrDefault()) : default;
 
-        public uint ToUInt32(T? value) => value.HasValue ? Number<T>.s_operations.ToUInt32(value.GetValueOrDefault()) : default;
+        public uint ToUInt32(T? value) => value.HasValue ? _operations.ToUInt32(value.GetValueOrDefault()) : default;
 
-        public long ToInt64(T? value) => value.HasValue ? Number<T>.s_operations.ToInt64(value.GetValueOrDefault()) : default;
+        public long ToInt64(T? value) => value.HasValue ? _operations.ToInt64(value.GetValueOrDefault()) : default;
 
-        public ulong ToUInt64(T? value) => value.HasValue ? Number<T>.s_operations.ToUInt64(value.GetValueOrDefault()) : default;
+        public ulong ToUInt64(T? value) => value.HasValue ? _operations.ToUInt64(value.GetValueOrDefault()) : default;
 
-        public float ToSingle(T? value) => value.HasValue ? Number<T>.s_operations.ToSingle(value.GetValueOrDefault()) : default;
+        public float ToSingle(T? value) => value.HasValue ? _operations.ToSingle(value.GetValueOrDefault()) : default;
 
-        public double ToDouble(T? value) => value.HasValue ? Number<T>.s_operations.ToDouble(value.GetValueOrDefault()) : default;
+        public double ToDouble(T? value) => value.HasValue ? _operations.ToDouble(value.GetValueOrDefault()) : default;
 
-        public decimal ToDecimal(T? value) => value.HasValue ? Number<T>.s_operations.ToDecimal(value.GetValueOrDefault()) : default;
+        public decimal ToDecimal(T? value) => value.HasValue ? _operations.ToDecimal(value.GetValueOrDefault()) : default;
 
 #if BIG_INTEGER
-        public BigInteger ToBigInteger(T? value) => value.HasValue ? Number<T>.s_operations.ToBigInteger(value.GetValueOrDefault()) : default;
+        public BigInteger ToBigInteger(T? value) => value.HasValue ? _operations.ToBigInteger(value.GetValueOrDefault()) : default;
 #endif
 
-        public bool IsEven(T? value) => value.HasValue ? Number<T>.s_operations.IsEven(value.GetValueOrDefault()) : false;
+        public bool IsEven(T? value) => value.HasValue ? _operations.IsEven(value.GetValueOrDefault()) : false;
 
-        public bool IsOdd(T? value) => value.HasValue ? Number<T>.s_operations.IsOdd(value.GetValueOrDefault()) : false;
+        public bool IsOdd(T? value) => value.HasValue ? _operations.IsOdd(value.GetValueOrDefault()) : false;
 
-        public bool IsPowerOfTwo(T? value) => value.HasValue ? Number<T>.s_operations.IsPowerOfTwo(value.GetValueOrDefault()) : false;
+        public bool IsPowerOfTwo(T? value) => value.HasValue ? _operations.IsPowerOfTwo(value.GetValueOrDefault()) : false;
 
-        public T? Clamp(T? value, T? min, T? max) => value.HasValue && min.HasValue && max.HasValue ? Number<T>.s_operations.Clamp(value.GetValueOrDefault(), min.GetValueOrDefault(), max.GetValueOrDefault()) : (T?)null;
+        public T? Clamp(T? value, T? min, T? max) => value.HasValue && min.HasValue && max.HasValue ? _operations.Clamp(value.GetValueOrDefault(), min.GetValueOrDefault(), max.GetValueOrDefault()) : (T?)null;
     }
 }

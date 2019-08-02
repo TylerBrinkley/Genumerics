@@ -37,36 +37,6 @@ namespace Genumerics
     /// </summary>
     public static class Number
     {
-        // Ensures default numeric operations are populated
-        internal static readonly bool Initialized = Initialize();
-
-        private static bool Initialize()
-        {
-            SetDefaultOperations<sbyte, DefaultNumericOperations>();
-            SetDefaultOperations<byte, DefaultNumericOperations>();
-            SetDefaultOperations<short, DefaultNumericOperations>();
-            SetDefaultOperations<ushort, DefaultNumericOperations>();
-            SetDefaultOperations<int, DefaultNumericOperations>();
-            SetDefaultOperations<uint, DefaultNumericOperations>();
-            SetDefaultOperations<long, DefaultNumericOperations>();
-            SetDefaultOperations<ulong, DefaultNumericOperations>();
-            SetDefaultOperations<float, DefaultNumericOperations>();
-            SetDefaultOperations<double, DefaultNumericOperations>();
-            SetDefaultOperations<decimal, DefaultNumericOperations>();
-#if BIG_INTEGER
-            SetDefaultOperations<BigInteger, DefaultNumericOperations>();
-#endif
-            return true;
-        }
-
-        private static void SetDefaultOperations<T, TNumericOperations>()
-            where T : struct
-            where TNumericOperations : struct, INumericOperations<T>
-        {
-            Number<T>.s_operations = new DefaultNumericOperations<T, TNumericOperations>();
-            Number<T?>.s_operations = new NullableNumericOperations<T>();
-        }
-
         /// <summary>
         /// Gets a value that represents the number zero (0).
         /// </summary>

@@ -25,7 +25,6 @@
 
 using System;
 using System.Threading;
-using System.Reflection;
 
 #if BIG_INTEGER
 using System.Numerics;
@@ -42,10 +41,7 @@ namespace Genumerics
         , IConvertible
 #endif
     {
-        // Ensures default numeric operations are populated
-        internal static readonly bool Initialized = Number.Initialized;
-
-        internal static INumericOperations<T> s_operations;
+        private static INumericOperations<T> s_operations;
 
         /// <summary>
         /// Gets or sets the operations supported for the numeric type <typeparamref name="T"/>. Cannot overwrite once set.
@@ -54,7 +50,7 @@ namespace Genumerics
         [CLSCompliant(false)]
         public static INumericOperations<T> Operations
         {
-            get => s_operations;
+            get => GetOperations(throwErrorWhenNull: false);
             set
             {
                 if (value == null)
@@ -62,32 +58,49 @@ namespace Genumerics
                     throw new ArgumentNullException(nameof(value));
                 }
 
-                var numericType = typeof(T);
-                var isValueType = numericType.IsValueType();
-                if (isValueType && default(T) == null)
+                if (typeof(T).IsValueType() && default(T) == null)
                 {
-                    throw new ArgumentException("Cannot explicitly set operations for nullable value types. Nullable types are handled automatically.");
+                    throw new ArgumentException("Cannot explicitly set operations for nullable value types. Nullable value types are handled automatically.");
                 }
 
-                if (Interlocked.CompareExchange(ref s_operations, value, null) != null)
+                if (Operations != null || Interlocked.CompareExchange(ref s_operations, value, null) != null)
                 {
                     throw new InvalidOperationException("Cannot overwrite operations once set.");
-                }
-                if (isValueType)
-                {
-                    var nullableOperations = Activator.CreateInstance(typeof(NullableNumericOperations<>).MakeGenericType(numericType));
-                    typeof(Number<>).MakeGenericType(typeof(Nullable<>).MakeGenericType(numericType))
-#if TYPE_REFLECTION
-                        .GetField(nameof(s_operations), BindingFlags.NonPublic | BindingFlags.Static)
-#else
-                        .GetTypeInfo().GetDeclaredField(nameof(s_operations))
-#endif
-                        .SetValue(null, nullableOperations);
                 }
             }
         }
 
-        internal static INumericOperations<T> GetOperations() => s_operations ?? throw new NotSupportedException($"Generic numeric operations on {typeof(T)} are not supported. The only supported types are SByte, Byte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, and BigInteger as well as the nullable versions of each of these types.");
+        internal static INumericOperations<T> GetOperations(bool throwErrorWhenNull = true)
+        {
+            var operations = s_operations;
+            if (operations == null)
+            {
+                var numericType = typeof(T);
+                Type operationsType = null;
+                if (default(DefaultNumericOperations) is INumericOperations<T>)
+                {
+                    operationsType = typeof(DefaultNumericOperations<,>).MakeGenericType(numericType, typeof(DefaultNumericOperations));
+                }
+                else if (default(T) == null && numericType.IsValueType())
+                {
+                    operationsType = typeof(NullableNumericOperations<>).MakeGenericType(numericType.GetGenericArguments()[0]);
+                }
+                else if (numericType.IsEnum())
+                {
+                    operationsType = typeof(EnumOperations<,,>).MakeGenericType(numericType, Enum.GetUnderlyingType(numericType), typeof(DefaultNumericOperations));
+                }
+                else if (throwErrorWhenNull)
+                {
+                    throw new NotSupportedException($"Generic numeric operations on {typeof(T)} are not supported. The only supported types are SByte, Byte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, and BigInteger as well as the nullable versions of each of these types.");
+                }
+
+                if (operationsType != null)
+                {
+                    operations = Interlocked.CompareExchange(ref s_operations, (operations = (INumericOperations<T>)Activator.CreateInstance(operationsType)), null) ?? operations;
+                }
+            }
+            return operations;
+        }
 
         /// <summary>
         /// The numeric value.

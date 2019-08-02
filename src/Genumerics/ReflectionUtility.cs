@@ -38,6 +38,19 @@ namespace Genumerics
             return type.GetTypeInfo().IsValueType;
 #endif
         }
+
+        public static bool IsEnum(this Type type)
+        {
+#if TYPE_REFLECTION
+            return type.IsEnum;
+#else
+            return type.GetTypeInfo().IsEnum;
+#endif
+        }
+
+#if !TYPE_REFLECTION
+        public static Type[] GetGenericArguments(this Type type) => type.GetTypeInfo().GenericTypeArguments;
+#endif
     }
 }
 

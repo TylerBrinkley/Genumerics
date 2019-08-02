@@ -29,37 +29,37 @@
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
     <AssemblyTitle>Genumerics .NET Core 2.1</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;SPAN;TYPE_REFLECTION;DIV_REM</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;SPAN;TYPE_REFLECTION;DIV_REM;UNSAFE;GENERIC_ENUM_PARSE;ENUM_TRYPARSE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <AssemblyTitle>Genumerics .NET Core 2.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;TYPE_REFLECTION;DIV_REM</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;TYPE_REFLECTION;DIV_REM;UNSAFE;GENERIC_ENUM_PARSE;ENUM_TRYPARSE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <AssemblyTitle>Genumerics .NET Standard 2.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION;DIV_REM</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION;DIV_REM;UNSAFE;ENUM_TRYPARSE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
     <AssemblyTitle>Genumerics .NET Standard 1.3</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;UNSAFE;ENUM_TRYPARSE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.1'">
     <AssemblyTitle>Genumerics .NET Standard 1.1</AssemblyTitle>
-    <DefineConstants>BIG_INTEGER</DefineConstants>
+    <DefineConstants>BIG_INTEGER;UNSAFE;ENUM_TRYPARSE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.0'">
     <AssemblyTitle>Genumerics .NET Standard 1.0</AssemblyTitle>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>UNSAFE;ENUM_TRYPARSE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net40'">
     <AssemblyTitle>Genumerics .NET 4.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION;DIV_REM</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION;DIV_REM;ENUM_TRYPARSE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net35'">
@@ -71,5 +71,47 @@
     <AssemblyTitle>Genumerics .NET 2.0</AssemblyTitle>
     <DefineConstants>ICONVERTIBLE;TYPE_REFLECTION;DIV_REM</DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
+      <Version>4.5.2</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
+      <Version>4.5.2</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.1'">
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
+      <Version>4.5.2</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.0'">
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
+      <Version>4.5.2</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
+      <Version>4.5.2</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
+      <Version>4.5.2</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp1.0'">
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
+      <Version>4.5.2</Version>
+    </PackageReference>
+  </ItemGroup>
 
 </Project>

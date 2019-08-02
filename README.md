@@ -6,7 +6,7 @@ You may have come across a point while working in .NET where you would like to p
 
 This library fills that gap by providing most standard numeric operations for the following built-in numeric types.
 
-`sbyte, byte, short, ushort, int, uint, long, ulong, float, double, decimal, and BigInteger`
+`sbyte, byte, short, ushort, int, uint, long, ulong, float, double, decimal, BigInteger, and enums`
 
 ## Genumerics Demo
 Below is a demo of some basic uses of Genumerics in the form of unit tests.
@@ -67,17 +67,17 @@ class GenumericsDemo
 }
 ```
 
-## Performance
-The summation algorithms below were benchmarked in .NET Core to determine the relative performance of the library compared with an `int` specific algorithm. As can be seen in the results, the performance is equivalent when using the numeric operations as a `struct` interface generic type argument constraint but is an order of magnitude slower when only using the numeric type due to the interface method dispatch. In order to reach performance parity with the `int` specific algorithm the library makes use of an optimization for `struct` interface generic type argument constraints described in this [generic calculations article](https://www.codeproject.com/articles/8531/using-generics-for-calculations) that prevents the interface method dispatch.
+## Performance Comparison
+The summation algorithms below were benchmarked in .NET Core to determine the relative performance of the library compared with an `int` specific algorithm. As can be seen in the results, the performance is equivalent when using the numeric operations as a `struct` interface generic type argument constraint but is almost an order of magnitude slower when only using the numeric type due to the interface method dispatch. In order to reach performance parity with the `int` specific algorithm the library makes use of an optimization for `struct` interface generic type argument constraints described in this [generic calculations article](https://www.codeproject.com/articles/8531/using-generics-for-calculations) that prevents the interface method dispatch.
 
 ### Results
-|     Method |       Mean |      Error |     StdDev | Ratio | RatioSD |
-|----------- |-----------:|-----------:|-----------:|------:|--------:|
-|        Sum |   574.7 ns |   6.598 ns |   5.849 ns |  1.00 |    0.00 |
-|  SumNumber | 6,003.0 ns | 114.548 ns | 101.544 ns | 10.45 |    0.19 |
-| SumNumber2 |   577.5 ns |   3.821 ns |   3.574 ns |  1.00 |    0.01 |
-|     SumAdd | 6,275.3 ns |  47.339 ns |  39.530 ns | 10.93 |    0.12 |
-|    SumAdd2 |   580.6 ns |   9.845 ns |   8.221 ns |  1.01 |    0.02 |
+|     Method |       Mean |     Error |    StdDev | Ratio | RatioSD |
+|----------- |-----------:|----------:|----------:|------:|--------:|
+|        Sum |   537.0 ns |  3.140 ns |  2.783 ns |  1.00 |    0.00 |
+|  SumNumber | 4,215.2 ns | 19.561 ns | 17.341 ns |  7.85 |    0.06 |
+| SumNumber2 |   532.8 ns |  1.366 ns |  1.278 ns |  0.99 |    0.01 |
+|     SumAdd | 3,956.6 ns | 18.581 ns | 17.380 ns |  7.37 |    0.06 |
+|    SumAdd2 |   535.6 ns |  4.418 ns |  3.449 ns |  1.00 |    0.01 |
 
 ### Code
 ```c#
