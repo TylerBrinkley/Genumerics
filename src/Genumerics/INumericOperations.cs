@@ -24,6 +24,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 #if BIG_INTEGER
@@ -374,6 +375,7 @@ namespace Genumerics
         /// <param name="format">A standard or custom numeric format string.</param>
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns>The string representation of <paramref name="value"/> as specified by the <paramref name="format"/> and <paramref name="provider"/> parameters.</returns>
+        [return: NotNullIfNotNull("value")]
         string? ToString(T value, string? format, IFormatProvider? provider);
 
         /// <summary>

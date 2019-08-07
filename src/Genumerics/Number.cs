@@ -24,6 +24,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace Genumerics
@@ -698,6 +699,7 @@ namespace Genumerics
         /// <param name="value">A number.</param>
         /// <returns>The string representation of <paramref name="value"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
+        [return: NotNullIfNotNull("value")]
         public static string? ToString<T>(T value) => Number<T>.GetOperations().ToString(value, null, null);
 
         /// <summary>
@@ -709,6 +711,7 @@ namespace Genumerics
         /// <returns>The string representation of <paramref name="value"/> in the format specified by the <paramref name="format"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="FormatException"><paramref name="format"/> is not a valid format string.</exception>
+        [return: NotNullIfNotNull("value")]
         public static string? ToString<T>(T value, string? format) => Number<T>.GetOperations().ToString(value, format, null);
 
         /// <summary>
@@ -719,6 +722,7 @@ namespace Genumerics
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns>The string representation of <paramref name="value"/> in the format specified by the <paramref name="provider"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
+        [return: NotNullIfNotNull("value")]
         public static string? ToString<T>(T value, IFormatProvider? provider) => Number<T>.GetOperations().ToString(value, null, provider);
 
         /// <summary>
@@ -731,6 +735,7 @@ namespace Genumerics
         /// <returns>The string representation of <paramref name="value"/> as specified by the <paramref name="format"/> and <paramref name="provider"/> parameters.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="FormatException"><paramref name="format"/> is not a valid format string.</exception>
+        [return: NotNullIfNotNull("value")]
         public static string? ToString<T>(T value, string? format, IFormatProvider? provider) => Number<T>.GetOperations().ToString(value, format, provider);
 
         /// <summary>

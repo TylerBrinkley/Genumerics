@@ -110,7 +110,7 @@ namespace Genumerics
         /// </summary>
         /// <param name="obj">The object to compare.</param>
         /// <returns><c>true</c> if the <paramref name="obj"/> argument is a <see cref="Number{T, TNumericOperations}"/> object, and its value is equal to the value of the current instance; otherwise, <c>false</c>.</returns>
-        public override bool Equals(object obj) => obj is Number<T, TNumericOperations> n && Equals(n);
+        public override bool Equals(object? obj) => obj is Number<T, TNumericOperations> n && Equals(n);
 
         /// <summary>
         /// Returns a value that indicates whether the current instance and a specified <see cref="Number{T, TNumericOperations}"/> object have the same value.
@@ -129,7 +129,7 @@ namespace Genumerics
         /// less than zero if current instance is less than <paramref name="obj"/>,
         /// zero if current instance equals <paramref name="obj"/>,
         /// and greater than zero if current instance is greater than <paramref name="obj"/> or <paramref name="obj"/> is <c>null</c>.</returns>
-        public int CompareTo(object obj) => obj is Number<T, TNumericOperations> n ? CompareTo(n) : (Value == null ? 0 : 1);
+        public int CompareTo(object? obj) => obj is Number<T, TNumericOperations> n ? CompareTo(n) : (Value == null ? 0 : 1);
 
         /// <summary>
         /// Compares this instance to a specified object and returns an integer that indicates
