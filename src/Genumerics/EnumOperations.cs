@@ -1,4 +1,29 @@
-﻿using System;
+﻿#region License
+// Copyright (c) 2019 Tyler Brinkley
+//
+// Permission is hereby granted, free of charge, to any person
+// obtaining a copy of this software and associated documentation
+// files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use,
+// copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following
+// conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+#endregion
+
+using System;
 using System.Globalization;
 
 #if BIG_INTEGER
@@ -79,7 +104,7 @@ namespace Genumerics
         public TEnum Not(TEnum value) => ToEnum(default(TUnderlyingOperations).Not(ToUnderlying(value)));
         public bool NotEquals(TEnum left, TEnum right) => default(TUnderlyingOperations).NotEquals(ToUnderlying(left), ToUnderlying(right));
         public TEnum Or(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).Or(ToUnderlying(left), ToUnderlying(right)));
-        public TEnum Parse(string value, NumberStyles? style, IFormatProvider provider) => style.HasValue ?
+        public TEnum Parse(string value, NumberStyles? style, IFormatProvider? provider) => style.HasValue ?
             ToEnum(default(TUnderlyingOperations).Parse(value, style, provider)) :
 #if GENERIC_ENUM_PARSE
             Enum.Parse<TEnum>(value);
@@ -87,7 +112,7 @@ namespace Genumerics
             (TEnum)Enum.Parse(typeof(TEnum), value);
 #endif
 #if SPAN
-        public TEnum Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => style.HasValue ?
+        public TEnum Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider) => style.HasValue ?
             ToEnum(default(TUnderlyingOperations).Parse(value, style, provider)) :
             Enum.Parse<TEnum>(value.ToString());
 #endif
@@ -107,13 +132,13 @@ namespace Genumerics
         public long ToInt64(TEnum value) => default(TUnderlyingOperations).ToInt64(ToUnderlying(value));
         public sbyte ToSByte(TEnum value) => default(TUnderlyingOperations).ToSByte(ToUnderlying(value));
         public float ToSingle(TEnum value) => default(TUnderlyingOperations).ToSingle(ToUnderlying(value));
-        public string ToString(TEnum value, string format, IFormatProvider provider) => value.ToString(format);
+        public string ToString(TEnum value, string? format, IFormatProvider? provider) => value.ToString(format);
         public ushort ToUInt16(TEnum value) => default(TUnderlyingOperations).ToUInt16(ToUnderlying(value));
         public uint ToUInt32(TEnum value) => default(TUnderlyingOperations).ToUInt32(ToUnderlying(value));
         public ulong ToUInt64(TEnum value) => default(TUnderlyingOperations).ToUInt64(ToUnderlying(value));
         public TEnum Truncate(TEnum value) => ToEnum(default(TUnderlyingOperations).Truncate(ToUnderlying(value)));
 #if SPAN
-        public bool TryFormat(TEnum value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null)
+        public bool TryFormat(TEnum value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null)
         {
             var str = value.ToString(format.ToString());
             str.AsSpan().CopyTo(destination);
@@ -121,7 +146,7 @@ namespace Genumerics
             return true;
         }
 #endif
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out TEnum result)
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out TEnum result)
         {
             if (style.HasValue)
             {
@@ -145,7 +170,7 @@ namespace Genumerics
 #endif
         }
 #if SPAN
-        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out TEnum result)
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out TEnum result)
         {
             if (style.HasValue)
             {

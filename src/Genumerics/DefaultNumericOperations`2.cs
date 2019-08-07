@@ -102,7 +102,7 @@ namespace Genumerics
 
         public T Or(T left, T right) => default(TNumericOperations).Or(left, right);
 
-        public T Parse(string value, NumberStyles? style, IFormatProvider provider) => default(TNumericOperations).Parse(value, style, provider);
+        public T Parse(string value, NumberStyles? style, IFormatProvider? provider) => default(TNumericOperations).Parse(value, style, provider);
 
         public T Remainder(T dividend, T divisor) => default(TNumericOperations).Remainder(dividend, divisor);
 
@@ -134,7 +134,7 @@ namespace Genumerics
 
         public float ToSingle(T value) => default(TNumericOperations).ToSingle(value);
 
-        public string ToString(T value, string format, IFormatProvider provider) => default(TNumericOperations).ToString(value, format, provider);
+        public string? ToString(T value, string? format, IFormatProvider? provider) => default(TNumericOperations).ToString(value, format, provider);
 
         public ushort ToUInt16(T value) => default(TNumericOperations).ToUInt16(value);
 
@@ -144,16 +144,16 @@ namespace Genumerics
 
         public T Truncate(T value) => default(TNumericOperations).Truncate(value);
 
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out T result) => default(TNumericOperations).TryParse(value, style, provider, out result);
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out T result) => default(TNumericOperations).TryParse(value, style, provider, out result);
 
         public T Xor(T left, T right) => default(TNumericOperations).Xor(left, right);
 
 #if SPAN
-        public T Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => default(TNumericOperations).Parse(value, style, provider);
+        public T Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider) => default(TNumericOperations).Parse(value, style, provider);
 
-        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out T result) => default(TNumericOperations).TryParse(value, style, provider, out result);
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out T result) => default(TNumericOperations).TryParse(value, style, provider, out result);
 
-        public bool TryFormat(T value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => default(TNumericOperations).TryFormat(value, destination, out charsWritten, format, provider);
+        public bool TryFormat(T value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => default(TNumericOperations).TryFormat(value, destination, out charsWritten, format, provider);
 #endif
     }
 }

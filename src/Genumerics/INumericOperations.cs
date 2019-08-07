@@ -229,7 +229,7 @@ namespace Genumerics
         /// <param name="style">A bitwise combination of the enumeration values that specify the permitted format of <paramref name="value"/>.</param>
         /// <param name="provider">An object that provides culture-specific formatting information about <paramref name="value"/>.</param>
         /// <returns>A value that is equivalent to the number specified in the <paramref name="value"/> parameter.</returns>
-        T Parse(string value, NumberStyles? style, IFormatProvider provider);
+        T Parse(string value, NumberStyles? style, IFormatProvider? provider);
 
         /// <summary>
         /// Tries to convert the string representation of a number in a specified <paramref name="style"/> and
@@ -245,7 +245,7 @@ namespace Genumerics
         /// or is not in a format that is compliant with <paramref name="style"/>. This parameter is passed
         /// uninitialized.</param>
         /// <returns><c>true</c> if the value parameter was converted successfully; otherwise, <c>false</c>.</returns>
-        bool TryParse(string value, NumberStyles? style, IFormatProvider provider, out T result);
+        bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out T result);
 
 #if SPAN
         /// <summary>
@@ -255,7 +255,7 @@ namespace Genumerics
         /// <param name="style">A bitwise combination of the enumeration values that specify the permitted format of <paramref name="value"/>.</param>
         /// <param name="provider">An object that provides culture-specific formatting information about <paramref name="value"/>.</param>
         /// <returns>A value that is equivalent to the number specified in the <paramref name="value"/> parameter.</returns>
-        T Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider);
+        T Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider);
 
         /// <summary>
         /// Tries to convert the string representation of a number in a specified <paramref name="style"/> and
@@ -271,7 +271,7 @@ namespace Genumerics
         /// or is not in a format that is compliant with <paramref name="style"/>. This parameter is passed
         /// uninitialized.</param>
         /// <returns><c>true</c> if the value parameter was converted successfully; otherwise, <c>false</c>.</returns>
-        bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider, out T result);
+        bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out T result);
 
         /// <summary>
         /// Tries to convert the specified numeric value to its equivalent string representation into the destination <see cref="Span{T}"/> by using the specified format and culture-specific format information.
@@ -282,7 +282,7 @@ namespace Genumerics
         /// <param name="format">A standard or custom numeric format string.</param>
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns><c>true</c> if the value's string representation was successfully written to <paramref name="destination"/>; otherwise, <c>false</c>.</returns>
-        bool TryFormat(T value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null);
+        bool TryFormat(T value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null);
 #endif
 
         /// <summary>
@@ -374,7 +374,7 @@ namespace Genumerics
         /// <param name="format">A standard or custom numeric format string.</param>
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns>The string representation of <paramref name="value"/> as specified by the <paramref name="format"/> and <paramref name="provider"/> parameters.</returns>
-        string ToString(T value, string format, IFormatProvider provider);
+        string? ToString(T value, string? format, IFormatProvider? provider);
 
         /// <summary>
         /// Converts the specified numeric value to an <see cref="sbyte"/>.

@@ -67,7 +67,7 @@ namespace Genumerics
         /// Converts the numeric value of the current object to its equivalent string representation.
         /// </summary>
         /// <returns>The string representation of the current numeric value.</returns>
-        public override string ToString() => default(TNumericOperations).ToString(Value, null, null);
+        public override string ToString() => default(TNumericOperations).ToString(Value, null, null)!;
 
         /// <summary>
         /// Converts the numeric value of the current numeric object to its equivalent string representation by using the specified format.
@@ -75,14 +75,14 @@ namespace Genumerics
         /// <param name="format">A standard or custom numeric format string.</param>
         /// <returns>The string representation of the current numeric value in the format specified by the <paramref name="format"/> parameter.</returns>
         /// <exception cref="FormatException"><paramref name="format"/> is not a valid format string.</exception>
-        public string ToString(string format) => default(TNumericOperations).ToString(Value, format, null);
+        public string ToString(string? format) => default(TNumericOperations).ToString(Value, format, null)!;
 
         /// <summary>
         /// Converts the numeric value of the current numeric object to its equivalent string representation by using the specified culture-specific formatting information.
         /// </summary>
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns>The string representation of the current numeric value in the format specified by the <paramref name="provider"/> parameter.</returns>
-        public string ToString(IFormatProvider provider) => default(TNumericOperations).ToString(Value, null, provider);
+        public string ToString(IFormatProvider? provider) => default(TNumericOperations).ToString(Value, null, provider)!;
 
         /// <summary>
         /// Converts the numeric value of the current numeric object to its equivalent string representation by using the specified format and culture-specific format information.
@@ -91,7 +91,7 @@ namespace Genumerics
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns>The string representation of the current numeric value as specified by the <paramref name="format"/> and <paramref name="provider"/> parameters.</returns>
         /// <exception cref="FormatException"><paramref name="format"/> is not a valid format string.</exception>
-        public string ToString(string format, IFormatProvider provider) => default(TNumericOperations).ToString(Value, format, provider);
+        public string ToString(string? format, IFormatProvider? provider) => default(TNumericOperations).ToString(Value, format, provider)!;
 
 #if SPAN
         /// <summary>
@@ -102,7 +102,7 @@ namespace Genumerics
         /// <param name="format">A standard or custom numeric format string.</param>
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns><c>true</c> if the value's string representation was successfully written to <paramref name="destination"/>; otherwise, <c>false</c>.</returns>
-        public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => default(TNumericOperations).TryFormat(Value, destination, out charsWritten, format, provider);
+        public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => default(TNumericOperations).TryFormat(Value, destination, out charsWritten, format, provider);
 #endif
 
         /// <summary>

@@ -25,6 +25,7 @@
 
 using System;
 using System.Threading;
+using System.Diagnostics.CodeAnalysis;
 
 #if BIG_INTEGER
 using System.Numerics;
@@ -41,14 +42,15 @@ namespace Genumerics
         , IConvertible
 #endif
     {
-        private static INumericOperations<T> s_operations;
+        private static INumericOperations<T>? s_operations;
 
         /// <summary>
         /// Gets or sets the operations supported for the numeric type <typeparamref name="T"/>. Cannot overwrite once set.
         /// Cannot set for nullable value types. Nullable types are handled automatically.
         /// </summary>
         [CLSCompliant(false)]
-        public static INumericOperations<T> Operations
+        [DisallowNull]
+        public static INumericOperations<T>? Operations
         {
             get => GetOperations(throwErrorWhenNull: false);
             set
@@ -58,7 +60,7 @@ namespace Genumerics
                     throw new ArgumentNullException(nameof(value));
                 }
 
-                if (typeof(T).IsValueType() && default(T) == null)
+                if (default(T)! == null && typeof(T).IsValueType())
                 {
                     throw new ArgumentException("Cannot explicitly set operations for nullable value types. Nullable value types are handled automatically.");
                 }
@@ -76,12 +78,12 @@ namespace Genumerics
             if (operations == null)
             {
                 var numericType = typeof(T);
-                Type operationsType = null;
+                Type? operationsType = null;
                 if (default(DefaultNumericOperations) is INumericOperations<T>)
                 {
                     operationsType = typeof(DefaultNumericOperations<,>).MakeGenericType(numericType, typeof(DefaultNumericOperations));
                 }
-                else if (default(T) == null && numericType.IsValueType())
+                else if (default(T)! == null && numericType.IsValueType())
                 {
                     operationsType = typeof(NullableNumericOperations<>).MakeGenericType(numericType.GetGenericArguments()[0]);
                 }
@@ -91,7 +93,7 @@ namespace Genumerics
                 }
                 else if (throwErrorWhenNull)
                 {
-                    throw new NotSupportedException($"Generic numeric operations on {typeof(T)} are not supported. The only supported types are SByte, Byte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, and BigInteger as well as the nullable versions of each of these types.");
+                    throw new NotSupportedException($"Generic numeric operations on {typeof(T)} are not supported. The only supported types are SByte, Byte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, BigInteger, and enums as well as the nullable versions of each of these types.");
                 }
 
                 if (operationsType != null)
@@ -99,7 +101,7 @@ namespace Genumerics
                     operations = Interlocked.CompareExchange(ref s_operations, (operations = (INumericOperations<T>)Activator.CreateInstance(operationsType)), null) ?? operations;
                 }
             }
-            return operations;
+            return operations!; // Could be null but only when throwErrorWhenNull = false
         }
 
         /// <summary>
@@ -127,7 +129,7 @@ namespace Genumerics
         /// </summary>
         /// <returns>The string representation of the current numeric value.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public override string ToString() => GetOperations().ToString(Value, null, null);
+        public override string? ToString() => GetOperations().ToString(Value, null, null);
 
         /// <summary>
         /// Converts the numeric value of the current numeric object to its equivalent string representation by using the specified format.
@@ -136,7 +138,7 @@ namespace Genumerics
         /// <returns>The string representation of the current numeric value in the format specified by the <paramref name="format"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="FormatException"><paramref name="format"/> is not a valid format string.</exception>
-        public string ToString(string format) => GetOperations().ToString(Value, format, null);
+        public string? ToString(string? format) => GetOperations().ToString(Value, format, null);
 
         /// <summary>
         /// Converts the numeric value of the current numeric object to its equivalent string representation by using the specified culture-specific formatting information.
@@ -144,7 +146,7 @@ namespace Genumerics
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns>The string representation of the current numeric value in the format specified by the <paramref name="provider"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public string ToString(IFormatProvider provider) => GetOperations().ToString(Value, null, provider);
+        public string? ToString(IFormatProvider? provider) => GetOperations().ToString(Value, null, provider);
 
         /// <summary>
         /// Converts the numeric value of the current numeric object to its equivalent string representation by using the specified format and culture-specific format information.
@@ -154,7 +156,7 @@ namespace Genumerics
         /// <returns>The string representation of the current numeric value as specified by the <paramref name="format"/> and <paramref name="provider"/> parameters.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="FormatException"><paramref name="format"/> is not a valid format string.</exception>
-        public string ToString(string format, IFormatProvider provider) => GetOperations().ToString(Value, format, provider);
+        public string? ToString(string? format, IFormatProvider? provider) => GetOperations().ToString(Value, format, provider);
 
 #if SPAN
         /// <summary>
@@ -166,7 +168,7 @@ namespace Genumerics
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns><c>true</c> if the value's string representation was successfully written to <paramref name="destination"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null) => GetOperations().TryFormat(Value, destination, out charsWritten, format, provider);
+        public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => GetOperations().TryFormat(Value, destination, out charsWritten, format, provider);
 #endif
 
         /// <summary>
@@ -175,7 +177,7 @@ namespace Genumerics
         /// <param name="obj">The object to compare.</param>
         /// <returns><c>true</c> if the <paramref name="obj"/> argument is a <see cref="Number{T}"/> object, and its value is equal to the value of the current instance; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public override bool Equals(object obj) => obj is Number<T> n && Equals(n);
+        public override bool Equals(object? obj) => obj is Number<T> n && Equals(n);
 
         /// <summary>
         /// Returns a value that indicates whether the current instance and a specified <see cref="Number{T}"/> object have the same value.
@@ -196,7 +198,7 @@ namespace Genumerics
         /// zero if current instance equals <paramref name="obj"/>,
         /// and greater than zero if current instance is greater than <paramref name="obj"/> or <paramref name="obj"/> is <c>null</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public int CompareTo(object obj) => obj is Number<T> n ? CompareTo(n) : (Value == null ? 0 : 1);
+        public int CompareTo(object? obj) => obj is Number<T> n ? CompareTo(n) : (Value == null ? 0 : 1);
 
         /// <summary>
         /// Compares this instance to a specified object and returns an integer that indicates
@@ -225,7 +227,7 @@ namespace Genumerics
                 return operations.Convert(Value);
             }
             _ = GetOperations(); // Necessary to validate conversion types
-            return default;
+            return default!;
         }
 
 #if ICONVERTIBLE

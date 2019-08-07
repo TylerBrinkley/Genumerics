@@ -96,7 +96,7 @@ namespace Genumerics
 
         public T? Or(T? left, T? right) => left.HasValue && right.HasValue ? _operations.Or(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
-        public T? Parse(string value, NumberStyles? styles, IFormatProvider provider) => _operations.Parse(value, styles, provider);
+        public T? Parse(string value, NumberStyles? styles, IFormatProvider? provider) => _operations.Parse(value, styles, provider);
 
         public T? Remainder(T? dividend, T? divisor) => dividend.HasValue && divisor.HasValue ? _operations.Remainder(dividend.GetValueOrDefault(), divisor.GetValueOrDefault()) : (T?)null;
 
@@ -104,7 +104,7 @@ namespace Genumerics
 
         public T? Subtract(T? left, T? right) => left.HasValue && right.HasValue ? _operations.Subtract(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
-        public bool TryParse(string value, NumberStyles? styles, IFormatProvider provider, out T? result)
+        public bool TryParse(string value, NumberStyles? styles, IFormatProvider? provider, out T? result)
         {
             var success = _operations.TryParse(value, styles, provider, out T r);
             result = r;
@@ -112,16 +112,16 @@ namespace Genumerics
         }
 
 #if SPAN
-        public T? Parse(ReadOnlySpan<char> value, NumberStyles? styles, IFormatProvider provider) => _operations.Parse(value, styles, provider);
+        public T? Parse(ReadOnlySpan<char> value, NumberStyles? styles, IFormatProvider? provider) => _operations.Parse(value, styles, provider);
 
-        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? styles, IFormatProvider provider, out T? result)
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? styles, IFormatProvider? provider, out T? result)
         {
             var success = _operations.TryParse(value, styles, provider, out T r);
             result = r;
             return success;
         }
 
-        public bool TryFormat(T? value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider provider = null)
+        public bool TryFormat(T? value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null)
         {
             if (value.HasValue)
             {
@@ -154,7 +154,7 @@ namespace Genumerics
 
         public int Sign(T? value) => value.HasValue ? _operations.Sign(value.GetValueOrDefault()) : -2;
 
-        public string ToString(T? value, string format, IFormatProvider provider) => value.HasValue ? _operations.ToString(value.GetValueOrDefault(), format, provider) : null;
+        public string? ToString(T? value, string? format, IFormatProvider? provider) => value.HasValue ? _operations.ToString(value.GetValueOrDefault(), format, provider) : null;
 
         public sbyte ToSByte(T? value) => value.HasValue ? _operations.ToSByte(value.GetValueOrDefault()) : default;
 
