@@ -4,7 +4,7 @@ Genumerics is a high-performance .NET library for generic numeric operations. It
 ## The Problem
 You may have come across a point while working in .NET where you would like to perform numeric or mathematical operations over a generic numeric type. Unfortunately .NET doesn't provide a way to do that natively and so you must either specialize each case of numeric type or figure out another way of accomplishing this.
 
-This library fills that gap by providing most standard numeric operations for the following built-in numeric types.
+This library fills that gap by providing most standard numeric operations for the following built-in numeric types and their nullable equivalents.
 
 `sbyte, byte, short, ushort, int, uint, long, ulong, float, double, decimal, BigInteger, and enums`
 
