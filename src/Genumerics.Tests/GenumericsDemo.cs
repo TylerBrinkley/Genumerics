@@ -1,7 +1,7 @@
 ﻿using Genumerics;
 using NUnit.Framework;
 
-class GenumericsDemo
+public class GenumericsDemo
 {
     [TestCase(4, 5, 9)]
     [TestCase(2.25, 6.75, 9.0)]
