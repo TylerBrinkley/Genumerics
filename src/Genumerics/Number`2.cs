@@ -243,7 +243,7 @@ namespace Genumerics
         /// <param name="value">An integer value.</param>
         /// <returns>The bitwise one's complement of <paramref name="value"/>.</returns>
         /// <exception cref="NotSupportedException">The numeric type is a floating point type.</exception>
-        public static Number<T, TNumericOperations> operator ~(Number<T, TNumericOperations> value) => default(TNumericOperations).Not(value);
+        public static Number<T, TNumericOperations> operator ~(Number<T, TNumericOperations> value) => default(TNumericOperations).OnesComplement(value);
 
         /// <summary>
         /// Increments a numeric value by 1.
@@ -292,7 +292,7 @@ namespace Genumerics
         /// <param name="right">The second value.</param>
         /// <returns>The result of the bitwise And operation.</returns>
         /// <exception cref="NotSupportedException">The numeric type is a floating point type.</exception>
-        public static Number<T, TNumericOperations> operator &(Number<T, TNumericOperations> left, Number<T, TNumericOperations> right) => default(TNumericOperations).And(left, right);
+        public static Number<T, TNumericOperations> operator &(Number<T, TNumericOperations> left, Number<T, TNumericOperations> right) => default(TNumericOperations).BitwiseAnd(left, right);
 
         /// <summary>
         /// Performs a bitwise Or operation on two integral values.
@@ -301,7 +301,7 @@ namespace Genumerics
         /// <param name="right">The second value.</param>
         /// <returns>The result of the bitwise Or operation.</returns>
         /// <exception cref="NotSupportedException">The numeric type is a floating point type.</exception>
-        public static Number<T, TNumericOperations> operator |(Number<T, TNumericOperations> left, Number<T, TNumericOperations> right) => default(TNumericOperations).Or(left, right);
+        public static Number<T, TNumericOperations> operator |(Number<T, TNumericOperations> left, Number<T, TNumericOperations> right) => default(TNumericOperations).BitwiseOr(left, right);
 
         /// <summary>
         /// Performs a bitwise exclusive Or operation on two integral values.
@@ -368,7 +368,7 @@ namespace Genumerics
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-        public static bool operator <=(Number<T, TNumericOperations> left, Number<T, TNumericOperations> right) => default(TNumericOperations).LessThanOrEquals(left, right);
+        public static bool operator <=(Number<T, TNumericOperations> left, Number<T, TNumericOperations> right) => default(TNumericOperations).LessThanOrEqual(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a numeric value is greater than or equal to another numeric value.
@@ -376,7 +376,7 @@ namespace Genumerics
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-        public static bool operator >=(Number<T, TNumericOperations> left, Number<T, TNumericOperations> right) => default(TNumericOperations).GreaterThanOrEquals(left, right);
+        public static bool operator >=(Number<T, TNumericOperations> left, Number<T, TNumericOperations> right) => default(TNumericOperations).GreaterThanOrEqual(left, right);
 
         /// <summary>
         /// Defines an explicit conversion of an <see cref="byte"/> to a <see cref="Number{T, TNumericOperations}"/> value.

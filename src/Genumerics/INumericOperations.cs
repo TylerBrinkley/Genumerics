@@ -102,7 +102,7 @@ namespace Genumerics
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-        bool LessThanOrEquals(T left, T right);
+        bool LessThanOrEqual(T left, T right);
 
         /// <summary>
         /// Returns a value that indicates whether a value is greater than another value.
@@ -118,7 +118,7 @@ namespace Genumerics
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-        bool GreaterThanOrEquals(T left, T right);
+        bool GreaterThanOrEqual(T left, T right);
 
         /// <summary>
         /// Adds two values and returns the result.
@@ -182,7 +182,7 @@ namespace Genumerics
         /// <param name="left">The first value.</param>
         /// <param name="right">The second value.</param>
         /// <returns>The result of the bitwise And operation.</returns>
-        T And(T left, T right);
+        T BitwiseAnd(T left, T right);
 
         /// <summary>
         /// Performs a bitwise Or operation on two values.
@@ -190,7 +190,7 @@ namespace Genumerics
         /// <param name="left">The first value.</param>
         /// <param name="right">The second value.</param>
         /// <returns>The result of the bitwise Or operation.</returns>
-        T Or(T left, T right);
+        T BitwiseOr(T left, T right);
 
         /// <summary>
         /// Performs a bitwise exclusive Or operation on two values.
@@ -205,7 +205,7 @@ namespace Genumerics
         /// </summary>
         /// <param name="value">An integer value.</param>
         /// <returns>The bitwise one's complement of <paramref name="value"/>.</returns>
-        T Not(T value);
+        T OnesComplement(T value);
 
         /// <summary>
         /// Shifts a value a specified number of bits to the left.

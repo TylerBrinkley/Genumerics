@@ -128,7 +128,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool LessThanOrEquals<T>(T left, T right) => Number<T>.GetOperations().LessThanOrEquals(left, right);
+        public static bool LessThanOrEqual<T>(T left, T right) => Number<T>.GetOperations().LessThanOrEqual(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a value is greater than another value.
@@ -148,7 +148,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool GreaterThanOrEquals<T>(T left, T right) => Number<T>.GetOperations().GreaterThanOrEquals(left, right);
+        public static bool GreaterThanOrEqual<T>(T left, T right) => Number<T>.GetOperations().GreaterThanOrEqual(left, right);
 
         /// <summary>
         /// Adds two values and returns the result.
@@ -255,7 +255,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T And<T>(T left, T right) => Number<T>.GetOperations().And(left, right);
+        public static T BitwiseAnd<T>(T left, T right) => Number<T>.GetOperations().BitwiseAnd(left, right);
 
         /// <summary>
         /// Performs a bitwise Or operation on two values.
@@ -267,7 +267,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T Or<T>(T left, T right) => Number<T>.GetOperations().Or(left, right);
+        public static T BitwiseOr<T>(T left, T right) => Number<T>.GetOperations().BitwiseOr(left, right);
 
         /// <summary>
         /// Performs a bitwise exclusive Or operation on two values.
@@ -290,7 +290,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T Not<T>(T value) => Number<T>.GetOperations().Not(value);
+        public static T OnesComplement<T>(T value) => Number<T>.GetOperations().OnesComplement(value);
 
         /// <summary>
         /// Shifts a value a specified number of bits to the left.

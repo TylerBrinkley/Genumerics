@@ -54,7 +54,7 @@ namespace Genumerics
 
         public T Add(T left, T right) => default(TNumericOperations).Add(left, right);
 
-        public T And(T left, T right) => default(TNumericOperations).And(left, right);
+        public T BitwiseAnd(T left, T right) => default(TNumericOperations).BitwiseAnd(left, right);
 
         public T Ceiling(T value) => default(TNumericOperations).Ceiling(value);
 
@@ -74,7 +74,7 @@ namespace Genumerics
 
         public bool GreaterThan(T left, T right) => default(TNumericOperations).GreaterThan(left, right);
 
-        public bool GreaterThanOrEquals(T left, T right) => default(TNumericOperations).GreaterThanOrEquals(left, right);
+        public bool GreaterThanOrEqual(T left, T right) => default(TNumericOperations).GreaterThanOrEqual(left, right);
 
         public bool IsEven(T value) => default(TNumericOperations).IsEven(value);
 
@@ -86,7 +86,7 @@ namespace Genumerics
 
         public bool LessThan(T left, T right) => default(TNumericOperations).LessThan(left, right);
 
-        public bool LessThanOrEquals(T left, T right) => default(TNumericOperations).LessThanOrEquals(left, right);
+        public bool LessThanOrEqual(T left, T right) => default(TNumericOperations).LessThanOrEqual(left, right);
 
         public T Max(T left, T right) => default(TNumericOperations).Max(left, right);
 
@@ -96,11 +96,11 @@ namespace Genumerics
 
         public T Negate(T value) => default(TNumericOperations).Negate(value);
 
-        public T Not(T value) => default(TNumericOperations).Not(value);
+        public T OnesComplement(T value) => default(TNumericOperations).OnesComplement(value);
 
         public bool NotEquals(T left, T right) => default(TNumericOperations).NotEquals(left, right);
 
-        public T Or(T left, T right) => default(TNumericOperations).Or(left, right);
+        public T BitwiseOr(T left, T right) => default(TNumericOperations).BitwiseOr(left, right);
 
         public T Parse(string value, NumberStyles? style, IFormatProvider? provider) => default(TNumericOperations).Parse(value, style, provider);
 

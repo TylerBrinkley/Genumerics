@@ -325,7 +325,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator ~(Number<T> value) => GetOperations().Not(value);
+        public static Number<T> operator ~(Number<T> value) => GetOperations().OnesComplement(value);
 
         /// <summary>
         /// Increments a numeric value by 1.
@@ -381,7 +381,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator &(Number<T> left, Number<T> right) => GetOperations().And(left, right);
+        public static Number<T> operator &(Number<T> left, Number<T> right) => GetOperations().BitwiseAnd(left, right);
 
         /// <summary>
         /// Performs a bitwise Or operation on two integral values.
@@ -392,7 +392,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator |(Number<T> left, Number<T> right) => GetOperations().Or(left, right);
+        public static Number<T> operator |(Number<T> left, Number<T> right) => GetOperations().BitwiseOr(left, right);
 
         /// <summary>
         /// Performs a bitwise exclusive Or operation on two integral values.
@@ -470,7 +470,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool operator <=(Number<T> left, Number<T> right) => GetOperations().LessThanOrEquals(left, right);
+        public static bool operator <=(Number<T> left, Number<T> right) => GetOperations().LessThanOrEqual(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a numeric value is greater than or equal to another numeric value.
@@ -479,7 +479,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool operator >=(Number<T> left, Number<T> right) => GetOperations().GreaterThanOrEquals(left, right);
+        public static bool operator >=(Number<T> left, Number<T> right) => GetOperations().GreaterThanOrEqual(left, right);
 
         /// <summary>
         /// Defines an explicit conversion of an <see cref="byte"/> to a <see cref="Number{T}"/> value.

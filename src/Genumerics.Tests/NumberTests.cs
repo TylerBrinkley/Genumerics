@@ -447,27 +447,27 @@ namespace Genumerics.Tests
 
         public static IEnumerable<TestCaseData> LessThanNullableCases() => LessThanCases().Concat(BinaryNullableCases(false, false, false));
 
-        [TestCaseSource(nameof(LessThanOrEqualsCases))]
+        [TestCaseSource(nameof(LessThanOrEqualCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public bool LessThanOrEquals<T>(T valueToInferType, T left, T right) => Number.LessThanOrEquals(left, right);
+        public bool LessThanOrEqual<T>(T valueToInferType, T left, T right) => Number.LessThanOrEqual(left, right);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(LessThanOrEqualsCases))]
+        [TestCaseSource(nameof(LessThanOrEqualCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public bool LessThanOrEqualsNumber<T>(T valueToInferType, T left, T right) => Number.Create(left) <= right;
+        public bool LessThanOrEqualNumber<T>(T valueToInferType, T left, T right) => Number.Create(left) <= right;
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(LessThanOrEqualsNullableCases))]
+        [TestCaseSource(nameof(LessThanOrEqualNullableCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public bool LessThanOrEqualsNullable<T>(T valueToInferType, T? left, T? right) where T : struct => Number.LessThanOrEquals(left, right);
+        public bool LessThanOrEqualNullable<T>(T valueToInferType, T? left, T? right) where T : struct => Number.LessThanOrEqual(left, right);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(LessThanOrEqualsNullableCases))]
+        [TestCaseSource(nameof(LessThanOrEqualNullableCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public bool LessThanOrEqualsNullableNumber<T>(T valueToInferType, T? left, T? right) where T : struct => Number.Create(left) <= right;
+        public bool LessThanOrEqualNullableNumber<T>(T valueToInferType, T? left, T? right) where T : struct => Number.Create(left) <= right;
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        public static IEnumerable<TestCaseData> LessThanOrEqualsCases()
+        public static IEnumerable<TestCaseData> LessThanOrEqualCases()
         {
             yield return CreateTestCase<sbyte>(true, sbyte.MaxValue, sbyte.MaxValue);
             yield return CreateTestCase<sbyte>(false, sbyte.MaxValue, sbyte.MinValue);
@@ -501,7 +501,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<DayOfWeek>(false, DayOfWeek.Monday, DayOfWeek.Sunday);
         }
 
-        public static IEnumerable<TestCaseData> LessThanOrEqualsNullableCases() => LessThanOrEqualsCases().Concat(BinaryNullableCases(false, false, false));
+        public static IEnumerable<TestCaseData> LessThanOrEqualNullableCases() => LessThanOrEqualCases().Concat(BinaryNullableCases(false, false, false));
 
         [TestCaseSource(nameof(GreaterThanCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -559,27 +559,27 @@ namespace Genumerics.Tests
 
         public static IEnumerable<TestCaseData> GreaterThanNullableCases() => GreaterThanCases().Concat(BinaryNullableCases(false, false, false));
 
-        [TestCaseSource(nameof(GreaterThanOrEqualsCases))]
+        [TestCaseSource(nameof(GreaterThanOrEqualCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public bool GreaterThanOrEquals<T>(T valueToInferType, T left, T right) => Number.GreaterThanOrEquals(left, right);
+        public bool GreaterThanOrEqual<T>(T valueToInferType, T left, T right) => Number.GreaterThanOrEqual(left, right);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(GreaterThanOrEqualsCases))]
+        [TestCaseSource(nameof(GreaterThanOrEqualCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public bool GreaterThanOrEqualsNumber<T>(T valueToInferType, T left, T right) => Number.Create(left) >= right;
+        public bool GreaterThanOrEqualNumber<T>(T valueToInferType, T left, T right) => Number.Create(left) >= right;
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(GreaterThanOrEqualsNullableCases))]
+        [TestCaseSource(nameof(GreaterThanOrEqualNullableCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public bool GreaterThanOrEqualsNullable<T>(T valueToInferType, T? left, T? right) where T : struct => Number.GreaterThanOrEquals(left, right);
+        public bool GreaterThanOrEqualNullable<T>(T valueToInferType, T? left, T? right) where T : struct => Number.GreaterThanOrEqual(left, right);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(GreaterThanOrEqualsNullableCases))]
+        [TestCaseSource(nameof(GreaterThanOrEqualNullableCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public bool GreaterThanOrEqualsNullableNumber<T>(T valueToInferType, T? left, T? right) where T : struct => Number.Create(left) >= right;
+        public bool GreaterThanOrEqualNullableNumber<T>(T valueToInferType, T? left, T? right) where T : struct => Number.Create(left) >= right;
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        public static IEnumerable<TestCaseData> GreaterThanOrEqualsCases()
+        public static IEnumerable<TestCaseData> GreaterThanOrEqualCases()
         {
             yield return CreateTestCase<sbyte>(true, sbyte.MinValue, sbyte.MinValue);
             yield return CreateTestCase<sbyte>(false, sbyte.MinValue, sbyte.MaxValue);
@@ -613,7 +613,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<DayOfWeek>(false, DayOfWeek.Sunday, DayOfWeek.Monday);
         }
 
-        public static IEnumerable<TestCaseData> GreaterThanOrEqualsNullableCases() => GreaterThanOrEqualsCases().Concat(BinaryNullableCases(false, false, false));
+        public static IEnumerable<TestCaseData> GreaterThanOrEqualNullableCases() => GreaterThanOrEqualCases().Concat(BinaryNullableCases(false, false, false));
 
         [TestCaseSource(nameof(AddCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -1008,27 +1008,27 @@ namespace Genumerics.Tests
 
         public static IEnumerable<TestCaseData> MinNullableCases() => MinCases().Concat(BinaryNullableCases());
 
-        [TestCaseSource(nameof(AndCases))]
+        [TestCaseSource(nameof(BitwiseAndCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T And<T>(T valueToInferType, T left, T right) => Number.And(left, right);
+        public T BitwiseAnd<T>(T valueToInferType, T left, T right) => Number.BitwiseAnd(left, right);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(AndCases))]
+        [TestCaseSource(nameof(BitwiseAndCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T AndNumber<T>(T valueToInferType, T left, T right) => Number.Create(left) & right;
+        public T BitwiseAndNumber<T>(T valueToInferType, T left, T right) => Number.Create(left) & right;
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(AndNullableCases))]
+        [TestCaseSource(nameof(BitwiseAndNullableCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T? AndNullable<T>(T valueToInferType, T? left, T? right) where T : struct => Number.And(left, right);
+        public T? BitwiseAndNullable<T>(T valueToInferType, T? left, T? right) where T : struct => Number.BitwiseAnd(left, right);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(AndNullableCases))]
+        [TestCaseSource(nameof(BitwiseAndNullableCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T? AndNullableNumber<T>(T valueToInferType, T? left, T? right) where T : struct => Number.Create(left) & right;
+        public T? BitwiseAndNullableNumber<T>(T valueToInferType, T? left, T? right) where T : struct => Number.Create(left) & right;
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        public static IEnumerable<TestCaseData> AndCases()
+        public static IEnumerable<TestCaseData> BitwiseAndCases()
         {
             yield return CreateTestCase<sbyte>((sbyte)2, (sbyte)3, (sbyte)6);
             yield return CreateTestCase<byte>((byte)2, (byte)3, (byte)6);
@@ -1045,49 +1045,49 @@ namespace Genumerics.Tests
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Saturday);
         }
 
-        public static IEnumerable<TestCaseData> AndNullableCases() => AndCases().Concat(BinaryNullableCases(types: TestTypes.Integral));
+        public static IEnumerable<TestCaseData> BitwiseAndNullableCases() => BitwiseAndCases().Concat(BinaryNullableCases(types: TestTypes.Integral));
 
         [TestCaseSource(nameof(BinaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void AndThrows<T>(T valueToInferType, T left, T right) => Assert.Throws<NotSupportedException>(() => Number.And(left, right));
-#pragma warning restore IDE0060 // Remove unused parameter
-
-        [TestCaseSource(nameof(BinaryBitwiseThrowsCases))]
-#pragma warning disable IDE0060 // Remove unused parameter
-        public void AndThrowsNumber<T>(T valueToInferType, T left, T right) => Assert.Throws<NotSupportedException>(() => _ = Number.Create(left) & right);
+        public void BitwiseAndThrows<T>(T valueToInferType, T left, T right) => Assert.Throws<NotSupportedException>(() => Number.BitwiseAnd(left, right));
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(BinaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void AndNullableThrows<T>(T valueToInferType, T? left, T? right) where T : struct => Assert.Throws<NotSupportedException>(() => Number.And(left, right));
+        public void BitwiseAndThrowsNumber<T>(T valueToInferType, T left, T right) => Assert.Throws<NotSupportedException>(() => _ = Number.Create(left) & right);
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(BinaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void AndNullableThrowsNumber<T>(T valueToInferType, T? left, T? right) where T : struct => Assert.Throws<NotSupportedException>(() => _ = Number.Create(left) & right);
+        public void BitwiseAndNullableThrows<T>(T valueToInferType, T? left, T? right) where T : struct => Assert.Throws<NotSupportedException>(() => Number.BitwiseAnd(left, right));
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(OrCases))]
+        [TestCaseSource(nameof(BinaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T Or<T>(T valueToInferType, T left, T right) => Number.Or(left, right);
+        public void BitwiseAndNullableThrowsNumber<T>(T valueToInferType, T? left, T? right) where T : struct => Assert.Throws<NotSupportedException>(() => _ = Number.Create(left) & right);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(OrCases))]
+        [TestCaseSource(nameof(BitwiseOrCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T OrNumber<T>(T valueToInferType, T left, T right) => Number.Create(left) | right;
+        public T BitwiseOr<T>(T valueToInferType, T left, T right) => Number.BitwiseOr(left, right);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(OrNullableCases))]
+        [TestCaseSource(nameof(BitwiseOrCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T? OrNullable<T>(T valueToInferType, T? left, T? right) where T : struct => Number.Or(left, right);
+        public T BitwiseOrNumber<T>(T valueToInferType, T left, T right) => Number.Create(left) | right;
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(OrNullableCases))]
+        [TestCaseSource(nameof(BitwiseOrNullableCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T? OrNullableNumber<T>(T valueToInferType, T? left, T? right) where T : struct => Number.Create(left) | right;
+        public T? BitwiseOrNullable<T>(T valueToInferType, T? left, T? right) where T : struct => Number.BitwiseOr(left, right);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        public static IEnumerable<TestCaseData> OrCases()
+        [TestCaseSource(nameof(BitwiseOrNullableCases))]
+#pragma warning disable IDE0060 // Remove unused parameter
+        public T? BitwiseOrNullableNumber<T>(T valueToInferType, T? left, T? right) where T : struct => Number.Create(left) | right;
+#pragma warning restore IDE0060 // Remove unused parameter
+
+        public static IEnumerable<TestCaseData> BitwiseOrCases()
         {
             yield return CreateTestCase<sbyte>((sbyte)7, (sbyte)3, (sbyte)5);
             yield return CreateTestCase<byte>((byte)7, (byte)3, (byte)5);
@@ -1104,26 +1104,26 @@ namespace Genumerics.Tests
             yield return CreateTestCase<DayOfWeek>((DayOfWeek)7, DayOfWeek.Wednesday, DayOfWeek.Friday);
         }
 
-        public static IEnumerable<TestCaseData> OrNullableCases() => OrCases().Concat(BinaryNullableCases(types: TestTypes.Integral));
+        public static IEnumerable<TestCaseData> BitwiseOrNullableCases() => BitwiseOrCases().Concat(BinaryNullableCases(types: TestTypes.Integral));
 
         [TestCaseSource(nameof(BinaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void OrThrows<T>(T valueToInferType, T left, T right) => Assert.Throws<NotSupportedException>(() => Number.Or(left, right));
+        public void BitwiseOrThrows<T>(T valueToInferType, T left, T right) => Assert.Throws<NotSupportedException>(() => Number.BitwiseOr(left, right));
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(BinaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void OrThrowsNumber<T>(T valueToInferType, T left, T right) => Assert.Throws<NotSupportedException>(() => _ = Number.Create(left) | right);
+        public void BitwiseOrThrowsNumber<T>(T valueToInferType, T left, T right) => Assert.Throws<NotSupportedException>(() => _ = Number.Create(left) | right);
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(BinaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void OrNullableThrows<T>(T valueToInferType, T? left, T? right) where T : struct => Assert.Throws<NotSupportedException>(() => Number.Or(left, right));
+        public void BitwiseOrNullableThrows<T>(T valueToInferType, T? left, T? right) where T : struct => Assert.Throws<NotSupportedException>(() => Number.BitwiseOr(left, right));
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(BinaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void OrNullableThrowsNumber<T>(T valueToInferType, T? left, T? right) where T : struct => Assert.Throws<NotSupportedException>(() => _ = Number.Create(left) | right);
+        public void BitwiseOrNullableThrowsNumber<T>(T valueToInferType, T? left, T? right) where T : struct => Assert.Throws<NotSupportedException>(() => _ = Number.Create(left) | right);
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(XorCases))]
@@ -1185,27 +1185,27 @@ namespace Genumerics.Tests
         public void XorNullableThrowsNumber<T>(T valueToInferType, T? left, T? right) where T : struct => Assert.Throws<NotSupportedException>(() => _ = Number.Create(left) ^ right);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(NotCases))]
+        [TestCaseSource(nameof(OnesComplementCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T Not<T>(T valueToInferType, T value) => Number.Not(value);
+        public T OnesComplement<T>(T valueToInferType, T value) => Number.OnesComplement(value);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(NotCases))]
+        [TestCaseSource(nameof(OnesComplementCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T NotNumber<T>(T valueToInferType, T value) => ~Number.Create(value);
+        public T OnesComplementNumber<T>(T valueToInferType, T value) => ~Number.Create(value);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(NotNullableCases))]
+        [TestCaseSource(nameof(OnesComplementNullableCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T? NotNullable<T>(T valueToInferType, T? value) where T : struct => Number.Not(value);
+        public T? OnesComplementNullable<T>(T valueToInferType, T? value) where T : struct => Number.OnesComplement(value);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        [TestCaseSource(nameof(NotNullableCases))]
+        [TestCaseSource(nameof(OnesComplementNullableCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T? NotNullableNumber<T>(T valueToInferType, T? value) where T : struct => ~Number.Create(value);
+        public T? OnesComplementNullableNumber<T>(T valueToInferType, T? value) where T : struct => ~Number.Create(value);
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        public static IEnumerable<TestCaseData> NotCases()
+        public static IEnumerable<TestCaseData> OnesComplementCases()
         {
             yield return CreateTestCase<sbyte>((sbyte)-4, (sbyte)3);
             yield return CreateTestCase<sbyte>((sbyte)1, (sbyte)-2);
@@ -1233,26 +1233,26 @@ namespace Genumerics.Tests
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Monday, (DayOfWeek)(-2));
         }
 
-        public static IEnumerable<TestCaseData> NotNullableCases() => NotCases().Concat(UnaryNullableCases(types: TestTypes.Integral));
+        public static IEnumerable<TestCaseData> OnesComplementNullableCases() => OnesComplementCases().Concat(UnaryNullableCases(types: TestTypes.Integral));
 
         [TestCaseSource(nameof(UnaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void NotThrows<T>(T valueToInferType, T value) => Assert.Throws<NotSupportedException>(() => Number.Not(value));
+        public void OnesComplementThrows<T>(T valueToInferType, T value) => Assert.Throws<NotSupportedException>(() => Number.OnesComplement(value));
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(UnaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void NotThrowsNumber<T>(T valueToInferType, T value) => Assert.Throws<NotSupportedException>(() => _ = ~Number.Create(value));
+        public void OnesComplementThrowsNumber<T>(T valueToInferType, T value) => Assert.Throws<NotSupportedException>(() => _ = ~Number.Create(value));
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(UnaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void NotNullableThrows<T>(T valueToInferType, T? value) where T : struct => Assert.Throws<NotSupportedException>(() => Number.Not(value));
+        public void OnesComplementNullableThrows<T>(T valueToInferType, T? value) where T : struct => Assert.Throws<NotSupportedException>(() => Number.OnesComplement(value));
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(UnaryBitwiseThrowsCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void NotNullableThrowsNumber<T>(T valueToInferType, T? value) where T : struct => Assert.Throws<NotSupportedException>(() => _ = ~Number.Create(value));
+        public void OnesComplementNullableThrowsNumber<T>(T valueToInferType, T? value) where T : struct => Assert.Throws<NotSupportedException>(() => _ = ~Number.Create(value));
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(LeftShiftCases))]

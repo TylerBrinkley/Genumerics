@@ -75,7 +75,7 @@ namespace Genumerics
 
         public TEnum Abs(TEnum value) => ToEnum(default(TUnderlyingOperations).Abs(ToUnderlying(value)));
         public TEnum Add(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).Add(ToUnderlying(left), ToUnderlying(right)));
-        public TEnum And(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).And(ToUnderlying(left), ToUnderlying(right)));
+        public TEnum BitwiseAnd(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).BitwiseAnd(ToUnderlying(left), ToUnderlying(right)));
         public TEnum Ceiling(TEnum value) => ToEnum(default(TUnderlyingOperations).Ceiling(ToUnderlying(value)));
         public TEnum Clamp(TEnum value, TEnum min, TEnum max) => ToEnum(default(TUnderlyingOperations).Clamp(ToUnderlying(value), ToUnderlying(min), ToUnderlying(max)));
         public int Compare(TEnum left, TEnum right) => default(TUnderlyingOperations).Compare(ToUnderlying(left), ToUnderlying(right));
@@ -90,20 +90,20 @@ namespace Genumerics
         public bool Equals(TEnum left, TEnum right) => default(TUnderlyingOperations).Equals(ToUnderlying(left), ToUnderlying(right));
         public TEnum Floor(TEnum value) => ToEnum(default(TUnderlyingOperations).Floor(ToUnderlying(value)));
         public bool GreaterThan(TEnum left, TEnum right) => default(TUnderlyingOperations).GreaterThan(ToUnderlying(left), ToUnderlying(right));
-        public bool GreaterThanOrEquals(TEnum left, TEnum right) => default(TUnderlyingOperations).GreaterThanOrEquals(ToUnderlying(left), ToUnderlying(right));
+        public bool GreaterThanOrEqual(TEnum left, TEnum right) => default(TUnderlyingOperations).GreaterThanOrEqual(ToUnderlying(left), ToUnderlying(right));
         public bool IsEven(TEnum value) => default(TUnderlyingOperations).IsEven(ToUnderlying(value));
         public bool IsOdd(TEnum value) => default(TUnderlyingOperations).IsOdd(ToUnderlying(value));
         public bool IsPowerOfTwo(TEnum value) => default(TUnderlyingOperations).IsPowerOfTwo(ToUnderlying(value));
         public TEnum LeftShift(TEnum value, int shift) => ToEnum(default(TUnderlyingOperations).LeftShift(ToUnderlying(value), shift));
         public bool LessThan(TEnum left, TEnum right) => default(TUnderlyingOperations).LessThan(ToUnderlying(left), ToUnderlying(right));
-        public bool LessThanOrEquals(TEnum left, TEnum right) => default(TUnderlyingOperations).LessThanOrEquals(ToUnderlying(left), ToUnderlying(right));
+        public bool LessThanOrEqual(TEnum left, TEnum right) => default(TUnderlyingOperations).LessThanOrEqual(ToUnderlying(left), ToUnderlying(right));
         public TEnum Max(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).Max(ToUnderlying(left), ToUnderlying(right)));
         public TEnum Min(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).Min(ToUnderlying(left), ToUnderlying(right)));
         public TEnum Multiply(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).Multiply(ToUnderlying(left), ToUnderlying(right)));
         public TEnum Negate(TEnum value) => ToEnum(default(TUnderlyingOperations).Negate(ToUnderlying(value)));
-        public TEnum Not(TEnum value) => ToEnum(default(TUnderlyingOperations).Not(ToUnderlying(value)));
+        public TEnum OnesComplement(TEnum value) => ToEnum(default(TUnderlyingOperations).OnesComplement(ToUnderlying(value)));
         public bool NotEquals(TEnum left, TEnum right) => default(TUnderlyingOperations).NotEquals(ToUnderlying(left), ToUnderlying(right));
-        public TEnum Or(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).Or(ToUnderlying(left), ToUnderlying(right)));
+        public TEnum BitwiseOr(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).BitwiseOr(ToUnderlying(left), ToUnderlying(right)));
         public TEnum Parse(string value, NumberStyles? style, IFormatProvider? provider) => style.HasValue ?
             ToEnum(default(TUnderlyingOperations).Parse(value, style, provider)) :
 #if GENERIC_ENUM_PARSE

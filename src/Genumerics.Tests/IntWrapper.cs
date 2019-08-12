@@ -37,7 +37,7 @@ namespace Genumerics.Tests
 
         public IntWrapper Abs(IntWrapper value) => Number<int>.Operations.Abs(value);
         public IntWrapper Add(IntWrapper left, IntWrapper right) => Number<int>.Operations.Add(left, right);
-        public IntWrapper And(IntWrapper left, IntWrapper right) => Number<int>.Operations.And(left, right);
+        public IntWrapper BitwiseAnd(IntWrapper left, IntWrapper right) => Number<int>.Operations.BitwiseAnd(left, right);
         public IntWrapper Ceiling(IntWrapper value) => Number<int>.Operations.Ceiling(value);
         public IntWrapper Clamp(IntWrapper value, IntWrapper min, IntWrapper max) => Number<int>.Operations.Clamp(value, min, max);
         public int Compare(IntWrapper left, IntWrapper right) => Number<int>.Operations.Compare(left, right);
@@ -52,20 +52,20 @@ namespace Genumerics.Tests
         public bool Equals(IntWrapper left, IntWrapper right) => Number<int>.Operations.Equals(left, right);
         public IntWrapper Floor(IntWrapper value) => Number<int>.Operations.Floor(value);
         public bool GreaterThan(IntWrapper left, IntWrapper right) => Number<int>.Operations.GreaterThan(left, right);
-        public bool GreaterThanOrEquals(IntWrapper left, IntWrapper right) => Number<int>.Operations.GreaterThanOrEquals(left, right);
+        public bool GreaterThanOrEqual(IntWrapper left, IntWrapper right) => Number<int>.Operations.GreaterThanOrEqual(left, right);
         public bool IsEven(IntWrapper value) => Number<int>.Operations.IsEven(value);
         public bool IsOdd(IntWrapper value) => Number<int>.Operations.IsOdd(value);
         public bool IsPowerOfTwo(IntWrapper value) => Number<int>.Operations.IsPowerOfTwo(value);
         public IntWrapper LeftShift(IntWrapper value, int shift) => Number<int>.Operations.LeftShift(value, shift);
         public bool LessThan(IntWrapper left, IntWrapper right) => Number<int>.Operations.LessThan(left, right);
-        public bool LessThanOrEquals(IntWrapper left, IntWrapper right) => Number<int>.Operations.LessThanOrEquals(left, right);
+        public bool LessThanOrEqual(IntWrapper left, IntWrapper right) => Number<int>.Operations.LessThanOrEqual(left, right);
         public IntWrapper Max(IntWrapper left, IntWrapper right) => Number<int>.Operations.Max(left, right);
         public IntWrapper Min(IntWrapper left, IntWrapper right) => Number<int>.Operations.Min(left, right);
         public IntWrapper Multiply(IntWrapper left, IntWrapper right) => Number<int>.Operations.Multiply(left, right);
         public IntWrapper Negate(IntWrapper value) => Number<int>.Operations.Negate(value);
-        public IntWrapper Not(IntWrapper value) => Number<int>.Operations.Not(value);
+        public IntWrapper OnesComplement(IntWrapper value) => Number<int>.Operations.OnesComplement(value);
         public bool NotEquals(IntWrapper left, IntWrapper right) => Number<int>.Operations.NotEquals(left, right);
-        public IntWrapper Or(IntWrapper left, IntWrapper right) => Number<int>.Operations.Or(left, right);
+        public IntWrapper BitwiseOr(IntWrapper left, IntWrapper right) => Number<int>.Operations.BitwiseOr(left, right);
         public IntWrapper Parse(string value, NumberStyles? style, IFormatProvider provider) => Number<int>.Operations.Parse(value, style, provider);
 #if SPAN
         public IntWrapper Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider provider) => Number<int>.Operations.Parse(value, style, provider);

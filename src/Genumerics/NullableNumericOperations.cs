@@ -58,7 +58,7 @@ namespace Genumerics
 
         public T? Add(T? left, T? right) => left.HasValue && right.HasValue ? _operations.Add(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
-        public T? And(T? left, T? right) => left.HasValue && right.HasValue ? _operations.And(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? BitwiseAnd(T? left, T? right) => left.HasValue && right.HasValue ? _operations.BitwiseAnd(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
         public T? Divide(T? dividend, T? divisor) => dividend.HasValue && divisor.HasValue ? _operations.Divide(dividend.GetValueOrDefault(), divisor.GetValueOrDefault()) : (T?)null;
 
@@ -78,23 +78,23 @@ namespace Genumerics
 
         public bool GreaterThan(T? left, T? right) => left.HasValue && right.HasValue ? _operations.GreaterThan(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
 
-        public bool GreaterThanOrEquals(T? left, T? right) => left.HasValue && right.HasValue ? _operations.GreaterThanOrEquals(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
+        public bool GreaterThanOrEqual(T? left, T? right) => left.HasValue && right.HasValue ? _operations.GreaterThanOrEqual(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
 
         public T? LeftShift(T? value, int shift) => value.HasValue ? _operations.LeftShift(value.GetValueOrDefault(), shift) : value;
 
         public bool LessThan(T? left, T? right) => left.HasValue && right.HasValue ? _operations.LessThan(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
 
-        public bool LessThanOrEquals(T? left, T? right) => left.HasValue && right.HasValue ? _operations.LessThanOrEquals(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
+        public bool LessThanOrEqual(T? left, T? right) => left.HasValue && right.HasValue ? _operations.LessThanOrEqual(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
 
         public T? Multiply(T? left, T? right) => left.HasValue && right.HasValue ? _operations.Multiply(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
         public T? Negate(T? value) => value.HasValue ? _operations.Negate(value.GetValueOrDefault()) : value;
 
-        public T? Not(T? value) => value.HasValue ? _operations.Not(value.GetValueOrDefault()) : value;
+        public T? OnesComplement(T? value) => value.HasValue ? _operations.OnesComplement(value.GetValueOrDefault()) : value;
 
         public bool NotEquals(T? left, T? right) => left.HasValue && right.HasValue ? _operations.NotEquals(left.GetValueOrDefault(), right.GetValueOrDefault()) : left.HasValue || right.HasValue;
 
-        public T? Or(T? left, T? right) => left.HasValue && right.HasValue ? _operations.Or(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? BitwiseOr(T? left, T? right) => left.HasValue && right.HasValue ? _operations.BitwiseOr(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
 
         public T? Parse(string value, NumberStyles? styles, IFormatProvider? provider) => _operations.Parse(value, styles, provider);
 

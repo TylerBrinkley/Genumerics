@@ -262,27 +262,27 @@ namespace Genumerics
         #endregion
 
         #region LessThanOrEquals
-        public bool LessThanOrEquals(sbyte left, sbyte right) => left <= right;
+        public bool LessThanOrEqual(sbyte left, sbyte right) => left <= right;
 
-        public bool LessThanOrEquals(byte left, byte right) => left <= right;
+        public bool LessThanOrEqual(byte left, byte right) => left <= right;
 
-        public bool LessThanOrEquals(short left, short right) => left <= right;
+        public bool LessThanOrEqual(short left, short right) => left <= right;
 
-        public bool LessThanOrEquals(ushort left, ushort right) => left <= right;
+        public bool LessThanOrEqual(ushort left, ushort right) => left <= right;
 
-        public bool LessThanOrEquals(int left, int right) => left <= right;
+        public bool LessThanOrEqual(int left, int right) => left <= right;
 
-        public bool LessThanOrEquals(uint left, uint right) => left <= right;
+        public bool LessThanOrEqual(uint left, uint right) => left <= right;
 
-        public bool LessThanOrEquals(long left, long right) => left <= right;
+        public bool LessThanOrEqual(long left, long right) => left <= right;
 
-        public bool LessThanOrEquals(ulong left, ulong right) => left <= right;
+        public bool LessThanOrEqual(ulong left, ulong right) => left <= right;
 
-        public bool LessThanOrEquals(float left, float right) => left <= right;
+        public bool LessThanOrEqual(float left, float right) => left <= right;
 
-        public bool LessThanOrEquals(double left, double right) => left <= right;
+        public bool LessThanOrEqual(double left, double right) => left <= right;
 
-        public bool LessThanOrEquals(decimal left, decimal right) => left <= right;
+        public bool LessThanOrEqual(decimal left, decimal right) => left <= right;
         #endregion
 
         #region GreaterThan
@@ -310,27 +310,27 @@ namespace Genumerics
         #endregion
 
         #region GreaterThanOrEquals
-        public bool GreaterThanOrEquals(sbyte left, sbyte right) => left >= right;
+        public bool GreaterThanOrEqual(sbyte left, sbyte right) => left >= right;
 
-        public bool GreaterThanOrEquals(byte left, byte right) => left >= right;
+        public bool GreaterThanOrEqual(byte left, byte right) => left >= right;
 
-        public bool GreaterThanOrEquals(short left, short right) => left >= right;
+        public bool GreaterThanOrEqual(short left, short right) => left >= right;
 
-        public bool GreaterThanOrEquals(ushort left, ushort right) => left >= right;
+        public bool GreaterThanOrEqual(ushort left, ushort right) => left >= right;
 
-        public bool GreaterThanOrEquals(int left, int right) => left >= right;
+        public bool GreaterThanOrEqual(int left, int right) => left >= right;
 
-        public bool GreaterThanOrEquals(uint left, uint right) => left >= right;
+        public bool GreaterThanOrEqual(uint left, uint right) => left >= right;
 
-        public bool GreaterThanOrEquals(long left, long right) => left >= right;
+        public bool GreaterThanOrEqual(long left, long right) => left >= right;
 
-        public bool GreaterThanOrEquals(ulong left, ulong right) => left >= right;
+        public bool GreaterThanOrEqual(ulong left, ulong right) => left >= right;
 
-        public bool GreaterThanOrEquals(float left, float right) => left >= right;
+        public bool GreaterThanOrEqual(float left, float right) => left >= right;
 
-        public bool GreaterThanOrEquals(double left, double right) => left >= right;
+        public bool GreaterThanOrEqual(double left, double right) => left >= right;
 
-        public bool GreaterThanOrEquals(decimal left, decimal right) => left >= right;
+        public bool GreaterThanOrEqual(decimal left, decimal right) => left >= right;
         #endregion
 
         #region Add
@@ -554,51 +554,51 @@ namespace Genumerics
         #endregion
 
         #region And
-        public sbyte And(sbyte left, sbyte right) => (sbyte)(left & right);
+        public sbyte BitwiseAnd(sbyte left, sbyte right) => (sbyte)(left & right);
 
-        public byte And(byte left, byte right) => (byte)(left & right);
+        public byte BitwiseAnd(byte left, byte right) => (byte)(left & right);
 
-        public short And(short left, short right) => (short)(left & right);
+        public short BitwiseAnd(short left, short right) => (short)(left & right);
 
-        public ushort And(ushort left, ushort right) => (ushort)(left & right);
+        public ushort BitwiseAnd(ushort left, ushort right) => (ushort)(left & right);
 
-        public int And(int left, int right) => left & right;
+        public int BitwiseAnd(int left, int right) => left & right;
 
-        public uint And(uint left, uint right) => left & right;
+        public uint BitwiseAnd(uint left, uint right) => left & right;
 
-        public long And(long left, long right) => left & right;
+        public long BitwiseAnd(long left, long right) => left & right;
 
-        public ulong And(ulong left, ulong right) => left & right;
+        public ulong BitwiseAnd(ulong left, ulong right) => left & right;
 
-        public float And(float left, float right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
+        public float BitwiseAnd(float left, float right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
 
-        public double And(double left, double right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
+        public double BitwiseAnd(double left, double right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
 
-        public decimal And(decimal left, decimal right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
+        public decimal BitwiseAnd(decimal left, decimal right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
         #endregion
 
         #region Or
-        public sbyte Or(sbyte left, sbyte right) => (sbyte)(left | right);
+        public sbyte BitwiseOr(sbyte left, sbyte right) => (sbyte)(left | right);
 
-        public byte Or(byte left, byte right) => (byte)(left | right);
+        public byte BitwiseOr(byte left, byte right) => (byte)(left | right);
 
-        public short Or(short left, short right) => (short)(left | right);
+        public short BitwiseOr(short left, short right) => (short)(left | right);
 
-        public ushort Or(ushort left, ushort right) => (ushort)(left | right);
+        public ushort BitwiseOr(ushort left, ushort right) => (ushort)(left | right);
 
-        public int Or(int left, int right) => left | right;
+        public int BitwiseOr(int left, int right) => left | right;
 
-        public uint Or(uint left, uint right) => left | right;
+        public uint BitwiseOr(uint left, uint right) => left | right;
 
-        public long Or(long left, long right) => left | right;
+        public long BitwiseOr(long left, long right) => left | right;
 
-        public ulong Or(ulong left, ulong right) => left | right;
+        public ulong BitwiseOr(ulong left, ulong right) => left | right;
 
-        public float Or(float left, float right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
+        public float BitwiseOr(float left, float right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
 
-        public double Or(double left, double right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
+        public double BitwiseOr(double left, double right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
 
-        public decimal Or(decimal left, decimal right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
+        public decimal BitwiseOr(decimal left, decimal right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
         #endregion
 
         #region Xor
@@ -626,27 +626,27 @@ namespace Genumerics
         #endregion
 
         #region Not
-        public sbyte Not(sbyte value) => (sbyte)~value;
+        public sbyte OnesComplement(sbyte value) => (sbyte)~value;
 
-        public byte Not(byte value) => (byte)~value;
+        public byte OnesComplement(byte value) => (byte)~value;
 
-        public short Not(short value) => (short)~value;
+        public short OnesComplement(short value) => (short)~value;
 
-        public ushort Not(ushort value) => (ushort)~value;
+        public ushort OnesComplement(ushort value) => (ushort)~value;
 
-        public int Not(int value) => ~value;
+        public int OnesComplement(int value) => ~value;
 
-        public uint Not(uint value) => ~value;
+        public uint OnesComplement(uint value) => ~value;
 
-        public long Not(long value) => ~value;
+        public long OnesComplement(long value) => ~value;
 
-        public ulong Not(ulong value) => ~value;
+        public ulong OnesComplement(ulong value) => ~value;
 
-        public float Not(float value) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
+        public float OnesComplement(float value) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
 
-        public double Not(double value) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
+        public double OnesComplement(double value) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
 
-        public decimal Not(decimal value) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
+        public decimal OnesComplement(decimal value) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
         #endregion
 
         #region LeftShift
@@ -1726,11 +1726,11 @@ namespace Genumerics
 
         public bool LessThan(BigInteger left, BigInteger right) => left < right;
 
-        public bool LessThanOrEquals(BigInteger left, BigInteger right) => left <= right;
+        public bool LessThanOrEqual(BigInteger left, BigInteger right) => left <= right;
 
         public bool GreaterThan(BigInteger left, BigInteger right) => left > right;
 
-        public bool GreaterThanOrEquals(BigInteger left, BigInteger right) => left >= right;
+        public bool GreaterThanOrEqual(BigInteger left, BigInteger right) => left >= right;
 
         public BigInteger Add(BigInteger left, BigInteger right) => left + right;
 
@@ -1746,13 +1746,13 @@ namespace Genumerics
 
         public BigInteger Negate(BigInteger value) => -value;
 
-        public BigInteger And(BigInteger left, BigInteger right) => left & right;
+        public BigInteger BitwiseAnd(BigInteger left, BigInteger right) => left & right;
 
-        public BigInteger Or(BigInteger left, BigInteger right) => left | right;
+        public BigInteger BitwiseOr(BigInteger left, BigInteger right) => left | right;
 
         public BigInteger Xor(BigInteger left, BigInteger right) => left ^ right;
 
-        public BigInteger Not(BigInteger value) => ~value;
+        public BigInteger OnesComplement(BigInteger value) => ~value;
 
         public BigInteger LeftShift(BigInteger value, int shift) => value << shift;
 
