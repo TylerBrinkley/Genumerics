@@ -2049,19 +2049,19 @@ namespace Genumerics.Tests
 
         [TestCaseSource(nameof(ParseCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T Parse<T>(T valueToInferType, string value, NumberStyles? style) => style.HasValue ? Number.Parse<T>(value, style.GetValueOrDefault(), CultureInfo.InvariantCulture) : Number.Parse<T>(value, CultureInfo.InvariantCulture);
+        public T Parse<T>(T valueToInferType, string value, NumberStyles? style) => Number.Parse<T>(value, style, CultureInfo.InvariantCulture);
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(ParseCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T? ParseNullable<T>(T valueToInferType, string value, NumberStyles? style) where T : struct => style.HasValue ? Number.Parse<T?>(value, style.GetValueOrDefault(), CultureInfo.InvariantCulture) : Number.Parse<T?>(value, CultureInfo.InvariantCulture);
+        public T? ParseNullable<T>(T valueToInferType, string value, NumberStyles? style) where T : struct => Number.Parse<T?>(value, style, CultureInfo.InvariantCulture);
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(ParseCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
         public T TryParse<T>(T valueToInferType, string value, NumberStyles? style)
         {
-            Assert.IsTrue(style.HasValue ? Number.TryParse(value, style.GetValueOrDefault(), CultureInfo.InvariantCulture, out T result) : Number.TryParse(value, CultureInfo.InvariantCulture, out result));
+            Assert.IsTrue(Number.TryParse(value, style, CultureInfo.InvariantCulture, out T result));
             return result;
         }
 #pragma warning restore IDE0060 // Remove unused parameter
@@ -2071,7 +2071,7 @@ namespace Genumerics.Tests
         public T? TryParseNullable<T>(T valueToInferType, string value, NumberStyles? style)
             where T : struct
         {
-            Assert.IsTrue(style.HasValue ? Number.TryParse(value, style.GetValueOrDefault(), CultureInfo.InvariantCulture, out T? result) : Number.TryParse(value, CultureInfo.InvariantCulture, out result));
+            Assert.IsTrue(Number.TryParse(value, style, CultureInfo.InvariantCulture, out T? result));
             return result;
         }
 #pragma warning restore IDE0060 // Remove unused parameter
@@ -2079,19 +2079,19 @@ namespace Genumerics.Tests
 #if SPAN
         [TestCaseSource(nameof(ParseCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T ParseSpan<T>(T valueToInferType, string value, NumberStyles? style) => style.HasValue ? Number.Parse<T>(value.AsSpan(), style.GetValueOrDefault(), CultureInfo.InvariantCulture) : Number.Parse<T>(value.AsSpan(), CultureInfo.InvariantCulture);
+        public T ParseSpan<T>(T valueToInferType, string value, NumberStyles? style) => Number.Parse<T>(value.AsSpan(), style, CultureInfo.InvariantCulture);
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(ParseCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public T? ParseSpanNullable<T>(T valueToInferType, string value, NumberStyles? style) where T : struct => style.HasValue ? Number.Parse<T?>(value.AsSpan(), style.GetValueOrDefault(), CultureInfo.InvariantCulture) : Number.Parse<T?>(value.AsSpan(), CultureInfo.InvariantCulture);
+        public T? ParseSpanNullable<T>(T valueToInferType, string value, NumberStyles? style) where T : struct => Number.Parse<T?>(value.AsSpan(), style, CultureInfo.InvariantCulture);
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(ParseCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
         public T TryParseSpan<T>(T valueToInferType, string value, NumberStyles? style)
         {
-            Assert.IsTrue(style.HasValue ? Number.TryParse(value.AsSpan(), style.GetValueOrDefault(), CultureInfo.InvariantCulture, out T result) : Number.TryParse(value.AsSpan(), CultureInfo.InvariantCulture, out result));
+            Assert.IsTrue(Number.TryParse(value.AsSpan(), style, CultureInfo.InvariantCulture, out T result));
             return result;
         }
 #pragma warning restore IDE0060 // Remove unused parameter
@@ -2101,7 +2101,7 @@ namespace Genumerics.Tests
         public T? TryParseSpanNullable<T>(T valueToInferType, string value, NumberStyles? style)
             where T : struct
         {
-            Assert.IsTrue(style.HasValue ? Number.TryParse(value.AsSpan(), style.GetValueOrDefault(), CultureInfo.InvariantCulture, out T? result) : Number.TryParse(value.AsSpan(), CultureInfo.InvariantCulture, out result));
+            Assert.IsTrue(Number.TryParse(value.AsSpan(), style, CultureInfo.InvariantCulture, out T? result));
             return result;
         }
 #pragma warning restore IDE0060 // Remove unused parameter
@@ -2154,14 +2154,7 @@ namespace Genumerics.Tests
 #pragma warning disable IDE0060 // Remove unused parameter
         public void ParseFail<T>(T valueToInferType, string value, NumberStyles? style, Type exceptionType)
         {
-            if (style.HasValue)
-            {
-                Assert.Throws(exceptionType, () => Number.Parse<T>(value, style.GetValueOrDefault(), CultureInfo.InvariantCulture));
-            }
-            else
-            {
-                Assert.Throws(exceptionType, () => Number.Parse<T>(value, CultureInfo.InvariantCulture));
-            }
+            Assert.Throws(exceptionType, () => Number.Parse<T>(value, style, CultureInfo.InvariantCulture));
         }
 #pragma warning restore IDE0060 // Remove unused parameter
 
@@ -2169,26 +2162,19 @@ namespace Genumerics.Tests
 #pragma warning disable IDE0060 // Remove unused parameter
         public void ParseNullableFail<T>(T valueToInferType, string value, NumberStyles? style, Type exceptionType) where T : struct
         {
-            if (style.HasValue)
-            {
-                Assert.Throws(exceptionType, () => Number.Parse<T?>(value, style.GetValueOrDefault(), CultureInfo.InvariantCulture));
-            }
-            else
-            {
-                Assert.Throws(exceptionType, () => Number.Parse<T?>(value, CultureInfo.InvariantCulture));
-            }
+            Assert.Throws(exceptionType, () => Number.Parse<T?>(value, style, CultureInfo.InvariantCulture));
         }
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(ParseFailCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void TryParseFail<T>(T valueToInferType, string value, NumberStyles? style, Type exceptionType) => Assert.IsFalse(style.HasValue ? Number.TryParse(value, style.GetValueOrDefault(), CultureInfo.InvariantCulture, out T _) : Number.TryParse(value, CultureInfo.InvariantCulture, out T _));
+        public void TryParseFail<T>(T valueToInferType, string value, NumberStyles? style, Type exceptionType) => Assert.IsFalse(Number.TryParse(value, style, CultureInfo.InvariantCulture, out T _));
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(ParseFailCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
         public void TryParseNullableFail<T>(T valueToInferType, string value, NumberStyles? style, Type exceptionType)
-            where T : struct => Assert.IsFalse(style.HasValue ? Number.TryParse(value, style.GetValueOrDefault(), CultureInfo.InvariantCulture, out T? _) : Number.TryParse(value, CultureInfo.InvariantCulture, out T? _));
+            where T : struct => Assert.IsFalse(Number.TryParse(value, style, CultureInfo.InvariantCulture, out T? _));
 #pragma warning restore IDE0060 // Remove unused parameter
 
 #if SPAN
@@ -2196,14 +2182,7 @@ namespace Genumerics.Tests
 #pragma warning disable IDE0060 // Remove unused parameter
         public void ParseSpanFail<T>(T valueToInferType, string value, NumberStyles? style, Type exceptionType)
         {
-            if (style.HasValue)
-            {
-                Assert.Throws(exceptionType, () => Number.Parse<T>(value.AsSpan(), style.GetValueOrDefault(), CultureInfo.InvariantCulture));
-            }
-            else
-            {
-                Assert.Throws(exceptionType, () => Number.Parse<T>(value.AsSpan(), CultureInfo.InvariantCulture));
-            }
+            Assert.Throws(exceptionType, () => Number.Parse<T>(value.AsSpan(), style, CultureInfo.InvariantCulture));
         }
 #pragma warning restore IDE0060 // Remove unused parameter
 
@@ -2211,26 +2190,19 @@ namespace Genumerics.Tests
 #pragma warning disable IDE0060 // Remove unused parameter
         public void ParseSpanNullableFail<T>(T valueToInferType, string value, NumberStyles? style, Type exceptionType) where T : struct
         {
-            if (style.HasValue)
-            {
-                Assert.Throws(exceptionType, () => Number.Parse<T?>(value.AsSpan(), style.GetValueOrDefault(), CultureInfo.InvariantCulture));
-            }
-            else
-            {
-                Assert.Throws(exceptionType, () => Number.Parse<T?>(value.AsSpan(), CultureInfo.InvariantCulture));
-            }
+            Assert.Throws(exceptionType, () => Number.Parse<T?>(value.AsSpan(), style, CultureInfo.InvariantCulture));
         }
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(ParseFailCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void TryParseSpanFail<T>(T valueToInferType, string value, NumberStyles? style, Type exceptionType) => Assert.IsFalse(style.HasValue ? Number.TryParse(value.AsSpan(), style.GetValueOrDefault(), CultureInfo.InvariantCulture, out T _) : Number.TryParse(value.AsSpan(), CultureInfo.InvariantCulture, out T _));
+        public void TryParseSpanFail<T>(T valueToInferType, string value, NumberStyles? style, Type exceptionType) => Assert.IsFalse(Number.TryParse(value.AsSpan(), style, CultureInfo.InvariantCulture, out T _));
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(ParseFailCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
         public void TryParseSpanNullableFail<T>(T valueToInferType, string value, NumberStyles? style, Type exceptionType)
-            where T : struct => Assert.IsFalse(style.HasValue ? Number.TryParse(value.AsSpan(), style.GetValueOrDefault(), CultureInfo.InvariantCulture, out T? _) : Number.TryParse(value.AsSpan(), CultureInfo.InvariantCulture, out T? _));
+            where T : struct => Assert.IsFalse(Number.TryParse(value.AsSpan(), style, CultureInfo.InvariantCulture, out T? _));
 #pragma warning restore IDE0060 // Remove unused parameter
 #endif
 
