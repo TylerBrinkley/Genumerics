@@ -352,7 +352,7 @@ namespace Genumerics
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         /// <exception cref="FormatException"><paramref name="value"/> is not in the correct format.</exception>
-        public static T Parse<T>(string value, NumberStyles style) => Number<T>.GetOperations().Parse(value, style, NumberFormatInfo.CurrentInfo);
+        public static T Parse<T>(string value, NumberStyles? style) => Number<T>.GetOperations().Parse(value, style, NumberFormatInfo.CurrentInfo);
 
         /// <summary>
         /// Converts the string representation of a number in a specified <paramref name="style"/> and culture-specific format to its <typeparamref name="T"/> equivalent.
@@ -368,7 +368,7 @@ namespace Genumerics
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         /// <exception cref="FormatException"><paramref name="value"/> is not in the correct format.</exception>
-        public static T Parse<T>(string value, NumberStyles style, IFormatProvider? provider) => Number<T>.GetOperations().Parse(value, style, provider);
+        public static T Parse<T>(string value, NumberStyles? style, IFormatProvider? provider) => Number<T>.GetOperations().Parse(value, style, provider);
 
         /// <summary>
         /// Tries to convert the string representation of a number to its <typeparamref name="T"/> equivalent, and returns a value that indicates whether the conversion succeeded.
@@ -414,7 +414,7 @@ namespace Genumerics
         /// <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="NumberStyles"/> value.
         /// -or-
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
-        public static bool TryParse<T>(string value, NumberStyles style, out T result) => Number<T>.GetOperations().TryParse(value, style, NumberFormatInfo.CurrentInfo, out result);
+        public static bool TryParse<T>(string value, NumberStyles? style, out T result) => Number<T>.GetOperations().TryParse(value, style, NumberFormatInfo.CurrentInfo, out result);
 
         /// <summary>
         /// Tries to convert the string representation of a number in a specified <paramref name="style"/> and
@@ -435,7 +435,7 @@ namespace Genumerics
         /// <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="NumberStyles"/> value.
         /// -or-
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
-        public static bool TryParse<T>(string value, NumberStyles style, IFormatProvider? provider, out T result) => Number<T>.GetOperations().TryParse(value, style, provider, out result);
+        public static bool TryParse<T>(string value, NumberStyles? style, IFormatProvider? provider, out T result) => Number<T>.GetOperations().TryParse(value, style, provider, out result);
 
 #if SPAN
         /// <summary>
@@ -447,31 +447,6 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="FormatException"><paramref name="value"/> is not in the correct format.</exception>
         public static T Parse<T>(ReadOnlySpan<char> value) => Number<T>.GetOperations().Parse(value, null, NumberFormatInfo.CurrentInfo);
-
-        /// <summary>
-        /// Converts the string representation of a number in a specified culture-specific format to its <typeparamref name="T"/> equivalent.
-        /// </summary>
-        /// <typeparam name="T">The numeric type.</typeparam>
-        /// <param name="value">A string that contains a number to convert.</param>
-        /// <param name="provider">An object that provides culture-specific formatting information about <paramref name="value"/>.</param>
-        /// <returns>A value that is equivalent to the number specified in the <paramref name="value"/> parameter.</returns>
-        /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        /// <exception cref="FormatException"><paramref name="value"/> is not in the correct format.</exception>
-        public static T Parse<T>(ReadOnlySpan<char> value, IFormatProvider? provider) => Number<T>.GetOperations().Parse(value, null, provider);
-
-        /// <summary>
-        /// Converts the string representation of a number in a specified <paramref name="style"/> to its <typeparamref name="T"/> equivalent.
-        /// </summary>
-        /// <typeparam name="T">The numeric type.</typeparam>
-        /// <param name="value">A string that contains a number to convert.</param>
-        /// <param name="style">A bitwise combination of the enumeration values that specify the permitted format of <paramref name="value"/>.</param>
-        /// <returns>A value that is equivalent to the number specified in the <paramref name="value"/> parameter.</returns>
-        /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        /// <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="NumberStyles"/> value.
-        /// -or-
-        /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
-        /// <exception cref="FormatException"><paramref name="value"/> is not in the correct format.</exception>
-        public static T Parse<T>(ReadOnlySpan<char> value, NumberStyles style) => Number<T>.GetOperations().Parse(value, style, NumberFormatInfo.CurrentInfo);
 
         /// <summary>
         /// Converts the string representation of a number in a specified <paramref name="style"/> and culture-specific format to its <typeparamref name="T"/> equivalent.
@@ -487,7 +462,7 @@ namespace Genumerics
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         /// <exception cref="FormatException"><paramref name="value"/> is not in the correct format.</exception>
-        public static T Parse<T>(ReadOnlySpan<char> value, NumberStyles style, IFormatProvider? provider) => Number<T>.GetOperations().Parse(value, style, provider);
+        public static T Parse<T>(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider) => Number<T>.GetOperations().Parse(value, style, provider);
 
         /// <summary>
         /// Tries to convert the string representation of a number to its <typeparamref name="T"/> equivalent, and returns a value that indicates whether the conversion succeeded.
@@ -501,39 +476,6 @@ namespace Genumerics
         /// <returns><c>true</c> if value was converted successfully; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         public static bool TryParse<T>(ReadOnlySpan<char> value, out T result) => Number<T>.GetOperations().TryParse(value, null, NumberFormatInfo.CurrentInfo, out result);
-
-        /// <summary>
-        /// Tries to convert the string representation of a number in a culture-specific format to its <typeparamref name="T"/> equivalent, and returns a value that indicates whether the conversion succeeded.
-        /// </summary>
-        /// <typeparam name="T">The numeric type.</typeparam>
-        /// <param name="value">The string representation of a number.</param>
-        /// <param name="provider">An object that supplies culture-specific formatting information about <paramref name="value"/>.</param>
-        /// <param name="result">When this method returns, contains the <typeparamref name="T"/> equivalent
-        /// to the number that is contained in <paramref name="value"/>, or zero (0) if the conversion fails.
-        /// The conversion fails if the <paramref name="value"/> parameter is <c>null</c> or is not of the correct
-        /// format. This parameter is passed uninitialized.</param>
-        /// <returns><c>true</c> if value was converted successfully; otherwise, <c>false</c>.</returns>
-        /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool TryParse<T>(ReadOnlySpan<char> value, IFormatProvider? provider, out T result) => Number<T>.GetOperations().TryParse(value, null, provider, out result);
-
-        /// <summary>
-        /// Tries to convert the string representation of a number in a specified <paramref name="style"/> to its <typeparamref name="T"/> equivalent, and returns
-        /// a value that indicates whether the conversion succeeded.
-        /// </summary>
-        /// <typeparam name="T">The numeric type.</typeparam>
-        /// <param name="value">The string representation of a number. The string is interpreted using the style specified by <paramref name="style"/>.</param>
-        /// <param name="style">A bitwise combination of enumeration values that indicates the style elements that can be present in <paramref name="value"/>.</param>
-        /// <param name="result">When this method returns, contains the <typeparamref name="T"/> equivalent
-        /// to the number that is contained in <paramref name="value"/>, or zero (0)
-        /// if the conversion failed. The conversion fails if the value parameter is <c>null</c>
-        /// or is not in a format that is compliant with <paramref name="style"/>. This parameter is passed
-        /// uninitialized.</param>
-        /// <returns><c>true</c> if the value parameter was converted successfully; otherwise, <c>false</c>.</returns>
-        /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        /// <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="NumberStyles"/> value.
-        /// -or-
-        /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
-        public static bool TryParse<T>(ReadOnlySpan<char> value, NumberStyles style, out T result) => Number<T>.GetOperations().TryParse(value, style, NumberFormatInfo.CurrentInfo, out result);
 
         /// <summary>
         /// Tries to convert the string representation of a number in a specified <paramref name="style"/> and
@@ -554,7 +496,7 @@ namespace Genumerics
         /// <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="NumberStyles"/> value.
         /// -or-
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
-        public static bool TryParse<T>(ReadOnlySpan<char> value, NumberStyles style, IFormatProvider? provider, out T result) => Number<T>.GetOperations().TryParse(value, style, provider, out result);
+        public static bool TryParse<T>(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out T result) => Number<T>.GetOperations().TryParse(value, style, provider, out result);
 
         /// <summary>
         /// Tries to convert the specified numeric value to its equivalent string representation into the destination <see cref="Span{T}"/> by using the specified format and culture-specific format information.
