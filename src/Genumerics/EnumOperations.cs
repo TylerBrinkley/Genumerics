@@ -30,7 +30,7 @@ using System.Globalization;
 using System.Numerics;
 #endif
 
-#if UNSAFE
+#if UNSAFE || AGGRESSIVE_INLINING
 using System.Runtime.CompilerServices;
 #endif
 
@@ -41,23 +41,15 @@ namespace Genumerics
         where TUnderlying : struct
         where TUnderlyingOperations : struct, INumericOperations<TUnderlying>
     {
-        private static TEnum ToEnum(TUnderlying value)
-        {
-#if UNSAFE
-            return Unsafe.As<TUnderlying, TEnum>(ref value);
-#else
-            return (TEnum)Enum.ToObject(typeof(TEnum), value);
+#if AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        }
+        private static TEnum ToEnum(TUnderlying value) => Unsafe.As<TUnderlying, TEnum>(ref value);
 
-        private static TUnderlying ToUnderlying(TEnum value)
-        {
-#if UNSAFE
-            return Unsafe.As<TEnum, TUnderlying>(ref value);
-#else
-            return (TUnderlying)(object)value;
+#if AGGRESSIVE_INLINING
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-        }
+        private static TUnderlying ToUnderlying(TEnum value) => Unsafe.As<TEnum, TUnderlying>(ref value);
 
         public TEnum Zero => ToEnum(default(TUnderlyingOperations).Zero);
 

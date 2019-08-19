@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1;netcoreapp2.0;netstandard2.0;netstandard1.3;netstandard1.1;netstandard1.0;net40;net35;net20</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;netcoreapp2.0;netstandard2.0;netstandard1.3;netstandard1.1;netstandard1.0;net45;net40;net35;net20</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0</FileVersion>
     <VersionPrefix>1.0.0</VersionPrefix>
@@ -29,91 +28,58 @@
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Fody" Version="5.0.6" PrivateAssets="All" />
+    <WeaverFiles Include="$(SolutionDir)Weavers\bin\$(Configuration)\netstandard2.0\Weavers.dll" WeaverClassNames="UnsafeWeaver" />
+  </ItemGroup>
+
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
     <AssemblyTitle>Genumerics .NET Core 2.1</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;SPAN;TYPE_REFLECTION;DIV_REM;UNSAFE;GENERIC_ENUM_PARSE;ENUM_TRYPARSE</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;SPAN;TYPE_REFLECTION;DIV_REM;GENERIC_ENUM_PARSE;ENUM_TRYPARSE;FORWARD_REF;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <AssemblyTitle>Genumerics .NET Core 2.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;TYPE_REFLECTION;DIV_REM;UNSAFE;GENERIC_ENUM_PARSE;ENUM_TRYPARSE</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;TYPE_REFLECTION;DIV_REM;GENERIC_ENUM_PARSE;ENUM_TRYPARSE;FORWARD_REF;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <AssemblyTitle>Genumerics .NET Standard 2.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION;DIV_REM;UNSAFE;ENUM_TRYPARSE</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION;DIV_REM;ENUM_TRYPARSE;FORWARD_REF;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
     <AssemblyTitle>Genumerics .NET Standard 1.3</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;UNSAFE;ENUM_TRYPARSE</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;ENUM_TRYPARSE;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.1'">
     <AssemblyTitle>Genumerics .NET Standard 1.1</AssemblyTitle>
-    <DefineConstants>BIG_INTEGER;UNSAFE;ENUM_TRYPARSE</DefineConstants>
+    <DefineConstants>BIG_INTEGER;ENUM_TRYPARSE;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.0'">
     <AssemblyTitle>Genumerics .NET Standard 1.0</AssemblyTitle>
-    <DefineConstants>UNSAFE;ENUM_TRYPARSE</DefineConstants>
+    <DefineConstants>ENUM_TRYPARSE;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net45'">
+    <AssemblyTitle>Genumerics .NET 4.5</AssemblyTitle>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION;DIV_REM;ENUM_TRYPARSE;FORWARD_REF;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net40'">
     <AssemblyTitle>Genumerics .NET 4.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION;DIV_REM;ENUM_TRYPARSE</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION;DIV_REM;ENUM_TRYPARSE;FORWARD_REF;SECURITY_SAFE_CRITICAL</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net35'">
     <AssemblyTitle>Genumerics .NET 3.5</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;TYPE_REFLECTION;DIV_REM</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;TYPE_REFLECTION;DIV_REM;FORWARD_REF</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net20'">
     <AssemblyTitle>Genumerics .NET 2.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;TYPE_REFLECTION;DIV_REM</DefineConstants>
+    <DefineConstants>ICONVERTIBLE;TYPE_REFLECTION;DIV_REM;FORWARD_REF</DefineConstants>
   </PropertyGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
-      <Version>4.5.2</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
-      <Version>4.5.2</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.1'">
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
-      <Version>4.5.2</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.0'">
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
-      <Version>4.5.2</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
-      <Version>4.5.2</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
-      <Version>4.5.2</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp1.0'">
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
-      <Version>4.5.2</Version>
-    </PackageReference>
-  </ItemGroup>
-
 </Project>
