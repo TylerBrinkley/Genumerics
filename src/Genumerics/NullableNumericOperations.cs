@@ -35,12 +35,7 @@ namespace Genumerics
     internal sealed class NullableNumericOperations<T> : INumericOperations<T?>
         where T : struct
     {
-        private readonly INumericOperations<T> _operations;
-
-        public NullableNumericOperations()
-        {
-            _operations = Number<T>.GetOperations();
-        }
+        private readonly INumericOperations<T> _operations = Number<T>.GetOperations();
 
         public T? Zero => _operations.Zero;
 
