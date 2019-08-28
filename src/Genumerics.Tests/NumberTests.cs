@@ -2026,11 +2026,11 @@ namespace Genumerics.Tests
             yield return CreateTestCase<ulong>("2", 2UL, null);
             yield return CreateTestCase<ulong>("F", 15UL, "X");
             yield return CreateTestCase<float>("3.9", 3.9F, null);
-            yield return CreateTestCase<float>("-3,987.90", -3987.9F, "N2");
+            yield return CreateTestCase<float>("-3,987.90", -3987.9F, "N");
             yield return CreateTestCase<double>("3.9", 3.9, null);
-            yield return CreateTestCase<double>("-3,987.90", -3987.9, "N2");
+            yield return CreateTestCase<double>("-3,987.90", -3987.9, "N");
             yield return CreateTestCase<decimal>("3.9", 3.9M, null);
-            yield return CreateTestCase<decimal>("-3,987.90", -3987.9M, "N2");
+            yield return CreateTestCase<decimal>("-3,987.90", -3987.9M, "N");
 #if BIG_INTEGER
             yield return CreateTestCase<BigInteger>("-3", new BigInteger(-3), null);
             yield return CreateTestCase<BigInteger>("2", new BigInteger(2), "D");
