@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1;netcoreapp2.0;netstandard2.0;netstandard1.3;netstandard1.1;netstandard1.0;net45;net40;net35;net20</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0;netcoreapp2.1;netcoreapp2.0;netstandard2.0;netstandard1.3;netstandard1.1;netstandard1.0;net45;net40;net35;net20</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0</FileVersion>
     <VersionPrefix>1.0.0</VersionPrefix>
