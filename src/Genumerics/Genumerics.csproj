@@ -33,6 +33,11 @@
     <WeaverFiles Include="$(SolutionDir)Weavers\bin\$(Configuration)\netstandard2.0\Weavers.dll" WeaverClassNames="UnsafeWeaver" />
   </ItemGroup>
 
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
+    <AssemblyTitle>Genumerics .NET Core 3.0</AssemblyTitle>
+    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;SPAN;TYPE_REFLECTION;DIV_REM;GENERIC_ENUM_PARSE;ENUM_TRYPARSE;FORWARD_REF;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL;NULLABLE_ATTRIBUTES</DefineConstants>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
     <AssemblyTitle>Genumerics .NET Core 2.1</AssemblyTitle>
     <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;SPAN;TYPE_REFLECTION;DIV_REM;GENERIC_ENUM_PARSE;ENUM_TRYPARSE;FORWARD_REF;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>

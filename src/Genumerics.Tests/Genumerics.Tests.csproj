@@ -17,6 +17,10 @@
     <ProjectReference Include="..\Genumerics\Genumerics.csproj" />
   </ItemGroup>
 
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
+    <DefineConstants>BIG_INTEGER;SPAN</DefineConstants>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
     <DefineConstants>BIG_INTEGER;SPAN</DefineConstants>
   </PropertyGroup>
