@@ -16,7 +16,7 @@ jobs:
       with:
         dotnet-version: 3.0.100-preview8-013656
     - name: Build and test with dotnet
-      uses: TylerBrinkley/Genumerics/src
+      working-directory: src
       run: |
         dotnet build --configuration Release
         dotnet test
