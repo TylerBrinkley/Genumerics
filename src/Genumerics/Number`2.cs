@@ -163,35 +163,37 @@ namespace Genumerics
         /// <returns>The <see cref="TypeCode"/> for <typeparamref name="T"/>.</returns>
         public TypeCode GetTypeCode() => default(TNumericOperations).TypeCode;
 
-        bool IConvertible.ToBoolean(IFormatProvider provider) => Convert.ToBoolean(Value, provider);
+        bool IConvertible.ToBoolean(IFormatProvider? provider) => Convert.ToBoolean(Value, provider);
 
-        byte IConvertible.ToByte(IFormatProvider provider) => default(TNumericOperations).ToByte(Value);
+        byte IConvertible.ToByte(IFormatProvider? provider) => default(TNumericOperations).ToByte(Value);
 
-        char IConvertible.ToChar(IFormatProvider provider) => Convert.ToChar(Value, provider);
+        char IConvertible.ToChar(IFormatProvider? provider) => Convert.ToChar(Value, provider);
 
-        DateTime IConvertible.ToDateTime(IFormatProvider provider) => Convert.ToDateTime(Value, provider);
+        DateTime IConvertible.ToDateTime(IFormatProvider? provider) => Convert.ToDateTime(Value, provider);
 
-        decimal IConvertible.ToDecimal(IFormatProvider provider) => default(TNumericOperations).ToDecimal(Value);
+        decimal IConvertible.ToDecimal(IFormatProvider? provider) => default(TNumericOperations).ToDecimal(Value);
 
-        double IConvertible.ToDouble(IFormatProvider provider) => default(TNumericOperations).ToDouble(Value);
+        double IConvertible.ToDouble(IFormatProvider? provider) => default(TNumericOperations).ToDouble(Value);
 
-        short IConvertible.ToInt16(IFormatProvider provider) => default(TNumericOperations).ToInt16(Value);
+        short IConvertible.ToInt16(IFormatProvider? provider) => default(TNumericOperations).ToInt16(Value);
 
-        int IConvertible.ToInt32(IFormatProvider provider) => default(TNumericOperations).ToInt32(Value);
+        int IConvertible.ToInt32(IFormatProvider? provider) => default(TNumericOperations).ToInt32(Value);
 
-        long IConvertible.ToInt64(IFormatProvider provider) => default(TNumericOperations).ToInt64(Value);
+        long IConvertible.ToInt64(IFormatProvider? provider) => default(TNumericOperations).ToInt64(Value);
 
-        sbyte IConvertible.ToSByte(IFormatProvider provider) => default(TNumericOperations).ToSByte(Value);
+        sbyte IConvertible.ToSByte(IFormatProvider? provider) => default(TNumericOperations).ToSByte(Value);
 
-        float IConvertible.ToSingle(IFormatProvider provider) => default(TNumericOperations).ToSingle(Value);
+        float IConvertible.ToSingle(IFormatProvider? provider) => default(TNumericOperations).ToSingle(Value);
 
-        object IConvertible.ToType(Type conversionType, IFormatProvider provider) => Convert.ChangeType(Value, conversionType, provider);
+#pragma warning disable CS8616 // Nullability of reference types in return type doesn't match implemented member.
+        object? IConvertible.ToType(Type conversionType, IFormatProvider? provider) => Convert.ChangeType(Value, conversionType, provider);
+#pragma warning restore CS8616 // Nullability of reference types in return type doesn't match implemented member.
 
-        ushort IConvertible.ToUInt16(IFormatProvider provider) => default(TNumericOperations).ToUInt16(Value);
+        ushort IConvertible.ToUInt16(IFormatProvider? provider) => default(TNumericOperations).ToUInt16(Value);
 
-        uint IConvertible.ToUInt32(IFormatProvider provider) => default(TNumericOperations).ToUInt32(Value);
+        uint IConvertible.ToUInt32(IFormatProvider? provider) => default(TNumericOperations).ToUInt32(Value);
 
-        ulong IConvertible.ToUInt64(IFormatProvider provider) => default(TNumericOperations).ToUInt64(Value);
+        ulong IConvertible.ToUInt64(IFormatProvider? provider) => default(TNumericOperations).ToUInt64(Value);
 #endif
 
         /// <summary>

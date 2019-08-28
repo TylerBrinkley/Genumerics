@@ -98,7 +98,7 @@ namespace Genumerics
 
                 if (operationsType != null)
                 {
-                    operations = Interlocked.CompareExchange(ref s_operations, (operations = (INumericOperations<T>)Activator.CreateInstance(operationsType)), null) ?? operations;
+                    operations = Interlocked.CompareExchange(ref s_operations, (operations = (INumericOperations<T>)Activator.CreateInstance(operationsType)!), null) ?? operations;
                 }
             }
             return operations!; // Could be null but only when throwErrorWhenNull = false
@@ -146,7 +146,9 @@ namespace Genumerics
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns>The string representation of the current numeric value in the format specified by the <paramref name="provider"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
+#pragma warning disable CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
         public string? ToString(IFormatProvider? provider) => GetOperations().ToString(Value, null, provider);
+#pragma warning restore CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
 
         /// <summary>
         /// Converts the numeric value of the current numeric object to its equivalent string representation by using the specified format and culture-specific format information.
@@ -156,7 +158,9 @@ namespace Genumerics
         /// <returns>The string representation of the current numeric value as specified by the <paramref name="format"/> and <paramref name="provider"/> parameters.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="FormatException"><paramref name="format"/> is not a valid format string.</exception>
+#pragma warning disable CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
         public string? ToString(string? format, IFormatProvider? provider) => GetOperations().ToString(Value, format, provider);
+#pragma warning restore CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
 
 #if SPAN
         /// <summary>
@@ -238,35 +242,37 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         public TypeCode GetTypeCode() => GetOperations().TypeCode;
 
-        bool IConvertible.ToBoolean(IFormatProvider provider) => Convert.ToBoolean(Value, provider);
+        bool IConvertible.ToBoolean(IFormatProvider? provider) => Convert.ToBoolean(Value, provider);
 
-        byte IConvertible.ToByte(IFormatProvider provider) => GetOperations().ToByte(Value);
+        byte IConvertible.ToByte(IFormatProvider? provider) => GetOperations().ToByte(Value);
 
-        char IConvertible.ToChar(IFormatProvider provider) => Convert.ToChar(Value, provider);
+        char IConvertible.ToChar(IFormatProvider? provider) => Convert.ToChar(Value, provider);
 
-        DateTime IConvertible.ToDateTime(IFormatProvider provider) => Convert.ToDateTime(Value, provider);
+        DateTime IConvertible.ToDateTime(IFormatProvider? provider) => Convert.ToDateTime(Value, provider);
 
-        decimal IConvertible.ToDecimal(IFormatProvider provider) => GetOperations().ToDecimal(Value);
+        decimal IConvertible.ToDecimal(IFormatProvider? provider) => GetOperations().ToDecimal(Value);
 
-        double IConvertible.ToDouble(IFormatProvider provider) => GetOperations().ToDouble(Value);
+        double IConvertible.ToDouble(IFormatProvider? provider) => GetOperations().ToDouble(Value);
 
-        short IConvertible.ToInt16(IFormatProvider provider) => GetOperations().ToInt16(Value);
+        short IConvertible.ToInt16(IFormatProvider? provider) => GetOperations().ToInt16(Value);
 
-        int IConvertible.ToInt32(IFormatProvider provider) => GetOperations().ToInt32(Value);
+        int IConvertible.ToInt32(IFormatProvider? provider) => GetOperations().ToInt32(Value);
 
-        long IConvertible.ToInt64(IFormatProvider provider) => GetOperations().ToInt64(Value);
+        long IConvertible.ToInt64(IFormatProvider? provider) => GetOperations().ToInt64(Value);
 
-        sbyte IConvertible.ToSByte(IFormatProvider provider) => GetOperations().ToSByte(Value);
+        sbyte IConvertible.ToSByte(IFormatProvider? provider) => GetOperations().ToSByte(Value);
 
-        float IConvertible.ToSingle(IFormatProvider provider) => GetOperations().ToSingle(Value);
+        float IConvertible.ToSingle(IFormatProvider? provider) => GetOperations().ToSingle(Value);
 
-        object IConvertible.ToType(Type conversionType, IFormatProvider provider) => Convert.ChangeType(Value, conversionType, provider);
+#pragma warning disable CS8616 // Nullability of reference types in return type doesn't match implemented member.
+        object? IConvertible.ToType(Type conversionType, IFormatProvider? provider) => Convert.ChangeType(Value, conversionType, provider);
+#pragma warning restore CS8616 // Nullability of reference types in return type doesn't match implemented member.
 
-        ushort IConvertible.ToUInt16(IFormatProvider provider) => GetOperations().ToUInt16(Value);
+        ushort IConvertible.ToUInt16(IFormatProvider? provider) => GetOperations().ToUInt16(Value);
 
-        uint IConvertible.ToUInt32(IFormatProvider provider) => GetOperations().ToUInt32(Value);
+        uint IConvertible.ToUInt32(IFormatProvider? provider) => GetOperations().ToUInt32(Value);
 
-        ulong IConvertible.ToUInt64(IFormatProvider provider) => GetOperations().ToUInt64(Value);
+        ulong IConvertible.ToUInt64(IFormatProvider? provider) => GetOperations().ToUInt64(Value);
 #endif
 
         /// <summary>
