@@ -2217,7 +2217,6 @@ namespace Genumerics.Tests
             yield return CreateTestCase<long>(new object[] { ulong.MaxValue.ToString(), null, typeof(OverflowException) });
             yield return CreateTestCase<ulong>(new object[] { long.MinValue.ToString(), null, typeof(OverflowException) });
             yield return CreateTestCase<float>(new object[] { double.MaxValue.ToString(), null, typeof(OverflowException) });
-            yield return CreateTestCase<double>(new object[] { "1.79769313486232E+309", null, typeof(OverflowException) });
             yield return CreateTestCase<IntWrapper>(new object[] { uint.MaxValue.ToString(), null, typeof(OverflowException) });
             yield return CreateTestCase<DayOfWeek>(new object[] { uint.MaxValue.ToString(), null, typeof(OverflowException) });
             yield return CreateTestCase<sbyte>(new object[] { "a", null, typeof(FormatException) });
