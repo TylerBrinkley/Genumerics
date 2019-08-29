@@ -32,8 +32,7 @@ using System.Numerics;
 
 namespace Genumerics
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member, type should only really be used through the interface as a type constraint.
-                               // I'd make all the members use explicit interface implementation but that would greatly increase the library's dll size.
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member, type should only really be used through the interface as a type constraint. I'd make all the members use explicit interface implementation but that would greatly increase the library's dll size.
     /// <summary>
     /// Defines all the default numeric operations.
     /// </summary>
@@ -820,27 +819,27 @@ namespace Genumerics
 #endif
 
         #region Convert
-        sbyte INumericOperations<sbyte>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToSByte(value) ?? Convert.ToSByte(value);
+        sbyte INumericOperations<sbyte>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToSByte(value) ?? Convert.ToSByte(value);
 
-        byte INumericOperations<byte>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToByte(value) ?? Convert.ToByte(value);
+        byte INumericOperations<byte>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToByte(value) ?? Convert.ToByte(value);
 
-        short INumericOperations<short>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToInt16(value) ?? Convert.ToInt16(value);
+        short INumericOperations<short>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToInt16(value) ?? Convert.ToInt16(value);
 
-        ushort INumericOperations<ushort>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToUInt16(value) ?? Convert.ToUInt16(value);
+        ushort INumericOperations<ushort>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToUInt16(value) ?? Convert.ToUInt16(value);
 
-        int INumericOperations<int>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToInt32(value) ?? Convert.ToInt32(value);
+        int INumericOperations<int>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToInt32(value) ?? Convert.ToInt32(value);
 
-        uint INumericOperations<uint>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToUInt32(value) ?? Convert.ToUInt32(value);
+        uint INumericOperations<uint>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToUInt32(value) ?? Convert.ToUInt32(value);
 
-        long INumericOperations<long>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToInt64(value) ?? Convert.ToInt64(value);
+        long INumericOperations<long>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToInt64(value) ?? Convert.ToInt64(value);
 
-        ulong INumericOperations<ulong>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToUInt64(value) ?? Convert.ToUInt64(value);
+        ulong INumericOperations<ulong>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToUInt64(value) ?? Convert.ToUInt64(value);
 
-        float INumericOperations<float>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToSingle(value) ?? Convert.ToSingle(value);
+        float INumericOperations<float>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToSingle(value) ?? Convert.ToSingle(value);
 
-        double INumericOperations<double>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToDouble(value) ?? Convert.ToDouble(value);
+        double INumericOperations<double>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToDouble(value) ?? Convert.ToDouble(value);
 
-        decimal INumericOperations<decimal>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations()?.ToDecimal(value) ?? Convert.ToDecimal(value);
+        decimal INumericOperations<decimal>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToDecimal(value) ?? Convert.ToDecimal(value);
         #endregion
 
         #region ToSByte
@@ -1770,7 +1769,7 @@ namespace Genumerics
         public bool TryFormat(BigInteger value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
 #endif
 
-        BigInteger INumericOperations<BigInteger>.Convert<TFrom>(TFrom value) => Number<TFrom>.GetOperations().ToBigInteger(value);
+        BigInteger INumericOperations<BigInteger>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>().ToBigInteger(value);
 
         public BigInteger Round(BigInteger value, int digits, MidpointRounding mode) => value;
 

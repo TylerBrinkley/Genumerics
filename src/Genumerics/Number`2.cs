@@ -152,7 +152,7 @@ namespace Genumerics
         /// <exception cref="OverflowException">Number is greater than <typeparamref name="TTo"/>'s MaxValue or less than <typeparamref name="TTo"/>'s MinValue.</exception>
         public TTo To<TTo>()
         {
-            var operations = Number<TTo>.GetOperations();
+            var operations = Number.GetOperations<TTo>();
             return Value != null ? operations.Convert(Value) : default;
         }
 

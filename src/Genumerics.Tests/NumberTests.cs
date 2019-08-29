@@ -40,7 +40,7 @@ namespace Genumerics.Tests
     {
         static NumberTests()
         {
-            Number<IntWrapper>.Operations = new IntWrapperOperations();
+            Number.RegisterOperations<IntWrapper, IntWrapperOperations>();
         }
 
         private static TestCaseData CreateTestCase<T>(object expectedResult, params object[] args) => new TestCaseData(new[] { (object)default(T) }.Concat(args ?? new object[] { null }).ToArray()) { ExpectedResult = expectedResult };

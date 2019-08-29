@@ -1,4 +1,29 @@
-﻿using System.Runtime.CompilerServices;
+﻿#region License
+// Copyright (c) 2019 Tyler Brinkley
+//
+// Permission is hereby granted, free of charge, to any person
+// obtaining a copy of this software and associated documentation
+// files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use,
+// copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following
+// conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+#endregion
+
+using System.Runtime.CompilerServices;
 using System.Security;
 
 namespace Genumerics
@@ -15,28 +40,6 @@ namespace Genumerics
 #if SECURITY_SAFE_CRITICAL
         [SecuritySafeCritical]
 #endif
-        public static extern ref TTo As<TFrom, TTo>(ref TFrom source);
-
-#if FORWARD_REF && AGGRESSIVE_INLINING
-        [MethodImpl(MethodImplOptions.ForwardRef | MethodImplOptions.AggressiveInlining)]
-#elif AGGRESSIVE_INLINING
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#elif FORWARD_REF
-        [MethodImpl(MethodImplOptions.ForwardRef)]
-#endif
-#if SECURITY_SAFE_CRITICAL
-        [SecuritySafeCritical]
-#endif
-        public static extern T As<T>(object? value) where T : class;
-
-        internal static ref byte GetRawData(this object obj) =>
-            ref As<RawData>(obj).Data;
-    }
-
-    // Helper class to assist with unsafe pinning of arbitrary objects.
-    // It's used by VM code.
-    internal class RawData
-    {
-        public byte Data;
+        public static extern TTo As<TFrom, TTo>(TFrom source);
     }
 }

@@ -32,8 +32,8 @@ using System.Numerics;
 
 namespace Genumerics
 {
-    // A class wrapper instead of struct for better performance when used directly as an interface
-    internal sealed class DefaultNumericOperations<T, TNumericOperations> : INumericOperations<T>
+    // A class wrapper instead of using struct directly for better performance when used as an interface
+    internal sealed class NumericOperationsWrapper<T, TNumericOperations> : INumericOperations<T>
         where TNumericOperations : struct, INumericOperations<T>
     {
         public T Zero => default(TNumericOperations).Zero;

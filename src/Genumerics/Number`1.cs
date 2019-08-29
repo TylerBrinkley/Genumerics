@@ -24,8 +24,6 @@
 #endregion
 
 using System;
-using System.Threading;
-using System.Diagnostics.CodeAnalysis;
 
 #if BIG_INTEGER
 using System.Numerics;
@@ -42,67 +40,7 @@ namespace Genumerics
         , IConvertible
 #endif
     {
-        private static INumericOperations<T>? s_operations;
-
-        /// <summary>
-        /// Gets or sets the operations supported for the numeric type <typeparamref name="T"/>. Cannot overwrite once set.
-        /// Cannot set for nullable value types. Nullable types are handled automatically.
-        /// </summary>
-        [CLSCompliant(false)]
-        [DisallowNull]
-        public static INumericOperations<T>? Operations
-        {
-            get => GetOperations(throwErrorWhenNull: false);
-            set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException(nameof(value));
-                }
-
-                if (default(T)! == null && typeof(T).IsValueType())
-                {
-                    throw new ArgumentException("Cannot explicitly set operations for nullable value types. Nullable value types are handled automatically.");
-                }
-
-                if (Operations != null || Interlocked.CompareExchange(ref s_operations, value, null) != null)
-                {
-                    throw new InvalidOperationException("Cannot overwrite operations once set.");
-                }
-            }
-        }
-
-        internal static INumericOperations<T> GetOperations(bool throwErrorWhenNull = true)
-        {
-            var operations = s_operations;
-            if (operations == null)
-            {
-                var numericType = typeof(T);
-                Type? operationsType = null;
-                if (default(DefaultNumericOperations) is INumericOperations<T>)
-                {
-                    operationsType = typeof(DefaultNumericOperations<,>).MakeGenericType(numericType, typeof(DefaultNumericOperations));
-                }
-                else if (default(T)! == null && numericType.IsValueType())
-                {
-                    operationsType = typeof(NullableNumericOperations<>).MakeGenericType(numericType.GetGenericArguments()[0]);
-                }
-                else if (numericType.IsEnum())
-                {
-                    operationsType = typeof(EnumOperations<,,>).MakeGenericType(numericType, Enum.GetUnderlyingType(numericType), typeof(DefaultNumericOperations));
-                }
-                else if (throwErrorWhenNull)
-                {
-                    throw new NotSupportedException($"Generic numeric operations on {typeof(T)} are not supported. The only supported types are SByte, Byte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, BigInteger, and enums as well as the nullable versions of each of these types.");
-                }
-
-                if (operationsType != null)
-                {
-                    operations = Interlocked.CompareExchange(ref s_operations, (operations = (INumericOperations<T>)Activator.CreateInstance(operationsType)!), null) ?? operations;
-                }
-            }
-            return operations!; // Could be null but only when throwErrorWhenNull = false
-        }
+        internal static INumericOperations<T>? s_operations;
 
         /// <summary>
         /// The numeric value.
@@ -129,7 +67,7 @@ namespace Genumerics
         /// </summary>
         /// <returns>The string representation of the current numeric value.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public override string? ToString() => GetOperations().ToString(Value, null, null);
+        public override string? ToString() => Number.GetOperations<T>().ToString(Value, null, null);
 
         /// <summary>
         /// Converts the numeric value of the current numeric object to its equivalent string representation by using the specified format.
@@ -138,7 +76,7 @@ namespace Genumerics
         /// <returns>The string representation of the current numeric value in the format specified by the <paramref name="format"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="FormatException"><paramref name="format"/> is not a valid format string.</exception>
-        public string? ToString(string? format) => GetOperations().ToString(Value, format, null);
+        public string? ToString(string? format) => Number.GetOperations<T>().ToString(Value, format, null);
 
         /// <summary>
         /// Converts the numeric value of the current numeric object to its equivalent string representation by using the specified culture-specific formatting information.
@@ -147,7 +85,7 @@ namespace Genumerics
         /// <returns>The string representation of the current numeric value in the format specified by the <paramref name="provider"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
 #pragma warning disable CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
-        public string? ToString(IFormatProvider? provider) => GetOperations().ToString(Value, null, provider);
+        public string? ToString(IFormatProvider? provider) => Number.GetOperations<T>().ToString(Value, null, provider);
 #pragma warning restore CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
 
         /// <summary>
@@ -159,7 +97,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="FormatException"><paramref name="format"/> is not a valid format string.</exception>
 #pragma warning disable CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
-        public string? ToString(string? format, IFormatProvider? provider) => GetOperations().ToString(Value, format, provider);
+        public string? ToString(string? format, IFormatProvider? provider) => Number.GetOperations<T>().ToString(Value, format, provider);
 #pragma warning restore CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
 
 #if SPAN
@@ -172,7 +110,7 @@ namespace Genumerics
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns><c>true</c> if the value's string representation was successfully written to <paramref name="destination"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => GetOperations().TryFormat(Value, destination, out charsWritten, format, provider);
+        public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => Number.GetOperations<T>().TryFormat(Value, destination, out charsWritten, format, provider);
 #endif
 
         /// <summary>
@@ -189,7 +127,7 @@ namespace Genumerics
         /// <param name="other">The object to compare.</param>
         /// <returns><c>true</c> if this numeric object and <paramref name="other"/> have the same value; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public bool Equals(Number<T> other) => GetOperations().Equals(Value, other);
+        public bool Equals(Number<T> other) => Number.GetOperations<T>().Equals(Value, other);
 
         /// <summary>
         /// Compares this instance to a specified object and returns an integer that indicates
@@ -214,7 +152,7 @@ namespace Genumerics
         /// less than zero if current instance is less than <paramref name="other"/>,
         /// zero if current instance equals <paramref name="other"/>,
         /// and greater than zero if current instance is greater than <paramref name="other"/>.</returns>
-        public int CompareTo(Number<T> other) => GetOperations().Compare(Value, other);
+        public int CompareTo(Number<T> other) => Number.GetOperations<T>().Compare(Value, other);
 
         /// <summary>
         /// Converts the number to its <typeparamref name="TTo"/> equivalent.
@@ -225,12 +163,12 @@ namespace Genumerics
         /// <exception cref="OverflowException">Number is greater than <typeparamref name="TTo"/>'s MaxValue or less than <typeparamref name="TTo"/>'s MinValue.</exception>
         public TTo To<TTo>()
         {
-            var operations = Number<TTo>.GetOperations();
+            var operations = Number.GetOperations<TTo>();
             if (Value != null)
             {
                 return operations.Convert(Value);
             }
-            _ = GetOperations(); // Necessary to validate conversion types
+            _ = Number.GetOperations<T>(); // Necessary to validate conversion types
             return default!;
         }
 
@@ -240,39 +178,39 @@ namespace Genumerics
         /// </summary>
         /// <returns>The <see cref="TypeCode"/> for <typeparamref name="T"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public TypeCode GetTypeCode() => GetOperations().TypeCode;
+        public TypeCode GetTypeCode() => Number.GetOperations<T>().TypeCode;
 
         bool IConvertible.ToBoolean(IFormatProvider? provider) => Convert.ToBoolean(Value, provider);
 
-        byte IConvertible.ToByte(IFormatProvider? provider) => GetOperations().ToByte(Value);
+        byte IConvertible.ToByte(IFormatProvider? provider) => Number.GetOperations<T>().ToByte(Value);
 
         char IConvertible.ToChar(IFormatProvider? provider) => Convert.ToChar(Value, provider);
 
         DateTime IConvertible.ToDateTime(IFormatProvider? provider) => Convert.ToDateTime(Value, provider);
 
-        decimal IConvertible.ToDecimal(IFormatProvider? provider) => GetOperations().ToDecimal(Value);
+        decimal IConvertible.ToDecimal(IFormatProvider? provider) => Number.GetOperations<T>().ToDecimal(Value);
 
-        double IConvertible.ToDouble(IFormatProvider? provider) => GetOperations().ToDouble(Value);
+        double IConvertible.ToDouble(IFormatProvider? provider) => Number.GetOperations<T>().ToDouble(Value);
 
-        short IConvertible.ToInt16(IFormatProvider? provider) => GetOperations().ToInt16(Value);
+        short IConvertible.ToInt16(IFormatProvider? provider) => Number.GetOperations<T>().ToInt16(Value);
 
-        int IConvertible.ToInt32(IFormatProvider? provider) => GetOperations().ToInt32(Value);
+        int IConvertible.ToInt32(IFormatProvider? provider) => Number.GetOperations<T>().ToInt32(Value);
 
-        long IConvertible.ToInt64(IFormatProvider? provider) => GetOperations().ToInt64(Value);
+        long IConvertible.ToInt64(IFormatProvider? provider) => Number.GetOperations<T>().ToInt64(Value);
 
-        sbyte IConvertible.ToSByte(IFormatProvider? provider) => GetOperations().ToSByte(Value);
+        sbyte IConvertible.ToSByte(IFormatProvider? provider) => Number.GetOperations<T>().ToSByte(Value);
 
-        float IConvertible.ToSingle(IFormatProvider? provider) => GetOperations().ToSingle(Value);
+        float IConvertible.ToSingle(IFormatProvider? provider) => Number.GetOperations<T>().ToSingle(Value);
 
 #pragma warning disable CS8616 // Nullability of reference types in return type doesn't match implemented member.
         object? IConvertible.ToType(Type conversionType, IFormatProvider? provider) => Convert.ChangeType(Value, conversionType, provider);
 #pragma warning restore CS8616 // Nullability of reference types in return type doesn't match implemented member.
 
-        ushort IConvertible.ToUInt16(IFormatProvider? provider) => GetOperations().ToUInt16(Value);
+        ushort IConvertible.ToUInt16(IFormatProvider? provider) => Number.GetOperations<T>().ToUInt16(Value);
 
-        uint IConvertible.ToUInt32(IFormatProvider? provider) => GetOperations().ToUInt32(Value);
+        uint IConvertible.ToUInt32(IFormatProvider? provider) => Number.GetOperations<T>().ToUInt32(Value);
 
-        ulong IConvertible.ToUInt64(IFormatProvider? provider) => GetOperations().ToUInt64(Value);
+        ulong IConvertible.ToUInt64(IFormatProvider? provider) => Number.GetOperations<T>().ToUInt64(Value);
 #endif
 
         /// <summary>
@@ -302,7 +240,7 @@ namespace Genumerics
         /// <param name="right">The second value to add.</param>
         /// <returns>The sum of <paramref name="left"/> and <paramref name="right"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static Number<T> operator +(Number<T> left, Number<T> right) => GetOperations().Add(left, right);
+        public static Number<T> operator +(Number<T> left, Number<T> right) => Number.GetOperations<T>().Add(left, right);
 
         /// <summary>
         /// Negates a specified numeric value.
@@ -312,7 +250,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type doesn't support negative values.</exception>
-        public static Number<T> operator -(Number<T> value) => GetOperations().Negate(value);
+        public static Number<T> operator -(Number<T> value) => Number.GetOperations<T>().Negate(value);
 
         /// <summary>
         /// Subtracts a numeric value from another numeric value.
@@ -321,7 +259,7 @@ namespace Genumerics
         /// <param name="right">The value to subtract (the subtrahend).</param>
         /// <returns>The result of subtracting <paramref name="right"/> from <paramref name="left"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static Number<T> operator -(Number<T> left, Number<T> right) => GetOperations().Subtract(left, right);
+        public static Number<T> operator -(Number<T> left, Number<T> right) => Number.GetOperations<T>().Subtract(left, right);
 
         /// <summary>
         /// Returns the bitwise one's complement of a numeric value.
@@ -331,7 +269,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator ~(Number<T> value) => GetOperations().OnesComplement(value);
+        public static Number<T> operator ~(Number<T> value) => Number.GetOperations<T>().OnesComplement(value);
 
         /// <summary>
         /// Increments a numeric value by 1.
@@ -339,7 +277,7 @@ namespace Genumerics
         /// <param name="value">The value to increment.</param>
         /// <returns>The value of the <paramref name="value"/> parameter incremented by 1.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static Number<T> operator ++(Number<T> value) => GetOperations().Add(value, GetOperations().One);
+        public static Number<T> operator ++(Number<T> value) => Number.GetOperations<T>().Add(value, Number.GetOperations<T>().One);
 
         /// <summary>
         /// Decrements a numeric value by 1.
@@ -347,7 +285,7 @@ namespace Genumerics
         /// <param name="value">The value to decrement.</param>
         /// <returns>The value of the <paramref name="value"/> parameter decremented by 1.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static Number<T> operator --(Number<T> value) => GetOperations().Subtract(value, GetOperations().One);
+        public static Number<T> operator --(Number<T> value) => Number.GetOperations<T>().Subtract(value, Number.GetOperations<T>().One);
 
         /// <summary>
         /// Multiplies two specified numeric values.
@@ -356,7 +294,7 @@ namespace Genumerics
         /// <param name="right">The second value to multiply.</param>
         /// <returns>The product of <paramref name="left"/> and <paramref name="right"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static Number<T> operator *(Number<T> left, Number<T> right) => GetOperations().Multiply(left, right);
+        public static Number<T> operator *(Number<T> left, Number<T> right) => Number.GetOperations<T>().Multiply(left, right);
 
         /// <summary>
         /// Divides a specified numeric value by another specified numeric value.
@@ -366,7 +304,7 @@ namespace Genumerics
         /// <returns>The result of the division.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="DivideByZeroException"><paramref name="divisor"/> is zero (0).</exception>
-        public static Number<T> operator /(Number<T> dividend, Number<T> divisor) => GetOperations().Divide(dividend, divisor);
+        public static Number<T> operator /(Number<T> dividend, Number<T> divisor) => Number.GetOperations<T>().Divide(dividend, divisor);
 
         /// <summary>
         /// Returns the remainder that results from division with two specified numeric values.
@@ -376,7 +314,7 @@ namespace Genumerics
         /// <returns>The remainder that results from the division.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="DivideByZeroException"><paramref name="divisor"/> is zero (0).</exception>
-        public static Number<T> operator %(Number<T> dividend, Number<T> divisor) => GetOperations().Remainder(dividend, divisor);
+        public static Number<T> operator %(Number<T> dividend, Number<T> divisor) => Number.GetOperations<T>().Remainder(dividend, divisor);
 
         /// <summary>
         /// Performs a bitwise And operation on two integral values.
@@ -387,7 +325,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator &(Number<T> left, Number<T> right) => GetOperations().BitwiseAnd(left, right);
+        public static Number<T> operator &(Number<T> left, Number<T> right) => Number.GetOperations<T>().BitwiseAnd(left, right);
 
         /// <summary>
         /// Performs a bitwise Or operation on two integral values.
@@ -398,7 +336,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator |(Number<T> left, Number<T> right) => GetOperations().BitwiseOr(left, right);
+        public static Number<T> operator |(Number<T> left, Number<T> right) => Number.GetOperations<T>().BitwiseOr(left, right);
 
         /// <summary>
         /// Performs a bitwise exclusive Or operation on two integral values.
@@ -409,7 +347,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator ^(Number<T> left, Number<T> right) => GetOperations().Xor(left, right);
+        public static Number<T> operator ^(Number<T> left, Number<T> right) => Number.GetOperations<T>().Xor(left, right);
 
         /// <summary>
         /// Shifts an integral value a specified number of bits to the left.
@@ -420,7 +358,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator <<(Number<T> value, int shift) => GetOperations().LeftShift(value, shift);
+        public static Number<T> operator <<(Number<T> value, int shift) => Number.GetOperations<T>().LeftShift(value, shift);
 
         /// <summary>
         /// Shifts an integral value a specified number of bits to the right.
@@ -431,7 +369,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator >>(Number<T> value, int shift) => GetOperations().RightShift(value, shift);
+        public static Number<T> operator >>(Number<T> value, int shift) => Number.GetOperations<T>().RightShift(value, shift);
 
         /// <summary>
         /// Returns a value that indicates whether the values of two numeric objects are equal.
@@ -440,7 +378,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if the <paramref name="left"/> and <paramref name="right"/> parameters have the same value; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool operator ==(Number<T> left, Number<T> right) => GetOperations().Equals(left, right);
+        public static bool operator ==(Number<T> left, Number<T> right) => Number.GetOperations<T>().Equals(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether two numeric objects have different values.
@@ -449,7 +387,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool operator !=(Number<T> left, Number<T> right) => GetOperations().NotEquals(left, right);
+        public static bool operator !=(Number<T> left, Number<T> right) => Number.GetOperations<T>().NotEquals(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a numeric value is less than another numeric value.
@@ -458,7 +396,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool operator <(Number<T> left, Number<T> right) => GetOperations().LessThan(left, right);
+        public static bool operator <(Number<T> left, Number<T> right) => Number.GetOperations<T>().LessThan(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a numeric value is greater than another numeric value.
@@ -467,7 +405,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool operator >(Number<T> left, Number<T> right) => GetOperations().GreaterThan(left, right);
+        public static bool operator >(Number<T> left, Number<T> right) => Number.GetOperations<T>().GreaterThan(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a numeric value is less than or equal to another numeric value.
@@ -476,7 +414,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool operator <=(Number<T> left, Number<T> right) => GetOperations().LessThanOrEqual(left, right);
+        public static bool operator <=(Number<T> left, Number<T> right) => Number.GetOperations<T>().LessThanOrEqual(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a numeric value is greater than or equal to another numeric value.
@@ -485,7 +423,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool operator >=(Number<T> left, Number<T> right) => GetOperations().GreaterThanOrEqual(left, right);
+        public static bool operator >=(Number<T> left, Number<T> right) => Number.GetOperations<T>().GreaterThanOrEqual(left, right);
 
         /// <summary>
         /// Defines an explicit conversion of an <see cref="byte"/> to a <see cref="Number{T}"/> value.
@@ -494,7 +432,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
-        public static explicit operator Number<T>(byte value) => GetOperations().Convert(value);
+        public static explicit operator Number<T>(byte value) => Number.GetOperations<T>().Convert(value);
 
         /// <summary>
         /// Defines an explicit conversion of an <see cref="sbyte"/> to a <see cref="Number{T}"/> value. This API is not CLS-compliant.
@@ -504,7 +442,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
         [CLSCompliant(false)]
-        public static explicit operator Number<T>(sbyte value) => GetOperations().Convert(value);
+        public static explicit operator Number<T>(sbyte value) => Number.GetOperations<T>().Convert(value);
 
         /// <summary>
         /// Defines an explicit conversion of an <see cref="short"/> to a <see cref="Number{T}"/> value.
@@ -513,7 +451,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
-        public static explicit operator Number<T>(short value) => GetOperations().Convert(value);
+        public static explicit operator Number<T>(short value) => Number.GetOperations<T>().Convert(value);
 
         /// <summary>
         /// Defines an explicit conversion of an <see cref="ushort"/> to a <see cref="Number{T}"/> value. This API is not CLS-compliant.
@@ -523,7 +461,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
         [CLSCompliant(false)]
-        public static explicit operator Number<T>(ushort value) => GetOperations().Convert(value);
+        public static explicit operator Number<T>(ushort value) => Number.GetOperations<T>().Convert(value);
 
         /// <summary>
         /// Defines an explicit conversion of an <see cref="int"/> to a <see cref="Number{T}"/> value.
@@ -532,7 +470,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
-        public static explicit operator Number<T>(int value) => GetOperations().Convert(value);
+        public static explicit operator Number<T>(int value) => Number.GetOperations<T>().Convert(value);
 
         /// <summary>
         /// Defines an explicit conversion of an <see cref="uint"/> to a <see cref="Number{T}"/> value. This API is not CLS-compliant.
@@ -542,7 +480,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
         [CLSCompliant(false)]
-        public static explicit operator Number<T>(uint value) => GetOperations().Convert(value);
+        public static explicit operator Number<T>(uint value) => Number.GetOperations<T>().Convert(value);
 
         /// <summary>
         /// Defines an explicit conversion of an <see cref="long"/> to a <see cref="Number{T}"/> value.
@@ -551,7 +489,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
-        public static explicit operator Number<T>(long value) => GetOperations().Convert(value);
+        public static explicit operator Number<T>(long value) => Number.GetOperations<T>().Convert(value);
 
         /// <summary>
         /// Defines an explicit conversion of an <see cref="ulong"/> to a <see cref="Number{T}"/> value. This API is not CLS-compliant.
@@ -561,7 +499,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
         [CLSCompliant(false)]
-        public static explicit operator Number<T>(ulong value) => GetOperations().Convert(value);
+        public static explicit operator Number<T>(ulong value) => Number.GetOperations<T>().Convert(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="float"/> value to a <see cref="Number{T}"/> value.
@@ -570,7 +508,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
-        public static explicit operator Number<T>(float value) => GetOperations().Convert(value);
+        public static explicit operator Number<T>(float value) => Number.GetOperations<T>().Convert(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="double"/> value to a <see cref="Number{T}"/> value.
@@ -579,7 +517,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
-        public static explicit operator Number<T>(double value) => GetOperations().Convert(value);
+        public static explicit operator Number<T>(double value) => Number.GetOperations<T>().Convert(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="decimal"/> value to a <see cref="Number{T}"/> value.
@@ -588,7 +526,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
-        public static explicit operator Number<T>(decimal value) => GetOperations().Convert(value);
+        public static explicit operator Number<T>(decimal value) => Number.GetOperations<T>().Convert(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="Number{T}"/> object to an <see cref="sbyte"/> value. This API is not CLS-compliant.
@@ -598,7 +536,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <see cref="sbyte"/>'s MaxValue or less than <see cref="sbyte"/>'s MinValue.</exception>
         [CLSCompliant(false)]
-        public static explicit operator sbyte(Number<T> value) => GetOperations().ToSByte(value);
+        public static explicit operator sbyte(Number<T> value) => Number.GetOperations<T>().ToSByte(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="Number{T}"/> object to an <see cref="byte"/> value.
@@ -607,7 +545,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <see cref="byte"/>'s MaxValue or less than <see cref="byte"/>'s MinValue.</exception>
-        public static explicit operator byte(Number<T> value) => GetOperations().ToByte(value);
+        public static explicit operator byte(Number<T> value) => Number.GetOperations<T>().ToByte(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="Number{T}"/> object to an <see cref="short"/> value.
@@ -616,7 +554,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <see cref="short"/>'s MaxValue or less than <see cref="short"/>'s MinValue.</exception>
-        public static explicit operator short(Number<T> value) => GetOperations().ToInt16(value);
+        public static explicit operator short(Number<T> value) => Number.GetOperations<T>().ToInt16(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="Number{T}"/> object to an <see cref="ushort"/> value. This API is not CLS-compliant.
@@ -626,7 +564,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <see cref="ushort"/>'s MaxValue or less than <see cref="ushort"/>'s MinValue.</exception>
         [CLSCompliant(false)]
-        public static explicit operator ushort(Number<T> value) => GetOperations().ToUInt16(value);
+        public static explicit operator ushort(Number<T> value) => Number.GetOperations<T>().ToUInt16(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="Number{T}"/> object to an <see cref="int"/> value.
@@ -635,7 +573,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <see cref="int"/>'s MaxValue or less than <see cref="int"/>'s MinValue.</exception>
-        public static explicit operator int(Number<T> value) => GetOperations().ToInt32(value);
+        public static explicit operator int(Number<T> value) => Number.GetOperations<T>().ToInt32(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="Number{T}"/> object to an <see cref="uint"/> value. This API is not CLS-compliant.
@@ -645,7 +583,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <see cref="uint"/>'s MaxValue or less than <see cref="uint"/>'s MinValue.</exception>
         [CLSCompliant(false)]
-        public static explicit operator uint(Number<T> value) => GetOperations().ToUInt32(value);
+        public static explicit operator uint(Number<T> value) => Number.GetOperations<T>().ToUInt32(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="Number{T}"/> object to an <see cref="long"/> value.
@@ -654,7 +592,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <see cref="long"/>'s MaxValue or less than <see cref="long"/>'s MinValue.</exception>
-        public static explicit operator long(Number<T> value) => GetOperations().ToInt64(value);
+        public static explicit operator long(Number<T> value) => Number.GetOperations<T>().ToInt64(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="Number{T}"/> object to an <see cref="ulong"/> value. This API is not CLS-compliant.
@@ -664,7 +602,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <see cref="ulong"/>'s MaxValue or less than <see cref="ulong"/>'s MinValue.</exception>
         [CLSCompliant(false)]
-        public static explicit operator ulong(Number<T> value) => GetOperations().ToUInt64(value);
+        public static explicit operator ulong(Number<T> value) => Number.GetOperations<T>().ToUInt64(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="Number{T}"/> object to an <see cref="float"/> value.
@@ -673,7 +611,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <see cref="float"/>'s MaxValue or less than <see cref="float"/>'s MinValue.</exception>
-        public static explicit operator float(Number<T> value) => GetOperations().ToSingle(value);
+        public static explicit operator float(Number<T> value) => Number.GetOperations<T>().ToSingle(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="Number{T}"/> object to an <see cref="double"/> value.
@@ -682,7 +620,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <see cref="double"/>'s MaxValue or less than <see cref="double"/>'s MinValue.</exception>
-        public static explicit operator double(Number<T> value) => GetOperations().ToDouble(value);
+        public static explicit operator double(Number<T> value) => Number.GetOperations<T>().ToDouble(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="Number{T}"/> object to an <see cref="decimal"/> value.
@@ -691,7 +629,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <see cref="decimal"/>'s MaxValue or less than <see cref="decimal"/>'s MinValue.</exception>
-        public static explicit operator decimal(Number<T> value) => GetOperations().ToDecimal(value);
+        public static explicit operator decimal(Number<T> value) => Number.GetOperations<T>().ToDecimal(value);
 
 #if BIG_INTEGER
         /// <summary>
@@ -701,7 +639,7 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
-        public static explicit operator Number<T>(BigInteger value) => GetOperations().Convert(value);
+        public static explicit operator Number<T>(BigInteger value) => Number.GetOperations<T>().Convert(value);
 
         /// <summary>
         /// Defines an explicit conversion of a <see cref="Number{T}"/> object to a <see cref="BigInteger"/> value.
@@ -709,7 +647,7 @@ namespace Genumerics
         /// <param name="value">The value to convert to a <see cref="BigInteger"/>.</param>
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static explicit operator BigInteger(Number<T> value) => GetOperations().ToBigInteger(value);
+        public static explicit operator BigInteger(Number<T> value) => Number.GetOperations<T>().ToBigInteger(value);
 #endif
     }
 }
