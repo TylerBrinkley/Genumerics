@@ -83,7 +83,7 @@ namespace Genumerics
             }
             else if (numericType.IsEnum())
             {
-                operationsType = typeof(EnumOperations<,,>).MakeGenericType(numericType, Enum.GetUnderlyingType(numericType), typeof(DefaultNumericOperations));
+                operationsType = typeof(EnumNumericOperations<,,>).MakeGenericType(numericType, Enum.GetUnderlyingType(numericType), typeof(DefaultNumericOperations));
             }
             else
             {
@@ -96,7 +96,7 @@ namespace Genumerics
 
         /// <summary>
         /// Registers the operations supported for the numeric type <typeparamref name="T"/>. Cannot overwrite once set.
-        /// Cannot set for nullable value types. Nullable types are handled automatically.
+        /// Cannot set for nullable value types. Nullable value types are handled automatically.
         /// </summary>
         /// <typeparam name="T">The numeric type.</typeparam>
         /// <typeparam name="TNumericOperations">The numeric operations type.</typeparam>
@@ -808,9 +808,8 @@ namespace Genumerics
         /// <exception cref="ArgumentException"><paramref name="min"/> is greater than <paramref name="max"/>.</exception>
         public static T Clamp<T>(T value, T min, T max) => GetOperations<T>().Clamp(value, min, max);
 
-
         /// <summary>
-        /// Creates a <see cref="Number{T}"/> value.
+        /// Convenience method to create a <see cref="Number{T}"/> value without having to explitly specify the type argument.
         /// </summary>
         /// <typeparam name="T">The numeric type.</typeparam>
         /// <param name="value">The value.</param>
