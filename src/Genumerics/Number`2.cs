@@ -150,11 +150,7 @@ namespace Genumerics
         /// <returns>A value that is equivalent to the number.</returns>
         /// <exception cref="NotSupportedException">The <typeparamref name="TTo"/> type argument provided is not supported.</exception>
         /// <exception cref="OverflowException">Number is greater than <typeparamref name="TTo"/>'s MaxValue or less than <typeparamref name="TTo"/>'s MinValue.</exception>
-        public TTo To<TTo>()
-        {
-            var operations = Number.GetOperations<TTo>();
-            return Value != null ? operations.Convert(Value) : default;
-        }
+        public TTo To<TTo>() => Number.GetOperationsInternal<TTo>().Convert(Value);
 
 #if ICONVERTIBLE
         /// <summary>

@@ -840,7 +840,7 @@ namespace Genumerics.Tests
         public T? DivRemNullable<T>(T valueToInferType, T? left, T? right, T? expectedRemainder)
             where T : struct
         {
-            var result = Number.DivRem(left, right, out T? remainder);
+            var result = Number.DivRem(left, right, out var remainder);
             Assert.AreEqual(expectedRemainder, remainder);
             return result;
         }
@@ -2180,18 +2180,13 @@ namespace Genumerics.Tests
 #if SPAN
         [TestCaseSource(nameof(ParseFailCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void ParseSpanFail<T>(T valueToInferType, string value, NumberStyles? style, Type exceptionType)
-        {
-            Assert.Throws(exceptionType, () => Number.Parse<T>(value.AsSpan(), style, CultureInfo.InvariantCulture));
-        }
+        public void ParseSpanFail<T>(T valueToInferType, string value, NumberStyles? style, Type exceptionType) => Assert.Throws(exceptionType, () => Number.Parse<T>(value.AsSpan(), style, CultureInfo.InvariantCulture));
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(ParseFailCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public void ParseSpanNullableFail<T>(T valueToInferType, string value, NumberStyles? style, Type exceptionType) where T : struct
-        {
-            Assert.Throws(exceptionType, () => Number.Parse<T?>(value.AsSpan(), style, CultureInfo.InvariantCulture));
-        }
+        public void ParseSpanNullableFail<T>(T valueToInferType, string value, NumberStyles? style, Type exceptionType)
+            where T : struct => Assert.Throws(exceptionType, () => Number.Parse<T?>(value.AsSpan(), style, CultureInfo.InvariantCulture));
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(ParseFailCases))]

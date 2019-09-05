@@ -71,13 +71,13 @@ public class GenumericsDemo
 The summation algorithms below were benchmarked in .NET Core to determine the relative performance of the library compared with an `int` specific algorithm. As can be seen in the results, the performance is equivalent when using the numeric operations as a `struct` interface generic type argument constraint but is almost an order of magnitude slower when only using the numeric type due to the interface method dispatch. In order to reach performance parity with the `int` specific algorithm the library makes use of an optimization for `struct` interface generic type argument constraints described in this [generic calculations article](https://www.codeproject.com/articles/8531/using-generics-for-calculations) that prevents the interface method dispatch.
 
 ### Results
-|     Method |       Mean |     Error |     StdDev | Ratio | RatioSD |
-|----------- |-----------:|----------:|-----------:|------:|--------:|
-|        Sum |   413.6 ns |  8.008 ns | 16.1770 ns |  1.00 |    0.00 |
-|  SumNumber | 4,322.5 ns | 27.732 ns | 25.9406 ns | 10.43 |    0.44 |
-| SumNumber2 |   578.0 ns |  1.959 ns |  1.6360 ns |  1.39 |    0.06 |
-|     SumAdd | 3,532.2 ns | 17.044 ns | 15.1091 ns |  8.51 |    0.35 |
-|    SumAdd2 |   424.7 ns |  1.045 ns |  0.8724 ns |  1.02 |    0.04 |
+|     Method |       Mean |      Error |     StdDev | Ratio | RatioSD |
+|----------- |-----------:|-----------:|-----------:|------:|--------:|
+|        Sum |   391.6 ns |  2.1784 ns |  1.9311 ns |  1.00 |    0.00 |
+|  SumNumber | 4,175.5 ns | 78.8081 ns | 61.5282 ns | 10.66 |    0.13 |
+| SumNumber2 |   531.5 ns |  2.6641 ns |  2.4920 ns |  1.36 |    0.01 |
+|     SumAdd | 3,801.9 ns | 30.7378 ns | 25.6674 ns |  9.71 |    0.09 |
+|    SumAdd2 |   390.7 ns |  0.9437 ns |  0.7880 ns |  1.00 |    0.01 |
 
 ### Code
 ```c#
