@@ -26,10 +26,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-
-#if BIG_INTEGER
 using System.Numerics;
-#endif
 
 namespace Genumerics
 {
@@ -65,12 +62,10 @@ namespace Genumerics
         /// </summary>
         T MinValue { get; }
 
-#if ICONVERTIBLE
         /// <summary>
         /// Returns the <see cref="System.TypeCode"/> for <typeparamref name="T"/>.
         /// </summary>
         TypeCode TypeCode { get; }
-#endif
 
         /// <summary>
         /// Returns a value that indicates whether the values of the two objects are equal.
@@ -455,14 +450,12 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         decimal ToDecimal(T value);
 
-#if BIG_INTEGER
         /// <summary>
         /// Converts the specified numeric value to a <see cref="BigInteger"/>.
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         BigInteger ToBigInteger(T value);
-#endif
 
         /// <summary>
         /// Indicates whether the specified value is an even number.

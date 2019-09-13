@@ -25,10 +25,7 @@
 
 using System;
 using System.Globalization;
-
-#if BIG_INTEGER
 using System.Numerics;
-#endif
 
 namespace Genumerics
 {
@@ -63,10 +60,8 @@ namespace Genumerics
         /// <inheritdoc />
         public TEnum MinValue => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).MinValue);
 
-#if ICONVERTIBLE
         /// <inheritdoc />
         public TypeCode TypeCode => default(TUnderlyingOperations).TypeCode;
-#endif
 
         /// <inheritdoc />
         public TEnum Abs(TEnum value) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Abs(Unsafe.As<TEnum, TUnderlying>(value)));
@@ -182,10 +177,8 @@ namespace Genumerics
         /// <inheritdoc />
         public TEnum Subtract(TEnum left, TEnum right) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Subtract(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right)));
 
-#if BIG_INTEGER
         /// <inheritdoc />
         public BigInteger ToBigInteger(TEnum value) => default(TUnderlyingOperations).ToBigInteger(Unsafe.As<TEnum, TUnderlying>(value));
-#endif
 
         /// <inheritdoc />
         public byte ToByte(TEnum value) => default(TUnderlyingOperations).ToByte(Unsafe.As<TEnum, TUnderlying>(value));
@@ -246,22 +239,7 @@ namespace Genumerics
                 result = Unsafe.As<TUnderlying, TEnum>(r);
                 return success;
             }
-#if ENUM_TRYPARSE
             return Enum.TryParse(value, out result);
-#else
-            try
-            {
-                result = (TEnum)Enum.Parse(typeof(TEnum), value);
-                return true;
-            }
-#pragma warning disable CA1031 // Do not catch general exception types
-            catch
-            {
-                result = default;
-                return false;
-            }
-#pragma warning restore CA1031 // Do not catch general exception types
-#endif
         }
 
 #if SPAN

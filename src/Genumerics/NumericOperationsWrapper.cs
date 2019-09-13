@@ -25,10 +25,7 @@
 
 using System;
 using System.Globalization;
-
-#if BIG_INTEGER
 using System.Numerics;
-#endif
 
 namespace Genumerics
 {
@@ -46,9 +43,7 @@ namespace Genumerics
 
         public T MinValue => default(TNumericOperations).MinValue;
 
-#if ICONVERTIBLE
         public TypeCode TypeCode => default(TNumericOperations).TypeCode;
-#endif
 
         public T Abs(T value) => default(TNumericOperations).Abs(value);
 
@@ -114,9 +109,7 @@ namespace Genumerics
 
         public T Subtract(T left, T right) => default(TNumericOperations).Subtract(left, right);
 
-#if BIG_INTEGER
         public BigInteger ToBigInteger(T value) => default(TNumericOperations).ToBigInteger(value);
-#endif
 
         public byte ToByte(T value) => default(TNumericOperations).ToByte(value);
 

@@ -25,10 +25,7 @@
 
 using System;
 using System.Globalization;
-
-#if BIG_INTEGER
 using System.Numerics;
-#endif
 
 namespace Genumerics
 {
@@ -57,10 +54,8 @@ namespace Genumerics
         /// <inheritdoc />
         public T? MinValue => default(TNumericOperations).MinValue;
 
-#if ICONVERTIBLE
         /// <inheritdoc />
         public TypeCode TypeCode => default(TNumericOperations).TypeCode;
-#endif
 
         /// <inheritdoc />
         public T? Add(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Add(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
@@ -230,10 +225,8 @@ namespace Genumerics
         /// <inheritdoc />
         public decimal ToDecimal(T? value) => value.HasValue ? default(TNumericOperations).ToDecimal(value.GetValueOrDefault()) : default;
 
-#if BIG_INTEGER
         /// <inheritdoc />
         public BigInteger ToBigInteger(T? value) => value.HasValue ? default(TNumericOperations).ToBigInteger(value.GetValueOrDefault()) : default;
-#endif
 
         /// <inheritdoc />
         public bool IsEven(T? value) => value.HasValue ? default(TNumericOperations).IsEven(value.GetValueOrDefault()) : false;

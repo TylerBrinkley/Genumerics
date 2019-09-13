@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Globalization;
-
-#if BIG_INTEGER
 using System.Numerics;
-#endif
 
 namespace Genumerics.Tests
 {
@@ -75,9 +72,7 @@ namespace Genumerics.Tests
         public IntWrapper Round(IntWrapper value, int digits, MidpointRounding mode) => Number.GetOperations<int>().Round(value, digits, mode);
         public int Sign(IntWrapper value) => Number.GetOperations<int>().Sign(value);
         public IntWrapper Subtract(IntWrapper left, IntWrapper right) => Number.GetOperations<int>().Subtract(left, right);
-#if BIG_INTEGER
         public BigInteger ToBigInteger(IntWrapper value) => Number.GetOperations<int>().ToBigInteger(value);
-#endif
         public byte ToByte(IntWrapper value) => Number.GetOperations<int>().ToByte(value);
         public decimal ToDecimal(IntWrapper value) => Number.GetOperations<int>().ToDecimal(value);
         public double ToDouble(IntWrapper value) => Number.GetOperations<int>().ToDouble(value);

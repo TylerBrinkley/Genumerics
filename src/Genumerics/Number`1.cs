@@ -24,10 +24,7 @@
 #endregion
 
 using System;
-
-#if BIG_INTEGER
 using System.Numerics;
-#endif
 
 namespace Genumerics
 {
@@ -35,10 +32,7 @@ namespace Genumerics
     /// A number wrapper type that provides numeric operations in the form of convenient type operators.
     /// </summary>
     /// <typeparam name="T">The numeric type.</typeparam>
-    public readonly struct Number<T> : IEquatable<Number<T>>, IComparable<Number<T>>, IComparable, IFormattable
-#if ICONVERTIBLE
-        , IConvertible
-#endif
+    public readonly struct Number<T> : IEquatable<Number<T>>, IComparable<Number<T>>, IComparable, IFormattable, IConvertible
     {
         internal static INumericOperations<T>? s_operations;
 
@@ -163,7 +157,6 @@ namespace Genumerics
         /// <exception cref="OverflowException">Number is greater than <typeparamref name="TTo"/>'s MaxValue or less than <typeparamref name="TTo"/>'s MinValue.</exception>
         public TTo To<TTo>() => Number.GetOperationsInternal<TTo>().Convert(Value);
 
-#if ICONVERTIBLE
         /// <summary>
         /// Returns the <see cref="TypeCode"/> for <typeparamref name="T"/>.
         /// </summary>
@@ -202,7 +195,6 @@ namespace Genumerics
         uint IConvertible.ToUInt32(IFormatProvider? provider) => Number.GetOperationsInternal<T>().ToUInt32(Value);
 
         ulong IConvertible.ToUInt64(IFormatProvider? provider) => Number.GetOperationsInternal<T>().ToUInt64(Value);
-#endif
 
         /// <summary>
         /// Defines an implicit conversion of a <typeparamref name="T"/> to a <see cref="Number{T}"/>.
@@ -622,7 +614,6 @@ namespace Genumerics
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <see cref="decimal"/>'s MaxValue or less than <see cref="decimal"/>'s MinValue.</exception>
         public static explicit operator decimal(Number<T> value) => Number.GetOperationsInternal<T>().ToDecimal(value);
 
-#if BIG_INTEGER
         /// <summary>
         /// Defines an explicit conversion of a <see cref="BigInteger"/> to a <see cref="Number{T}"/> value.
         /// </summary>
@@ -639,6 +630,5 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         public static explicit operator BigInteger(Number<T> value) => Number.GetOperationsInternal<T>().ToBigInteger(value);
-#endif
     }
 }

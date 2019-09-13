@@ -56,21 +56,17 @@ namespace Genumerics
                 {
                     operationsType = typeof(DefaultNumericOperations);
                 }
-                else if (default(T)! == null && numericType.IsValueType())
+                else if (default(T)! == null && numericType.IsValueType)
                 {
                     var underlyingType = numericType.GetGenericArguments()[0];
                     var underlyingOperations = typeof(Number)
-#if TYPE_REFLECTION
                         .GetMethod(nameof(GetOperationsInternal), BindingFlags.Static | BindingFlags.NonPublic)!
-#else
-                        .GetTypeInfo().GetDeclaredMethod(nameof(GetOperationsInternal))
-#endif
                         .MakeGenericMethod(underlyingType).Invoke(null, null)!;
                     Debug.Assert(underlyingOperations.GetType().Name == "NumericOperationsWrapper`2");
                     var underlyingOperationsType = underlyingOperations.GetType().GetGenericArguments()[1];
                     operationsType = typeof(NullableNumericOperations<,>).MakeGenericType(underlyingType, underlyingOperationsType);
                 }
-                else if (numericType.IsEnum())
+                else if (numericType.IsEnum)
                 {
                     operationsType = typeof(EnumNumericOperations<,,>).MakeGenericType(numericType, Enum.GetUnderlyingType(numericType), typeof(DefaultNumericOperations));
                 }
@@ -109,7 +105,7 @@ namespace Genumerics
         public static void RegisterOperations<T, TNumericOperations>()
             where TNumericOperations : struct, INumericOperations<T>
         {
-            if (default(T)! == null && typeof(T).IsValueType())
+            if (default(T)! == null && typeof(T).IsValueType)
             {
                 throw new ArgumentException("Cannot explicitly register operations for nullable value types. Nullable value types are handled automatically.");
             }
@@ -166,7 +162,6 @@ namespace Genumerics
         /// the numeric type isn't bounded.</exception>
         public static T MinValue<T>() => GetOperationsInternal<T>().MinValue;
 
-#if ICONVERTIBLE
         /// <summary>
         /// Returns the <see cref="TypeCode"/> for <typeparamref name="T"/>.
         /// </summary>
@@ -174,7 +169,6 @@ namespace Genumerics
         /// <returns>The <see cref="TypeCode"/> for <typeparamref name="T"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         public static TypeCode GetTypeCode<T>() => GetOperationsInternal<T>().TypeCode;
-#endif
 
         /// <summary>
         /// Returns a value that indicates whether the values of the two objects are equal.

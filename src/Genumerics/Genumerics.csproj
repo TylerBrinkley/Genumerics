@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;netcoreapp2.1;netcoreapp2.0;netstandard2.0;netstandard1.3;netstandard1.1;netstandard1.0;net45;net40;net35;net20</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0;netcoreapp2.1;netcoreapp2.0;netstandard2.0;net45</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0</FileVersion>
     <VersionPrefix>1.0.0</VersionPrefix>
@@ -35,56 +35,26 @@
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
     <AssemblyTitle>Genumerics .NET Core 3.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;SPAN;TYPE_REFLECTION;DIV_REM;GENERIC_ENUM_PARSE;ENUM_TRYPARSE;FORWARD_REF;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL;NULLABLE_ATTRIBUTES</DefineConstants>
+    <DefineConstants>MATHF;CLAMP;GENERIC_ENUM_PARSE;SPAN;NULLABLE_ATTRIBUTES</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
     <AssemblyTitle>Genumerics .NET Core 2.1</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;SPAN;TYPE_REFLECTION;DIV_REM;GENERIC_ENUM_PARSE;ENUM_TRYPARSE;FORWARD_REF;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>
+    <DefineConstants>MATHF;CLAMP;GENERIC_ENUM_PARSE;SPAN</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <AssemblyTitle>Genumerics .NET Core 2.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;MATHF;CLAMP;TYPE_REFLECTION;DIV_REM;GENERIC_ENUM_PARSE;ENUM_TRYPARSE;FORWARD_REF;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>
+    <DefineConstants>MATHF;CLAMP;GENERIC_ENUM_PARSE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <AssemblyTitle>Genumerics .NET Standard 2.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION;DIV_REM;ENUM_TRYPARSE;FORWARD_REF;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
-    <AssemblyTitle>Genumerics .NET Standard 1.3</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;ENUM_TRYPARSE;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.1'">
-    <AssemblyTitle>Genumerics .NET Standard 1.1</AssemblyTitle>
-    <DefineConstants>BIG_INTEGER;ENUM_TRYPARSE;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.0'">
-    <AssemblyTitle>Genumerics .NET Standard 1.0</AssemblyTitle>
-    <DefineConstants>ENUM_TRYPARSE;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>
+    <DefineConstants></DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net45'">
     <AssemblyTitle>Genumerics .NET 4.5</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION;DIV_REM;ENUM_TRYPARSE;FORWARD_REF;AGGRESSIVE_INLINING;SECURITY_SAFE_CRITICAL</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net40'">
-    <AssemblyTitle>Genumerics .NET 4.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;BIG_INTEGER;TYPE_REFLECTION;DIV_REM;ENUM_TRYPARSE;FORWARD_REF;SECURITY_SAFE_CRITICAL</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net35'">
-    <AssemblyTitle>Genumerics .NET 3.5</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;TYPE_REFLECTION;DIV_REM;FORWARD_REF</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net20'">
-    <AssemblyTitle>Genumerics .NET 2.0</AssemblyTitle>
-    <DefineConstants>ICONVERTIBLE;TYPE_REFLECTION;DIV_REM;FORWARD_REF</DefineConstants>
+    <DefineConstants></DefineConstants>
   </PropertyGroup>
 </Project>

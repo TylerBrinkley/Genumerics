@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;netcoreapp2.1;netcoreapp2.0;netcoreapp1.1;netcoreapp1.0;net45;net40;net35;net20</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0;netcoreapp2.1;netcoreapp2.0;net45</TargetFrameworks>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -18,39 +18,10 @@
   </ItemGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
-    <DefineConstants>BIG_INTEGER;SPAN</DefineConstants>
+    <DefineConstants>SPAN</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
-    <DefineConstants>BIG_INTEGER;SPAN</DefineConstants>
+    <DefineConstants>SPAN</DefineConstants>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
-    <DefineConstants>BIG_INTEGER</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp1.1'">
-    <DefineConstants>BIG_INTEGER</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp1.0'">
-    <DefineConstants>BIG_INTEGER</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net45'">
-    <DefineConstants>BIG_INTEGER</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net40'">
-    <DefineConstants>BIG_INTEGER</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net35'">
-    <DefineConstants></DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net20'">
-    <DefineConstants></DefineConstants>
-  </PropertyGroup>
-
 </Project>

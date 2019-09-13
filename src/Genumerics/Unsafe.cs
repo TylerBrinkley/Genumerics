@@ -30,16 +30,8 @@ namespace Genumerics
 {
     internal static class Unsafe
     {
-#if FORWARD_REF && AGGRESSIVE_INLINING
         [MethodImpl(MethodImplOptions.ForwardRef | MethodImplOptions.AggressiveInlining)]
-#elif AGGRESSIVE_INLINING
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#elif FORWARD_REF
-        [MethodImpl(MethodImplOptions.ForwardRef)]
-#endif
-#if SECURITY_SAFE_CRITICAL
         [SecuritySafeCritical]
-#endif
         public static extern TTo As<TFrom, TTo>(TFrom source);
     }
 }

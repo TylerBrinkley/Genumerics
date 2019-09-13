@@ -24,10 +24,8 @@
 #endregion
 
 using System;
-using System.Security;
-
-#if COM_ATTRIBUTES
 using System.Runtime.InteropServices;
+using System.Security;
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -36,7 +34,6 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("719c7d93-e56c-492b-95a9-6914655b5cd5")]
-#endif
 
 [assembly: AllowPartiallyTrustedCallers]
 

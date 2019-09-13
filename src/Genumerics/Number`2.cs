@@ -24,10 +24,7 @@
 #endregion
 
 using System;
-
-#if BIG_INTEGER
 using System.Numerics;
-#endif
 
 namespace Genumerics
 {
@@ -37,10 +34,7 @@ namespace Genumerics
     /// <typeparam name="T">The numeric type.</typeparam>
     /// <typeparam name="TNumericOperations">The numeric operations type.</typeparam>+
     [CLSCompliant(false)]
-    public readonly struct Number<T, TNumericOperations> : IEquatable<Number<T, TNumericOperations>>, IComparable<Number<T, TNumericOperations>>, IComparable, IFormattable
-#if ICONVERTIBLE
-        , IConvertible
-#endif
+    public readonly struct Number<T, TNumericOperations> : IEquatable<Number<T, TNumericOperations>>, IComparable<Number<T, TNumericOperations>>, IComparable, IFormattable, IConvertible
         where TNumericOperations : struct, INumericOperations<T>
     {
         /// <summary>
@@ -152,7 +146,6 @@ namespace Genumerics
         /// <exception cref="OverflowException">Number is greater than <typeparamref name="TTo"/>'s MaxValue or less than <typeparamref name="TTo"/>'s MinValue.</exception>
         public TTo To<TTo>() => Number.GetOperationsInternal<TTo>().Convert(Value);
 
-#if ICONVERTIBLE
         /// <summary>
         /// Returns the <see cref="TypeCode"/> for <typeparamref name="T"/>.
         /// </summary>
@@ -190,7 +183,6 @@ namespace Genumerics
         uint IConvertible.ToUInt32(IFormatProvider? provider) => default(TNumericOperations).ToUInt32(Value);
 
         ulong IConvertible.ToUInt64(IFormatProvider? provider) => default(TNumericOperations).ToUInt64(Value);
-#endif
 
         /// <summary>
         /// Defines an implicit conversion of a <typeparamref name="T"/> to a <see cref="Number{T, TNumericOperations}"/>.
@@ -560,7 +552,6 @@ namespace Genumerics
         /// <exception cref="OverflowException"><paramref name="value"/> is greater than <see cref="decimal"/>'s MaxValue or less than <see cref="decimal"/>'s MinValue.</exception>
         public static explicit operator decimal(Number<T, TNumericOperations> value) => default(TNumericOperations).ToDecimal(value);
 
-#if BIG_INTEGER
         /// <summary>
         /// Defines an explicit conversion of a <see cref="BigInteger"/> to a <see cref="Number{T, TNumericOperations}"/> value.
         /// </summary>
@@ -575,6 +566,5 @@ namespace Genumerics
         /// <param name="value">The value to convert to a <see cref="BigInteger"/>.</param>
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         public static explicit operator BigInteger(Number<T, TNumericOperations> value) => default(TNumericOperations).ToBigInteger(value);
-#endif
     }
 }
