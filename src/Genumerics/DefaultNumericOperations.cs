@@ -33,7 +33,7 @@ namespace Genumerics
     /// Defines all the default numeric operations.
     /// </summary>
     [CLSCompliant(false)]
-    public struct DefaultNumericOperations : INumericOperations<sbyte>, INumericOperations<byte>, INumericOperations<short>, INumericOperations<ushort>, INumericOperations<int>, INumericOperations<uint>, INumericOperations<long>, INumericOperations<ulong>, INumericOperations<float>, INumericOperations<double>, INumericOperations<decimal>, INumericOperations<BigInteger>
+    public readonly struct DefaultNumericOperations : INumericOperations<sbyte>, INumericOperations<byte>, INumericOperations<short>, INumericOperations<ushort>, INumericOperations<int>, INumericOperations<uint>, INumericOperations<long>, INumericOperations<ulong>, INumericOperations<float>, INumericOperations<double>, INumericOperations<decimal>, INumericOperations<BigInteger>
     {
         #region Zero
         sbyte INumericOperations<sbyte>.Zero => 0;

@@ -35,7 +35,7 @@ namespace Genumerics
     /// <typeparam name="T">The numeric type.</typeparam>
     /// <typeparam name="TNumericOperations">The numeric type's operations type.</typeparam>
     [CLSCompliant(false)]
-    public struct NullableNumericOperations<T, TNumericOperations> : INumericOperations<T?>
+    public readonly struct NullableNumericOperations<T, TNumericOperations> : INumericOperations<T?>
         where T : struct
         where TNumericOperations : struct, INumericOperations<T>
     {

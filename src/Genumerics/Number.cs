@@ -32,16 +32,16 @@ using System.Threading;
 
 namespace Genumerics
 {
+    internal static class NumericOperationsCache<T>
+    {
+        internal static INumericOperations<T>? s_operations;
+    }
+
     /// <summary>
     /// Static class that provides many generic numeric operations and constants.
     /// </summary>
     public static class Number
     {
-        private static class OperationsCache<T>
-        {
-            internal static INumericOperations<T>? s_operations;
-        }
-
         private static NumericOperationsFactory[] s_operationsFactories = { new DefaultNumericOperationsFactory(), new NullableNumericOperationsFactory() };
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Genumerics
         [CLSCompliant(false)]
         public static INumericOperations<T>? GetOperations<T>()
         {
-            var operations = OperationsCache<T>.s_operations;
+            var operations = NumericOperationsCache<T>.s_operations;
             if (operations == null)
             {
                 Type? operationsType = null;
@@ -71,8 +71,7 @@ namespace Genumerics
                     throw new InvalidOperationException($"Operations type {operationsType} from factory must be a value type and implement {typeof(INumericOperations<T>)}. Return null from the factory if the type isn't supported.");
                 }
 
-                operations = Interlocked.CompareExchange(ref OperationsCache<T>.s_operations, (operations = (INumericOperations<T>)Activator.CreateInstance(typeof(NumericOperationsWrapper<,>).MakeGenericType(typeof(T), operationsType))!), null) ?? operations;
-                
+                operations = Interlocked.CompareExchange(ref NumericOperationsCache<T>.s_operations, (operations = (INumericOperations<T>)Activator.CreateInstance(typeof(NumericOperationsWrapper<,>).MakeGenericType(typeof(T), operationsType))!), null) ?? operations;
             }
             return operations;
         }
@@ -80,7 +79,7 @@ namespace Genumerics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static INumericOperations<T> GetOperationsInternal<T>()
         {
-            return OperationsCache<T>.s_operations ?? GetOperations<T>() ?? throw new NotSupportedException($"Generic numeric operations on {typeof(T)} are not supported. The only built-in supported types are SByte, Byte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, and BigInteger as well as the nullable versions of each of these types. You can register support for a non-built-in type using the Number.RegisterOperations method.");
+            return NumericOperationsCache<T>.s_operations ?? GetOperations<T>() ?? throw new NotSupportedException($"Generic numeric operations on {typeof(T)} are not supported. The only built-in supported types are SByte, Byte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, and BigInteger as well as the nullable versions of each of these types. You can register support for a non-built-in type using the Number.RegisterOperations method.");
         }
 
         /// <summary>
@@ -93,12 +92,7 @@ namespace Genumerics
         public static void RegisterOperations<T, TNumericOperations>()
             where TNumericOperations : struct, INumericOperations<T>
         {
-            if (default(T)! == null && typeof(T).IsValueType)
-            {
-                throw new ArgumentException("Cannot explicitly register operations for nullable value types. Nullable value types are handled automatically.");
-            }
-
-            if (GetOperations<T>() != null || Interlocked.CompareExchange(ref OperationsCache<T>.s_operations, new NumericOperationsWrapper<T, TNumericOperations>(), null) != null)
+            if (GetOperations<T>() != null || Interlocked.CompareExchange(ref NumericOperationsCache<T>.s_operations, new NumericOperationsWrapper<T, TNumericOperations>(), null) != null)
             {
                 throw new InvalidOperationException("Cannot overwrite built-in or previously registered operations.");
             }
