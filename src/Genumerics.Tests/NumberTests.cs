@@ -38,13 +38,14 @@ namespace Genumerics.Tests
         static NumberTests()
         {
             Number.RegisterOperations<IntWrapper, IntWrapperOperations>();
+            Number.RegisterOperationsFactory(t => t.IsEnum ? typeof(EnumNumericOperations<,,>).MakeGenericType(t, Enum.GetUnderlyingType(t), typeof(DefaultNumericOperations)) : null);
         }
 
-        private static TestCaseData CreateTestCase<T>(object expectedResult, params object[] args) => new TestCaseData(new[] { (object)default(T) }.Concat(args ?? new object[] { null }).ToArray()) { ExpectedResult = expectedResult };
+        private static TestCaseData CreateTestCase<T>(object? expectedResult, params object?[] args) => new TestCaseData(new[] { (object?)default(T)! }.Concat(args ?? new object?[] { null }).ToArray()) { ExpectedResult = expectedResult };
 
-        private static TestCaseData CreateTestCase<T>() => new TestCaseData(default(T));
+        private static TestCaseData CreateTestCase<T>() => new TestCaseData(default(T)!);
 
-        private static TestCaseData CreateTestCase<T>(object[] args) => new TestCaseData(new[] { (object)default(T) }.Concat(args).ToArray());
+        private static TestCaseData CreateTestCase<T>(object?[] args) => new TestCaseData(new[] { (object?)default(T)! }.Concat(args).ToArray());
 
         [Test]
         public void UnsupportedType() => Assert.Throws<NotSupportedException>(() => Number.Zero<string>());
@@ -827,7 +828,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Monday, DayOfWeek.Friday, DayOfWeek.Wednesday, DayOfWeek.Tuesday);
         }
 
-        public static IEnumerable<TestCaseData> DivRemNullableCases() => DivRemCases().Concat(BinaryNullableCases(additionalArgs: new object[] { null }));
+        public static IEnumerable<TestCaseData> DivRemNullableCases() => DivRemCases().Concat(BinaryNullableCases(additionalArgs: new object?[] { null }));
 
         [TestCaseSource(nameof(NegateCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -1825,7 +1826,7 @@ namespace Genumerics.Tests
             }
         }
 
-        public static TestCaseData CreateConvertCase(Type fromType, Type toType, object value, object expectedValue) => new TestCaseData(new object[] { Activator.CreateInstance(fromType), Activator.CreateInstance(toType), value }) { ExpectedResult = expectedValue };
+        public static TestCaseData CreateConvertCase(Type fromType, Type toType, object? value, object? expectedValue) => new TestCaseData(new object?[] { Activator.CreateInstance(fromType), Activator.CreateInstance(toType), value }) { ExpectedResult = expectedValue };
 
         public static IEnumerable<TestCaseData> ConvertNullableCases1()
         {
@@ -1859,22 +1860,22 @@ namespace Genumerics.Tests
 
         [TestCaseSource(nameof(ToStringCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public string ToString<T>(T valueToInferType, T value, string format) => Number.ToString(value, format);
+        public string? ToString<T>(T valueToInferType, T value, string? format) => Number.ToString(value, format);
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(ToStringCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public string ToStringNumber<T>(T valueToInferType, T value, string format) => Number.Create(value).ToString(format);
+        public string? ToStringNumber<T>(T valueToInferType, T value, string? format) => Number.Create(value).ToString(format);
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(ToStringNullableCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public string ToStringNullable<T>(T valueToInferType, T? value, string format) where T : struct => Number.ToString(value, format);
+        public string? ToStringNullable<T>(T valueToInferType, T? value, string? format) where T : struct => Number.ToString(value, format);
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [TestCaseSource(nameof(ToStringNullableCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public string ToStringNullableNumber<T>(T valueToInferType, T? value, string format) where T : struct => Number.Create(value).ToString(format);
+        public string? ToStringNullableNumber<T>(T valueToInferType, T? value, string? format) where T : struct => Number.Create(value).ToString(format);
 #pragma warning restore IDE0060 // Remove unused parameter
 
 #if SPAN
@@ -1900,7 +1901,7 @@ namespace Genumerics.Tests
 
         [TestCaseSource(nameof(ToStringNullableCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public string TryFormatNullable<T>(T valueToInferType, T? value, string format)
+        public string? TryFormatNullable<T>(T valueToInferType, T? value, string? format)
             where T : struct
         {
             var destination = new char[100].AsSpan();
@@ -1911,7 +1912,7 @@ namespace Genumerics.Tests
 
         [TestCaseSource(nameof(ToStringNullableCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
-        public string TryFormatNullableNumber<T>(T valueToInferType, T? value, string format)
+        public string? TryFormatNullableNumber<T>(T valueToInferType, T? value, string? format)
             where T : struct
         {
             var destination = new char[100].AsSpan();
@@ -1961,7 +1962,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<DayOfWeek>("0000000F", (DayOfWeek)15, "X");
         }
 
-        public static IEnumerable<TestCaseData> ToStringNullableCases() => ToStringCases().Concat(UnaryNullableCases(additionalArgs: new object[] { null }));
+        public static IEnumerable<TestCaseData> ToStringNullableCases() => ToStringCases().Concat(UnaryNullableCases(additionalArgs: new object?[] { null }));
 
         [TestCaseSource(nameof(ParseCases))]
 #pragma warning disable IDE0060 // Remove unused parameter
@@ -2117,29 +2118,29 @@ namespace Genumerics.Tests
 
         public static IEnumerable<TestCaseData> ParseFailCases()
         {
-            yield return CreateTestCase<sbyte>(new object[] { byte.MaxValue.ToString(), null, typeof(OverflowException) });
-            yield return CreateTestCase<byte>(new object[] { sbyte.MinValue.ToString(), null, typeof(OverflowException) });
-            yield return CreateTestCase<short>(new object[] { ushort.MaxValue.ToString(), null, typeof(OverflowException) });
-            yield return CreateTestCase<ushort>(new object[] { short.MinValue.ToString(), null, typeof(OverflowException) });
-            yield return CreateTestCase<int>(new object[] { uint.MaxValue.ToString(), null, typeof(OverflowException) });
-            yield return CreateTestCase<uint>(new object[] { int.MinValue.ToString(), null, typeof(OverflowException) });
-            yield return CreateTestCase<long>(new object[] { ulong.MaxValue.ToString(), null, typeof(OverflowException) });
-            yield return CreateTestCase<ulong>(new object[] { long.MinValue.ToString(), null, typeof(OverflowException) });
-            yield return CreateTestCase<IntWrapper>(new object[] { uint.MaxValue.ToString(), null, typeof(OverflowException) });
-            yield return CreateTestCase<DayOfWeek>(new object[] { uint.MaxValue.ToString(), null, typeof(OverflowException) });
-            yield return CreateTestCase<sbyte>(new object[] { "a", null, typeof(FormatException) });
-            yield return CreateTestCase<byte>(new object[] { "a", null, typeof(FormatException) });
-            yield return CreateTestCase<short>(new object[] { "a", null, typeof(FormatException) });
-            yield return CreateTestCase<ushort>(new object[] { "a", null, typeof(FormatException) });
-            yield return CreateTestCase<int>(new object[] { "a", null, typeof(FormatException) });
-            yield return CreateTestCase<uint>(new object[] { "a", null, typeof(FormatException) });
-            yield return CreateTestCase<long>(new object[] { "a", null, typeof(FormatException) });
-            yield return CreateTestCase<ulong>(new object[] { "a", null, typeof(FormatException) });
-            yield return CreateTestCase<float>(new object[] { "a", null, typeof(FormatException) });
-            yield return CreateTestCase<double>(new object[] { "a", null, typeof(FormatException) });
-            yield return CreateTestCase<BigInteger>(new object[] { "a", null, typeof(FormatException) });
-            yield return CreateTestCase<IntWrapper>(new object[] { "a", null, typeof(FormatException) });
-            yield return CreateTestCase<DayOfWeek>(new object[] { "a", null, typeof(ArgumentException) });
+            yield return CreateTestCase<sbyte>(new object?[] { byte.MaxValue.ToString(), null, typeof(OverflowException) });
+            yield return CreateTestCase<byte>(new object?[] { sbyte.MinValue.ToString(), null, typeof(OverflowException) });
+            yield return CreateTestCase<short>(new object?[] { ushort.MaxValue.ToString(), null, typeof(OverflowException) });
+            yield return CreateTestCase<ushort>(new object?[] { short.MinValue.ToString(), null, typeof(OverflowException) });
+            yield return CreateTestCase<int>(new object?[] { uint.MaxValue.ToString(), null, typeof(OverflowException) });
+            yield return CreateTestCase<uint>(new object?[] { int.MinValue.ToString(), null, typeof(OverflowException) });
+            yield return CreateTestCase<long>(new object?[] { ulong.MaxValue.ToString(), null, typeof(OverflowException) });
+            yield return CreateTestCase<ulong>(new object?[] { long.MinValue.ToString(), null, typeof(OverflowException) });
+            yield return CreateTestCase<IntWrapper>(new object?[] { uint.MaxValue.ToString(), null, typeof(OverflowException) });
+            yield return CreateTestCase<DayOfWeek>(new object?[] { uint.MaxValue.ToString(), null, typeof(OverflowException) });
+            yield return CreateTestCase<sbyte>(new object?[] { "a", null, typeof(FormatException) });
+            yield return CreateTestCase<byte>(new object?[] { "a", null, typeof(FormatException) });
+            yield return CreateTestCase<short>(new object?[] { "a", null, typeof(FormatException) });
+            yield return CreateTestCase<ushort>(new object?[] { "a", null, typeof(FormatException) });
+            yield return CreateTestCase<int>(new object?[] { "a", null, typeof(FormatException) });
+            yield return CreateTestCase<uint>(new object?[] { "a", null, typeof(FormatException) });
+            yield return CreateTestCase<long>(new object?[] { "a", null, typeof(FormatException) });
+            yield return CreateTestCase<ulong>(new object?[] { "a", null, typeof(FormatException) });
+            yield return CreateTestCase<float>(new object?[] { "a", null, typeof(FormatException) });
+            yield return CreateTestCase<double>(new object?[] { "a", null, typeof(FormatException) });
+            yield return CreateTestCase<BigInteger>(new object?[] { "a", null, typeof(FormatException) });
+            yield return CreateTestCase<IntWrapper>(new object?[] { "a", null, typeof(FormatException) });
+            yield return CreateTestCase<DayOfWeek>(new object?[] { "a", null, typeof(ArgumentException) });
         }
 
         [TestCaseSource(nameof(ClampCases))]
@@ -2285,97 +2286,97 @@ namespace Genumerics.Tests
             yield return CreateTestCase<decimal>(new object[] { 3.2M });
         }
 
-        public static IEnumerable<TestCaseData> BinaryNullableCases(object bothNullResult = null, object firstNullResult = null, object secondNullResult = null, TestTypes types = TestTypes.All, params object[] additionalArgs)
+        public static IEnumerable<TestCaseData> BinaryNullableCases(object? bothNullResult = null, object? firstNullResult = null, object? secondNullResult = null, TestTypes types = TestTypes.All, params object?[] additionalArgs)
         {
             if (types.HasAnyFlags(TestTypes.SByte))
             {
-                yield return CreateTestCase<sbyte>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<sbyte>(firstNullResult, new object[] { null, sbyte.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<sbyte>(secondNullResult, new object[] { sbyte.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<sbyte>(bothNullResult, new object?[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<sbyte>(firstNullResult, new object?[] { null, sbyte.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<sbyte>(secondNullResult, new object?[] { sbyte.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
             if (types.HasAnyFlags(TestTypes.Byte))
             {
-                yield return CreateTestCase<byte>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<byte>(firstNullResult, new object[] { null, byte.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<byte>(secondNullResult, new object[] { byte.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<byte>(bothNullResult, new object?[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<byte>(firstNullResult, new object?[] { null, byte.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<byte>(secondNullResult, new object?[] { byte.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
             if (types.HasAnyFlags(TestTypes.Int16))
             {
-                yield return CreateTestCase<short>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<short>(firstNullResult, new object[] { null, short.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<short>(secondNullResult, new object[] { short.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<short>(bothNullResult, new object?[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<short>(firstNullResult, new object?[] { null, short.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<short>(secondNullResult, new object?[] { short.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
             if (types.HasAnyFlags(TestTypes.UInt16))
             {
-                yield return CreateTestCase<ushort>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<ushort>(firstNullResult, new object[] { null, ushort.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<ushort>(secondNullResult, new object[] { ushort.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<ushort>(bothNullResult, new object?[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<ushort>(firstNullResult, new object?[] { null, ushort.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<ushort>(secondNullResult, new object?[] { ushort.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
             if (types.HasAnyFlags(TestTypes.Int32))
             {
-                yield return CreateTestCase<int>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<int>(firstNullResult, new object[] { null, int.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<int>(secondNullResult, new object[] { int.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<int>(bothNullResult, new object?[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<int>(firstNullResult, new object?[] { null, int.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<int>(secondNullResult, new object?[] { int.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
             if (types.HasAnyFlags(TestTypes.UInt32))
             {
-                yield return CreateTestCase<uint>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<uint>(firstNullResult, new object[] { null, uint.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<uint>(secondNullResult, new object[] { uint.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<uint>(bothNullResult, new object?[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<uint>(firstNullResult, new object?[] { null, uint.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<uint>(secondNullResult, new object?[] { uint.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
             if (types.HasAnyFlags(TestTypes.Int64))
             {
-                yield return CreateTestCase<short>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<short>(firstNullResult, new object[] { null, short.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<short>(secondNullResult, new object[] { short.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<short>(bothNullResult, new object?[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<short>(firstNullResult, new object?[] { null, short.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<short>(secondNullResult, new object?[] { short.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
             if (types.HasAnyFlags(TestTypes.UInt64))
             {
-                yield return CreateTestCase<ulong>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<ulong>(firstNullResult, new object[] { null, ulong.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<ulong>(secondNullResult, new object[] { ulong.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<ulong>(bothNullResult, new object?[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<ulong>(firstNullResult, new object?[] { null, ulong.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<ulong>(secondNullResult, new object?[] { ulong.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
             if (types.HasAnyFlags(TestTypes.Single))
             {
-                yield return CreateTestCase<float>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<float>(firstNullResult, new object[] { null, float.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<float>(secondNullResult, new object[] { float.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<float>(bothNullResult, new object?[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<float>(firstNullResult, new object?[] { null, float.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<float>(secondNullResult, new object?[] { float.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
             if (types.HasAnyFlags(TestTypes.Double))
             {
-                yield return CreateTestCase<double>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<double>(firstNullResult, new object[] { null, double.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<double>(secondNullResult, new object[] { double.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<double>(bothNullResult, new object?[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<double>(firstNullResult, new object?[] { null, double.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<double>(secondNullResult, new object?[] { double.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
             if (types.HasAnyFlags(TestTypes.Decimal))
             {
-                yield return CreateTestCase<decimal>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<decimal>(firstNullResult, new object[] { null, decimal.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<decimal>(secondNullResult, new object[] { decimal.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<decimal>(bothNullResult, new object?[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<decimal>(firstNullResult, new object?[] { null, decimal.MinValue }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<decimal>(secondNullResult, new object?[] { decimal.MaxValue, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
             if (types.HasAnyFlags(TestTypes.BigInteger))
             {
-                yield return CreateTestCase<BigInteger>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<BigInteger>(firstNullResult, new object[] { null, BigInteger.Zero }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<BigInteger>(secondNullResult, new object[] { BigInteger.One, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<BigInteger>(bothNullResult, new object?[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<BigInteger>(firstNullResult, new object?[] { null, BigInteger.Zero }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<BigInteger>(secondNullResult, new object?[] { BigInteger.One, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
             if (types.HasAnyFlags(TestTypes.IntWrapper))
             {
-                yield return CreateTestCase<IntWrapper>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<IntWrapper>(firstNullResult, new object[] { null, new IntWrapper(0) }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<IntWrapper>(secondNullResult, new object[] { new IntWrapper(1), null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<IntWrapper>(bothNullResult, new object?[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<IntWrapper>(firstNullResult, new object?[] { null, new IntWrapper(0) }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<IntWrapper>(secondNullResult, new object?[] { new IntWrapper(1), null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
             if (types.HasAnyFlags(TestTypes.DayOfWeek))
             {
-                yield return CreateTestCase<DayOfWeek>(bothNullResult, new object[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<DayOfWeek>(firstNullResult, new object[] { null, DayOfWeek.Sunday }.Concat(additionalArgs ?? new object[0]).ToArray());
-                yield return CreateTestCase<DayOfWeek>(secondNullResult, new object[] { DayOfWeek.Monday, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<DayOfWeek>(bothNullResult, new object?[] { null, null }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<DayOfWeek>(firstNullResult, new object?[] { null, DayOfWeek.Sunday }.Concat(additionalArgs ?? new object[0]).ToArray());
+                yield return CreateTestCase<DayOfWeek>(secondNullResult, new object?[] { DayOfWeek.Monday, null }.Concat(additionalArgs ?? new object[0]).ToArray());
             }
         }
 
-        public static IEnumerable<TestCaseData> UnaryNullableCases(object nullResult = null, TestTypes types = TestTypes.All, params object[] additionalArgs)
+        public static IEnumerable<TestCaseData> UnaryNullableCases(object? nullResult = null, TestTypes types = TestTypes.All, params object?[] additionalArgs)
         {
-            var args = new object[] { null }.Concat(additionalArgs ?? new object[0]).ToArray();
+            var args = new object?[] { null }.Concat(additionalArgs ?? new object?[0]).ToArray();
             if (types.HasAnyFlags(TestTypes.SByte))
             {
                 yield return CreateTestCase<sbyte>(nullResult, args);
@@ -2466,15 +2467,15 @@ namespace Genumerics.Tests
 
         public Type Type { get; }
 
-        public object Value { get; }
+        public object? Value { get; }
 
-        public TypeAndValue(Type type, object value)
+        public TypeAndValue(Type type, object? value)
         {
             Type = type;
             Value = value;
         }
 
-        public void Deconstruct(out Type type, out object value)
+        public void Deconstruct(out Type type, out object? value)
         {
             type = Type;
             value = Value;

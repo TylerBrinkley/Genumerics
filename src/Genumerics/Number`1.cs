@@ -34,8 +34,6 @@ namespace Genumerics
     /// <typeparam name="T">The numeric type.</typeparam>
     public readonly struct Number<T> : IEquatable<Number<T>>, IComparable<Number<T>>, IComparable, IFormattable, IConvertible
     {
-        internal static INumericOperations<T>? s_operations;
-
         /// <summary>
         /// The numeric value.
         /// </summary>

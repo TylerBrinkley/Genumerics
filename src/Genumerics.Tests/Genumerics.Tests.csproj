@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.0;netcoreapp2.1;netcoreapp2.0;net45</TargetFrameworks>
-
     <IsPackable>false</IsPackable>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +12,11 @@
     <PackageReference Include="nunit" Version="3.11.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Fody" Version="5.0.6" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WeaverFiles Include="$(SolutionDir)Weavers\bin\$(Configuration)\netstandard2.0\Weavers.dll" WeaverClassNames="UnsafeWeaver" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,10 +24,14 @@
   </ItemGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
-    <DefineConstants>SPAN</DefineConstants>
+    <DefineConstants>GENERIC_ENUM_PARSE;SPAN;UNSAFE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
-    <DefineConstants>SPAN</DefineConstants>
+    <DefineConstants>GENERIC_ENUM_PARSE;SPAN</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
+    <DefineConstants>GENERIC_ENUM_PARSE</DefineConstants>
   </PropertyGroup>
 </Project>

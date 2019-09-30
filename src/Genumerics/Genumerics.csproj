@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;netcoreapp2.1;netcoreapp2.0;netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0;netcoreapp2.1;netcoreapp2.0;netstandard2.1;netstandard2.0;net45</TargetFrameworks>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0</FileVersion>
     <VersionPrefix>1.0.0</VersionPrefix>
@@ -28,24 +28,24 @@
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Fody" Version="5.0.6" PrivateAssets="All" />
-    <WeaverFiles Include="$(SolutionDir)Weavers\bin\$(Configuration)\netstandard2.0\Weavers.dll" WeaverClassNames="UnsafeWeaver" />
-  </ItemGroup>
-
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
     <AssemblyTitle>Genumerics .NET Core 3.0</AssemblyTitle>
-    <DefineConstants>MATHF;CLAMP;GENERIC_ENUM_PARSE;SPAN;NULLABLE_ATTRIBUTES</DefineConstants>
+    <DefineConstants>MATHF;CLAMP;SPAN;NULLABLE_ATTRIBUTES</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
     <AssemblyTitle>Genumerics .NET Core 2.1</AssemblyTitle>
-    <DefineConstants>MATHF;CLAMP;GENERIC_ENUM_PARSE;SPAN</DefineConstants>
+    <DefineConstants>MATHF;CLAMP;SPAN</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <AssemblyTitle>Genumerics .NET Core 2.0</AssemblyTitle>
-    <DefineConstants>MATHF;CLAMP;GENERIC_ENUM_PARSE</DefineConstants>
+    <DefineConstants>MATHF;CLAMP</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    <AssemblyTitle>Genumerics .NET Standard 2.1</AssemblyTitle>
+    <DefineConstants>MATHF;CLAMP;SPAN;NULLABLE_ATTRIBUTES</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">

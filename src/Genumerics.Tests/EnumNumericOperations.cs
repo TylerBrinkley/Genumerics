@@ -35,7 +35,6 @@ namespace Genumerics
     /// <typeparam name="TEnum">The enum type.</typeparam>
     /// <typeparam name="TUnderlying">The enum's underlying type.</typeparam>
     /// <typeparam name="TUnderlyingOperations">The underlying type's operations type.</typeparam>
-    [CLSCompliant(false)]
     public struct EnumNumericOperations<TEnum, TUnderlying, TUnderlyingOperations> : INumericOperations<TEnum>
         where TEnum : struct, Enum
         where TUnderlying : struct

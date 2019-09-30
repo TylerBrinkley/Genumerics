@@ -4,11 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genumerics", "Genumerics\Genumerics.csproj", "{B87A3B68-DF70-466E-8D04-50DC27BF9644}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genumerics.Tests", "Genumerics.Tests\Genumerics.Tests.csproj", "{91E84D20-A0CA-4E7B-8990-0634EC19347E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0CE8D1D5-60CB-4FBF-B791-4D4E75CDA50F} = {0CE8D1D5-60CB-4FBF-B791-4D4E75CDA50F}
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genumerics.Tests", "Genumerics.Tests\Genumerics.Tests.csproj", "{91E84D20-A0CA-4E7B-8990-0634EC19347E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B4FBA507-CD1E-40A3-BCBC-4AF9F0D2EAE1}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genumerics.Benchmarks", "Genumerics.Benchmarks\Genumerics.Benchmarks.csproj", "{E1C4069A-C4E2-423B-BD30-E9B39315B593}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weavers", "Weavers\Weavers.csproj", "{0CE8D1D5-60CB-4FBF-B791-4D4E75CDA50F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weavers", "Weavers\Weavers.csproj", "{0CE8D1D5-60CB-4FBF-B791-4D4E75CDA50F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -24,10 +24,10 @@
 #endregion
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Reflection;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace Genumerics
@@ -37,6 +37,13 @@ namespace Genumerics
     /// </summary>
     public static class Number
     {
+        private static class OperationsCache<T>
+        {
+            internal static INumericOperations<T>? s_operations;
+        }
+
+        private static NumericOperationsFactory[] s_operationsFactories = { new DefaultNumericOperationsFactory(), new NullableNumericOperationsFactory() };
+
         /// <summary>
         /// Gets the operations supported for the numeric type <typeparamref name="T"/>.
         /// </summary>
@@ -46,53 +53,34 @@ namespace Genumerics
         [CLSCompliant(false)]
         public static INumericOperations<T>? GetOperations<T>()
         {
-            var operations = Number<T>.s_operations;
+            var operations = OperationsCache<T>.s_operations;
             if (operations == null)
             {
-                var numericType = typeof(T);
-                Type operationsType;
+                Type? operationsType = null;
 
-                if (default(DefaultNumericOperations) is INumericOperations<T>)
+                for (var i = 0; i < s_operationsFactories.Length && operationsType == null; ++i)
                 {
-                    operationsType = typeof(DefaultNumericOperations);
+                    operationsType = s_operationsFactories[i].GetOperationsType<T>();
                 }
-                else if (default(T)! == null && numericType.IsValueType)
-                {
-                    var underlyingType = numericType.GetGenericArguments()[0];
-                    var underlyingOperations = typeof(Number)
-                        .GetMethod(nameof(GetOperationsInternal), BindingFlags.Static | BindingFlags.NonPublic)!
-                        .MakeGenericMethod(underlyingType).Invoke(null, null)!;
-                    Debug.Assert(underlyingOperations.GetType().Name == "NumericOperationsWrapper`2");
-                    var underlyingOperationsType = underlyingOperations.GetType().GetGenericArguments()[1];
-                    operationsType = typeof(NullableNumericOperations<,>).MakeGenericType(underlyingType, underlyingOperationsType);
-                }
-                else if (numericType.IsEnum)
-                {
-                    operationsType = typeof(EnumNumericOperations<,,>).MakeGenericType(numericType, Enum.GetUnderlyingType(numericType), typeof(DefaultNumericOperations));
-                }
-                else
+                if (operationsType == null)
                 {
                     return null;
                 }
+                if (!operationsType.IsValueType || !operationsType.GetInterfaces().Any(i => i == typeof(INumericOperations<T>)))
+                {
+                    throw new InvalidOperationException($"Operations type {operationsType} from factory must be a value type and implement {typeof(INumericOperations<T>)}. Return null from the factory if the type isn't supported.");
+                }
 
-                operations = Interlocked.CompareExchange(ref Number<T>.s_operations, (operations = (INumericOperations<T>)Activator.CreateInstance(typeof(NumericOperationsWrapper<,>).MakeGenericType(numericType, operationsType))!), null) ?? operations;
+                operations = Interlocked.CompareExchange(ref OperationsCache<T>.s_operations, (operations = (INumericOperations<T>)Activator.CreateInstance(typeof(NumericOperationsWrapper<,>).MakeGenericType(typeof(T), operationsType))!), null) ?? operations;
                 
             }
             return operations;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static INumericOperations<T> GetOperationsInternal<T>()
         {
-            var operations = Number<T>.s_operations;
-            if (operations == null)
-            {
-                operations = GetOperations<T>();
-                if (operations == null)
-                {
-                    throw new NotSupportedException($"Generic numeric operations on {typeof(T)} are not supported. The only built-in supported types are SByte, Byte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, BigInteger, and enums as well as the nullable versions of each of these types. You can register support for a non-built-in type using the Number.RegisterOperations method.");
-                }
-            }
-            return operations;
+            return OperationsCache<T>.s_operations ?? GetOperations<T>() ?? throw new NotSupportedException($"Generic numeric operations on {typeof(T)} are not supported. The only built-in supported types are SByte, Byte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, and BigInteger as well as the nullable versions of each of these types. You can register support for a non-built-in type using the Number.RegisterOperations method.");
         }
 
         /// <summary>
@@ -110,10 +98,50 @@ namespace Genumerics
                 throw new ArgumentException("Cannot explicitly register operations for nullable value types. Nullable value types are handled automatically.");
             }
 
-            if (GetOperations<T>() != null || Interlocked.CompareExchange(ref Number<T>.s_operations, new NumericOperationsWrapper<T, TNumericOperations>(), null) != null)
+            if (GetOperations<T>() != null || Interlocked.CompareExchange(ref OperationsCache<T>.s_operations, new NumericOperationsWrapper<T, TNumericOperations>(), null) != null)
             {
                 throw new InvalidOperationException("Cannot overwrite built-in or previously registered operations.");
             }
+        }
+
+        /// <summary>
+        /// Registers the numeric operations factory. The operations factory's input parameter is the numeric type and the return type parameter is the numeric operations type.
+        /// If the numeric type is not supported by the factory <c>null</c> should be returned. The returned numeric operations type should be a value type and implement
+        /// <see cref="INumericOperations{T}"/> for the given numeric type.
+        /// </summary>
+        /// <param name="operationsFactory">The operations factory.</param>
+        public static void RegisterOperationsFactory(Func<Type, Type?> operationsFactory)
+        {
+            if (operationsFactory == null)
+            {
+                throw new ArgumentNullException(nameof(operationsFactory));
+            }
+
+            RegisterOperationsFactory(new FuncNumericOperationsFactory(operationsFactory));
+        }
+
+        /// <summary>
+        /// Registers the numeric operations factory. The operations factory's input parameter is the numeric type and the return type parameter is the numeric operations type.
+        /// If the numeric type is not supported by the factory <c>null</c> should be returned. The returned numeric operations type should be a value type and implement
+        /// <see cref="INumericOperations{T}"/> for the given numeric type.
+        /// </summary>
+        /// <param name="operationsFactory">The operations factory.</param>
+        public static void RegisterOperationsFactory(NumericOperationsFactory operationsFactory)
+        {
+            if (operationsFactory == null)
+            {
+                throw new ArgumentNullException(nameof(operationsFactory));
+            }
+
+            var operationsFactories = s_operationsFactories;
+            NumericOperationsFactory[] oldOperationsFactories;
+            do
+            {
+                oldOperationsFactories = operationsFactories;
+                operationsFactories = new NumericOperationsFactory[oldOperationsFactories.Length + 1];
+                oldOperationsFactories.CopyTo(operationsFactories, 0);
+                operationsFactories[operationsFactories.Length - 1] = operationsFactory;
+            } while ((operationsFactories = Interlocked.CompareExchange(ref s_operationsFactories, operationsFactories, oldOperationsFactories)) != oldOperationsFactories);
         }
 
         /// <summary>
