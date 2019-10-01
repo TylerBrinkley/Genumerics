@@ -12,11 +12,6 @@
     <PackageReference Include="nunit" Version="3.11.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
-    <PackageReference Include="Fody" Version="5.0.6" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <WeaverFiles Include="$(SolutionDir)Weavers\bin\$(Configuration)\netstandard2.0\Weavers.dll" WeaverClassNames="UnsafeWeaver" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,7 +19,7 @@
   </ItemGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
-    <DefineConstants>GENERIC_ENUM_PARSE;SPAN;UNSAFE</DefineConstants>
+    <DefineConstants>GENERIC_ENUM_PARSE;SPAN</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">

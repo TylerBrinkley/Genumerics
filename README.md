@@ -1,10 +1,10 @@
 # Genumerics
-Genumerics is a high-performance .NET library for generic numeric operations. It is compatible with .NET Framework 2.0+ and .NET Standard 1.0+.
+Genumerics is a high-performance .NET library for generic numeric operations. It is compatible with .NET Framework 4.5+ and .NET Standard 2.0+.
 
 ## The Problem
-You may have come across a point while working in .NET where you would like to perform numeric or mathematical operations over a generic numeric type. Unfortunately .NET doesn't provide a way to do that natively and so you must either specialize each case of numeric type or figure out another way of accomplishing this.
+You may have come across while working in .NET where you would like to perform numeric operations over a generic numeric type. Unfortunately .NET doesn't provide a way to do that natively.
 
-This library fills that gap by providing most standard numeric operations for the following built-in numeric types and their nullable equivalents.
+This library fills that gap by providing most standard numeric operations for the following built-in numeric types and their nullable equivalents with the ability to add support for other numeric types.
 
 `sbyte`, `byte`, `short`, `ushort`, `int`, `uint`, `long`, `ulong`, `float`, `double`, `decimal`, and `BigInteger`
 

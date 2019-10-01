@@ -44,110 +44,114 @@ namespace Genumerics
         private static readonly bool s_initialized = Enum.GetUnderlyingType(typeof(TEnum)) == typeof(TUnderlying) ? true : throw new InvalidOperationException("TUnderlying must be TEnum's underlying type");
 #pragma warning restore IDE0052 // Remove unread private members
 
-        /// <inheritdoc />
-        public TEnum Zero => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Zero);
+        private static TEnum ToEnum(TUnderlying value) => (TEnum)Enum.ToObject(typeof(TEnum), value);
+
+        private static TUnderlying ToUnderlying(TEnum value) => (TUnderlying)(object)value;
 
         /// <inheritdoc />
-        public TEnum One => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).One);
+        public TEnum Zero => ToEnum(default(TUnderlyingOperations).Zero);
 
         /// <inheritdoc />
-        public TEnum MinusOne => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).MinusOne);
+        public TEnum One => ToEnum(default(TUnderlyingOperations).One);
 
         /// <inheritdoc />
-        public TEnum MaxValue => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).MaxValue);
+        public TEnum MinusOne => ToEnum(default(TUnderlyingOperations).MinusOne);
 
         /// <inheritdoc />
-        public TEnum MinValue => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).MinValue);
+        public TEnum MaxValue => ToEnum(default(TUnderlyingOperations).MaxValue);
+
+        /// <inheritdoc />
+        public TEnum MinValue => ToEnum(default(TUnderlyingOperations).MinValue);
 
         /// <inheritdoc />
         public TypeCode TypeCode => default(TUnderlyingOperations).TypeCode;
 
         /// <inheritdoc />
-        public TEnum Abs(TEnum value) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Abs(Unsafe.As<TEnum, TUnderlying>(value)));
+        public TEnum Abs(TEnum value) => ToEnum(default(TUnderlyingOperations).Abs(ToUnderlying(value)));
 
         /// <inheritdoc />
-        public TEnum Add(TEnum left, TEnum right) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Add(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right)));
+        public TEnum Add(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).Add(ToUnderlying(left), ToUnderlying(right)));
 
         /// <inheritdoc />
-        public TEnum BitwiseAnd(TEnum left, TEnum right) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).BitwiseAnd(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right)));
+        public TEnum BitwiseAnd(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).BitwiseAnd(ToUnderlying(left), ToUnderlying(right)));
 
         /// <inheritdoc />
-        public TEnum Ceiling(TEnum value) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Ceiling(Unsafe.As<TEnum, TUnderlying>(value)));
+        public TEnum Ceiling(TEnum value) => ToEnum(default(TUnderlyingOperations).Ceiling(ToUnderlying(value)));
 
         /// <inheritdoc />
-        public TEnum Clamp(TEnum value, TEnum min, TEnum max) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Clamp(Unsafe.As<TEnum, TUnderlying>(value), Unsafe.As<TEnum, TUnderlying>(min), Unsafe.As<TEnum, TUnderlying>(max)));
+        public TEnum Clamp(TEnum value, TEnum min, TEnum max) => ToEnum(default(TUnderlyingOperations).Clamp(ToUnderlying(value), ToUnderlying(min), ToUnderlying(max)));
 
         /// <inheritdoc />
-        public int Compare(TEnum left, TEnum right) => default(TUnderlyingOperations).Compare(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right));
+        public int Compare(TEnum left, TEnum right) => default(TUnderlyingOperations).Compare(ToUnderlying(left), ToUnderlying(right));
 
         /// <inheritdoc />
-        public TEnum Convert<TFrom>(TFrom value) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Convert(value));
+        public TEnum Convert<TFrom>(TFrom value) => ToEnum(default(TUnderlyingOperations).Convert(value));
 
         /// <inheritdoc />
-        public TEnum Divide(TEnum dividend, TEnum divisor) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Divide(Unsafe.As<TEnum, TUnderlying>(dividend), Unsafe.As<TEnum, TUnderlying>(divisor)));
+        public TEnum Divide(TEnum dividend, TEnum divisor) => ToEnum(default(TUnderlyingOperations).Divide(ToUnderlying(dividend), ToUnderlying(divisor)));
 
         /// <inheritdoc />
         public TEnum DivRem(TEnum dividend, TEnum divisor, out TEnum remainder)
         {
-            var result = Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).DivRem(Unsafe.As<TEnum, TUnderlying>(dividend), Unsafe.As<TEnum, TUnderlying>(divisor), out var r));
-            remainder = Unsafe.As<TUnderlying, TEnum>(r);
+            var result = ToEnum(default(TUnderlyingOperations).DivRem(ToUnderlying(dividend), ToUnderlying(divisor), out var r));
+            remainder = ToEnum(r);
             return result;
         }
 
         /// <inheritdoc />
-        public bool Equals(TEnum left, TEnum right) => default(TUnderlyingOperations).Equals(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right));
+        public bool Equals(TEnum left, TEnum right) => default(TUnderlyingOperations).Equals(ToUnderlying(left), ToUnderlying(right));
 
         /// <inheritdoc />
-        public TEnum Floor(TEnum value) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Floor(Unsafe.As<TEnum, TUnderlying>(value)));
+        public TEnum Floor(TEnum value) => ToEnum(default(TUnderlyingOperations).Floor(ToUnderlying(value)));
 
         /// <inheritdoc />
-        public bool GreaterThan(TEnum left, TEnum right) => default(TUnderlyingOperations).GreaterThan(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right));
+        public bool GreaterThan(TEnum left, TEnum right) => default(TUnderlyingOperations).GreaterThan(ToUnderlying(left), ToUnderlying(right));
 
         /// <inheritdoc />
-        public bool GreaterThanOrEqual(TEnum left, TEnum right) => default(TUnderlyingOperations).GreaterThanOrEqual(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right));
+        public bool GreaterThanOrEqual(TEnum left, TEnum right) => default(TUnderlyingOperations).GreaterThanOrEqual(ToUnderlying(left), ToUnderlying(right));
 
         /// <inheritdoc />
-        public bool IsEven(TEnum value) => default(TUnderlyingOperations).IsEven(Unsafe.As<TEnum, TUnderlying>(value));
+        public bool IsEven(TEnum value) => default(TUnderlyingOperations).IsEven(ToUnderlying(value));
 
         /// <inheritdoc />
-        public bool IsOdd(TEnum value) => default(TUnderlyingOperations).IsOdd(Unsafe.As<TEnum, TUnderlying>(value));
+        public bool IsOdd(TEnum value) => default(TUnderlyingOperations).IsOdd(ToUnderlying(value));
 
         /// <inheritdoc />
-        public bool IsPowerOfTwo(TEnum value) => default(TUnderlyingOperations).IsPowerOfTwo(Unsafe.As<TEnum, TUnderlying>(value));
+        public bool IsPowerOfTwo(TEnum value) => default(TUnderlyingOperations).IsPowerOfTwo(ToUnderlying(value));
 
         /// <inheritdoc />
-        public TEnum LeftShift(TEnum value, int shift) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).LeftShift(Unsafe.As<TEnum, TUnderlying>(value), shift));
+        public TEnum LeftShift(TEnum value, int shift) => ToEnum(default(TUnderlyingOperations).LeftShift(ToUnderlying(value), shift));
 
         /// <inheritdoc />
-        public bool LessThan(TEnum left, TEnum right) => default(TUnderlyingOperations).LessThan(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right));
+        public bool LessThan(TEnum left, TEnum right) => default(TUnderlyingOperations).LessThan(ToUnderlying(left), ToUnderlying(right));
 
         /// <inheritdoc />
-        public bool LessThanOrEqual(TEnum left, TEnum right) => default(TUnderlyingOperations).LessThanOrEqual(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right));
+        public bool LessThanOrEqual(TEnum left, TEnum right) => default(TUnderlyingOperations).LessThanOrEqual(ToUnderlying(left), ToUnderlying(right));
 
         /// <inheritdoc />
-        public TEnum Max(TEnum left, TEnum right) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Max(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right)));
+        public TEnum Max(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).Max(ToUnderlying(left), ToUnderlying(right)));
 
         /// <inheritdoc />
-        public TEnum Min(TEnum left, TEnum right) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Min(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right)));
+        public TEnum Min(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).Min(ToUnderlying(left), ToUnderlying(right)));
 
         /// <inheritdoc />
-        public TEnum Multiply(TEnum left, TEnum right) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Multiply(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right)));
+        public TEnum Multiply(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).Multiply(ToUnderlying(left), ToUnderlying(right)));
 
         /// <inheritdoc />
-        public TEnum Negate(TEnum value) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Negate(Unsafe.As<TEnum, TUnderlying>(value)));
+        public TEnum Negate(TEnum value) => ToEnum(default(TUnderlyingOperations).Negate(ToUnderlying(value)));
 
         /// <inheritdoc />
-        public TEnum OnesComplement(TEnum value) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).OnesComplement(Unsafe.As<TEnum, TUnderlying>(value)));
+        public TEnum OnesComplement(TEnum value) => ToEnum(default(TUnderlyingOperations).OnesComplement(ToUnderlying(value)));
 
         /// <inheritdoc />
-        public bool NotEquals(TEnum left, TEnum right) => default(TUnderlyingOperations).NotEquals(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right));
+        public bool NotEquals(TEnum left, TEnum right) => default(TUnderlyingOperations).NotEquals(ToUnderlying(left), ToUnderlying(right));
 
         /// <inheritdoc />
-        public TEnum BitwiseOr(TEnum left, TEnum right) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).BitwiseOr(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right)));
+        public TEnum BitwiseOr(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).BitwiseOr(ToUnderlying(left), ToUnderlying(right)));
 
         /// <inheritdoc />
         public TEnum Parse(string value, NumberStyles? style, IFormatProvider? provider) => style.HasValue ?
-            Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Parse(value, style, provider)) :
+            ToEnum(default(TUnderlyingOperations).Parse(value, style, provider)) :
 #if GENERIC_ENUM_PARSE
             Enum.Parse<TEnum>(value);
 #else
@@ -157,66 +161,66 @@ namespace Genumerics
 #if SPAN
         /// <inheritdoc />
         public TEnum Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider) => style.HasValue ?
-            Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Parse(value, style, provider)) :
+            ToEnum(default(TUnderlyingOperations).Parse(value, style, provider)) :
             Enum.Parse<TEnum>(value.ToString());
 #endif
 
         /// <inheritdoc />
-        public TEnum Remainder(TEnum dividend, TEnum divisor) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Remainder(Unsafe.As<TEnum, TUnderlying>(dividend), Unsafe.As<TEnum, TUnderlying>(divisor)));
+        public TEnum Remainder(TEnum dividend, TEnum divisor) => ToEnum(default(TUnderlyingOperations).Remainder(ToUnderlying(dividend), ToUnderlying(divisor)));
 
         /// <inheritdoc />
-        public TEnum RightShift(TEnum value, int shift) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).RightShift(Unsafe.As<TEnum, TUnderlying>(value), shift));
+        public TEnum RightShift(TEnum value, int shift) => ToEnum(default(TUnderlyingOperations).RightShift(ToUnderlying(value), shift));
 
         /// <inheritdoc />
-        public TEnum Round(TEnum value, int digits, MidpointRounding mode) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Round(Unsafe.As<TEnum, TUnderlying>(value), digits, mode));
+        public TEnum Round(TEnum value, int digits, MidpointRounding mode) => ToEnum(default(TUnderlyingOperations).Round(ToUnderlying(value), digits, mode));
 
         /// <inheritdoc />
-        public int Sign(TEnum value) => default(TUnderlyingOperations).Sign(Unsafe.As<TEnum, TUnderlying>(value));
+        public int Sign(TEnum value) => default(TUnderlyingOperations).Sign(ToUnderlying(value));
 
         /// <inheritdoc />
-        public TEnum Subtract(TEnum left, TEnum right) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Subtract(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right)));
+        public TEnum Subtract(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).Subtract(ToUnderlying(left), ToUnderlying(right)));
 
         /// <inheritdoc />
-        public BigInteger ToBigInteger(TEnum value) => default(TUnderlyingOperations).ToBigInteger(Unsafe.As<TEnum, TUnderlying>(value));
+        public BigInteger ToBigInteger(TEnum value) => default(TUnderlyingOperations).ToBigInteger(ToUnderlying(value));
 
         /// <inheritdoc />
-        public byte ToByte(TEnum value) => default(TUnderlyingOperations).ToByte(Unsafe.As<TEnum, TUnderlying>(value));
+        public byte ToByte(TEnum value) => default(TUnderlyingOperations).ToByte(ToUnderlying(value));
 
         /// <inheritdoc />
-        public decimal ToDecimal(TEnum value) => default(TUnderlyingOperations).ToDecimal(Unsafe.As<TEnum, TUnderlying>(value));
+        public decimal ToDecimal(TEnum value) => default(TUnderlyingOperations).ToDecimal(ToUnderlying(value));
 
         /// <inheritdoc />
-        public double ToDouble(TEnum value) => default(TUnderlyingOperations).ToDouble(Unsafe.As<TEnum, TUnderlying>(value));
+        public double ToDouble(TEnum value) => default(TUnderlyingOperations).ToDouble(ToUnderlying(value));
 
         /// <inheritdoc />
-        public short ToInt16(TEnum value) => default(TUnderlyingOperations).ToInt16(Unsafe.As<TEnum, TUnderlying>(value));
+        public short ToInt16(TEnum value) => default(TUnderlyingOperations).ToInt16(ToUnderlying(value));
 
         /// <inheritdoc />
-        public int ToInt32(TEnum value) => default(TUnderlyingOperations).ToInt32(Unsafe.As<TEnum, TUnderlying>(value));
+        public int ToInt32(TEnum value) => default(TUnderlyingOperations).ToInt32(ToUnderlying(value));
 
         /// <inheritdoc />
-        public long ToInt64(TEnum value) => default(TUnderlyingOperations).ToInt64(Unsafe.As<TEnum, TUnderlying>(value));
+        public long ToInt64(TEnum value) => default(TUnderlyingOperations).ToInt64(ToUnderlying(value));
 
         /// <inheritdoc />
-        public sbyte ToSByte(TEnum value) => default(TUnderlyingOperations).ToSByte(Unsafe.As<TEnum, TUnderlying>(value));
+        public sbyte ToSByte(TEnum value) => default(TUnderlyingOperations).ToSByte(ToUnderlying(value));
 
         /// <inheritdoc />
-        public float ToSingle(TEnum value) => default(TUnderlyingOperations).ToSingle(Unsafe.As<TEnum, TUnderlying>(value));
+        public float ToSingle(TEnum value) => default(TUnderlyingOperations).ToSingle(ToUnderlying(value));
 
         /// <inheritdoc />
         public string ToString(TEnum value, string? format, IFormatProvider? provider) => value.ToString(format);
 
         /// <inheritdoc />
-        public ushort ToUInt16(TEnum value) => default(TUnderlyingOperations).ToUInt16(Unsafe.As<TEnum, TUnderlying>(value));
+        public ushort ToUInt16(TEnum value) => default(TUnderlyingOperations).ToUInt16(ToUnderlying(value));
 
         /// <inheritdoc />
-        public uint ToUInt32(TEnum value) => default(TUnderlyingOperations).ToUInt32(Unsafe.As<TEnum, TUnderlying>(value));
+        public uint ToUInt32(TEnum value) => default(TUnderlyingOperations).ToUInt32(ToUnderlying(value));
 
         /// <inheritdoc />
-        public ulong ToUInt64(TEnum value) => default(TUnderlyingOperations).ToUInt64(Unsafe.As<TEnum, TUnderlying>(value));
+        public ulong ToUInt64(TEnum value) => default(TUnderlyingOperations).ToUInt64(ToUnderlying(value));
 
         /// <inheritdoc />
-        public TEnum Truncate(TEnum value) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Truncate(Unsafe.As<TEnum, TUnderlying>(value)));
+        public TEnum Truncate(TEnum value) => ToEnum(default(TUnderlyingOperations).Truncate(ToUnderlying(value)));
 
 #if SPAN
         /// <inheritdoc />
@@ -235,7 +239,7 @@ namespace Genumerics
             if (style.HasValue)
             {
                 var success = default(TUnderlyingOperations).TryParse(value, style, provider, out var r);
-                result = Unsafe.As<TUnderlying, TEnum>(r);
+                result = ToEnum(r);
                 return success;
             }
             return Enum.TryParse(value, out result);
@@ -248,7 +252,7 @@ namespace Genumerics
             if (style.HasValue)
             {
                 var success = default(TUnderlyingOperations).TryParse(value, style, provider, out var r);
-                result = Unsafe.As<TUnderlying, TEnum>(r);
+                result = ToEnum(r);
                 return success;
             }
             return Enum.TryParse(value.ToString(), out result);
@@ -256,7 +260,7 @@ namespace Genumerics
 #endif
 
         /// <inheritdoc />
-        public TEnum Xor(TEnum left, TEnum right) => Unsafe.As<TUnderlying, TEnum>(default(TUnderlyingOperations).Xor(Unsafe.As<TEnum, TUnderlying>(left), Unsafe.As<TEnum, TUnderlying>(right)));
+        public TEnum Xor(TEnum left, TEnum right) => ToEnum(default(TUnderlyingOperations).Xor(ToUnderlying(left), ToUnderlying(right)));
 
         /// <inheritdoc />
         public override bool Equals(object? obj) => obj is EnumNumericOperations<TEnum, TUnderlying, TUnderlyingOperations>;
