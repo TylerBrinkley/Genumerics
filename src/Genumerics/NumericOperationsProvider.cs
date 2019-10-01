@@ -30,9 +30,9 @@ using System.Reflection;
 namespace Genumerics
 {
     /// <summary>
-    /// The numeric operations factory base class.
+    /// The numeric operations provider base class.
     /// </summary>
-    public abstract class NumericOperationsFactory
+    public abstract class NumericOperationsProvider
     {
         /// <summary>
         /// Gets the numeric operations type that handles the numeric type <typeparamref name="T"/> or else returns <c>null</c>.
@@ -42,12 +42,12 @@ namespace Genumerics
         public abstract Type? GetOperationsType<T>();
     }
 
-    internal sealed class DefaultNumericOperationsFactory : NumericOperationsFactory
+    internal sealed class DefaultNumericOperationsProvider : NumericOperationsProvider
     {
         public override Type? GetOperationsType<T>() => default(DefaultNumericOperations) is INumericOperations<T> ? typeof(DefaultNumericOperations) : null;
     }
 
-    internal sealed class NullableNumericOperationsFactory : NumericOperationsFactory
+    internal sealed class NullableNumericOperationsProvider : NumericOperationsProvider
     {
         public override Type? GetOperationsType<T>()
         {
@@ -66,15 +66,15 @@ namespace Genumerics
         }
     }
 
-    internal sealed class FuncNumericOperationsFactory : NumericOperationsFactory
+    internal sealed class FuncNumericOperationsProvider : NumericOperationsProvider
     {
-        private readonly Func<Type, Type?> _operationsFactory;
+        private readonly Func<Type, Type?> _operationsProvider;
 
-        public FuncNumericOperationsFactory(Func<Type, Type?> operationsFactory)
+        public FuncNumericOperationsProvider(Func<Type, Type?> operationsProvider)
         {
-            _operationsFactory = operationsFactory;
+            _operationsProvider = operationsProvider;
         }
 
-        public override Type? GetOperationsType<T>() => _operationsFactory(typeof(T));
+        public override Type? GetOperationsType<T>() => _operationsProvider(typeof(T));
     }
 }

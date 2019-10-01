@@ -38,7 +38,7 @@ namespace Genumerics.Tests
         static NumberTests()
         {
             Number.RegisterOperations<IntWrapper, IntWrapperOperations>();
-            Number.RegisterOperationsFactory(t => t.IsEnum ? typeof(EnumNumericOperations<,,>).MakeGenericType(t, Enum.GetUnderlyingType(t), typeof(DefaultNumericOperations)) : null);
+            Number.RegisterOperationsProvider(t => t.IsEnum ? typeof(EnumNumericOperations<,,>).MakeGenericType(t, Enum.GetUnderlyingType(t), typeof(DefaultNumericOperations)) : null);
         }
 
         private static TestCaseData CreateTestCase<T>(object? expectedResult, params object?[] args) => new TestCaseData(new[] { (object?)default(T)! }.Concat(args ?? new object?[] { null }).ToArray()) { ExpectedResult = expectedResult };

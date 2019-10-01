@@ -42,7 +42,7 @@ namespace Genumerics
     /// </summary>
     public static class Number
     {
-        private static NumericOperationsFactory[] s_operationsFactories = { new DefaultNumericOperationsFactory(), new NullableNumericOperationsFactory() };
+        private static NumericOperationsProvider[] s_operationsProviders = { new DefaultNumericOperationsProvider(), new NullableNumericOperationsProvider() };
 
         /// <summary>
         /// Gets the operations supported for the numeric type <typeparamref name="T"/>.
@@ -58,9 +58,9 @@ namespace Genumerics
             {
                 Type? operationsType = null;
 
-                for (var i = 0; i < s_operationsFactories.Length && operationsType == null; ++i)
+                for (var i = 0; i < s_operationsProviders.Length && operationsType == null; ++i)
                 {
-                    operationsType = s_operationsFactories[i].GetOperationsType<T>();
+                    operationsType = s_operationsProviders[i].GetOperationsType<T>();
                 }
                 if (operationsType == null)
                 {
@@ -68,7 +68,7 @@ namespace Genumerics
                 }
                 if (!operationsType.IsValueType || !operationsType.GetInterfaces().Any(i => i == typeof(INumericOperations<T>)))
                 {
-                    throw new InvalidOperationException($"Operations type {operationsType} from factory must be a value type and implement {typeof(INumericOperations<T>)}. Return null from the factory if the type isn't supported.");
+                    throw new InvalidOperationException($"Operations type {operationsType} from provider must be a value type and implement {typeof(INumericOperations<T>)}. Return null from the provider if the type isn't supported.");
                 }
 
                 operations = Interlocked.CompareExchange(ref NumericOperationsCache<T>.s_operations, (operations = (INumericOperations<T>)Activator.CreateInstance(typeof(NumericOperationsWrapper<,>).MakeGenericType(typeof(T), operationsType))!), null) ?? operations;
@@ -99,43 +99,43 @@ namespace Genumerics
         }
 
         /// <summary>
-        /// Registers the numeric operations factory. The operations factory's input parameter is the numeric type and the return type parameter is the numeric operations type.
-        /// If the numeric type is not supported by the factory <c>null</c> should be returned. The returned numeric operations type should be a value type and implement
+        /// Registers the numeric operations provider. The operations provider's input parameter is the numeric type and the return type parameter is the numeric operations type.
+        /// If the numeric type is not supported by the provider <c>null</c> should be returned. The returned numeric operations type should be a value type and implement
         /// <see cref="INumericOperations{T}"/> for the given numeric type.
         /// </summary>
-        /// <param name="operationsFactory">The operations factory.</param>
-        public static void RegisterOperationsFactory(Func<Type, Type?> operationsFactory)
+        /// <param name="operationsProvider">The operations provider.</param>
+        public static void RegisterOperationsProvider(Func<Type, Type?> operationsProvider)
         {
-            if (operationsFactory == null)
+            if (operationsProvider == null)
             {
-                throw new ArgumentNullException(nameof(operationsFactory));
+                throw new ArgumentNullException(nameof(operationsProvider));
             }
 
-            RegisterOperationsFactory(new FuncNumericOperationsFactory(operationsFactory));
+            RegisterOperationsProvider(new FuncNumericOperationsProvider(operationsProvider));
         }
 
         /// <summary>
-        /// Registers the numeric operations factory. The operations factory's input parameter is the numeric type and the return type parameter is the numeric operations type.
-        /// If the numeric type is not supported by the factory <c>null</c> should be returned. The returned numeric operations type should be a value type and implement
+        /// Registers the numeric operations provider. The operations provider's input parameter is the numeric type and the return type parameter is the numeric operations type.
+        /// If the numeric type is not supported by the provider <c>null</c> should be returned. The returned numeric operations type should be a value type and implement
         /// <see cref="INumericOperations{T}"/> for the given numeric type.
         /// </summary>
-        /// <param name="operationsFactory">The operations factory.</param>
-        public static void RegisterOperationsFactory(NumericOperationsFactory operationsFactory)
+        /// <param name="operationsProvider">The operations provider.</param>
+        public static void RegisterOperationsProvider(NumericOperationsProvider operationsProvider)
         {
-            if (operationsFactory == null)
+            if (operationsProvider == null)
             {
-                throw new ArgumentNullException(nameof(operationsFactory));
+                throw new ArgumentNullException(nameof(operationsProvider));
             }
 
-            var operationsFactories = s_operationsFactories;
-            NumericOperationsFactory[] oldOperationsFactories;
+            var operationsProviders = s_operationsProviders;
+            NumericOperationsProvider[] oldOperationsProviders;
             do
             {
-                oldOperationsFactories = operationsFactories;
-                operationsFactories = new NumericOperationsFactory[oldOperationsFactories.Length + 1];
-                oldOperationsFactories.CopyTo(operationsFactories, 0);
-                operationsFactories[operationsFactories.Length - 1] = operationsFactory;
-            } while ((operationsFactories = Interlocked.CompareExchange(ref s_operationsFactories, operationsFactories, oldOperationsFactories)) != oldOperationsFactories);
+                oldOperationsProviders = operationsProviders;
+                operationsProviders = new NumericOperationsProvider[oldOperationsProviders.Length + 1];
+                oldOperationsProviders.CopyTo(operationsProviders, 0);
+                operationsProviders[operationsProviders.Length - 1] = operationsProvider;
+            } while ((operationsProviders = Interlocked.CompareExchange(ref s_operationsProviders, operationsProviders, oldOperationsProviders)) != oldOperationsProviders);
         }
 
         /// <summary>
