@@ -168,3 +168,7 @@ public class SumBenchmarks<T, TNumericOperations>
     }
 }
 ```
+
+## Interface
+
+See [fuget](https://www.fuget.org/packages/Genumerics/1.0.1/lib/netcoreapp3.0/Genumerics.dll/Genumerics/Number) for exploring the interface.
