@@ -53,7 +53,7 @@ public class GenumericsDemo
 
     [TestCase(123, null, "123")]
     [TestCase(255, "X", "FF")]
-    public void ToString<T>(T value, string format, string expected)
+    public void ToString<T>(T value, string? format, string expected)
     {
         Assert.AreEqual(expected, Number.ToString(value, format));
     }
