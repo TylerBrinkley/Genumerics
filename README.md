@@ -1,3 +1,7 @@
+![GitHub last commit (master)](https://img.shields.io/github/last-commit/TylerBrinkley/Genumerics/master.svg?logo=github)
+[![NuGet Version](https://img.shields.io/nuget/v/Genumerics.svg?logo=nuget)](https://www.nuget.org/packages/Genumerics/)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/Genumerics.svg?logo=nuget)](https://www.nuget.org/packages/Genumerics/)
+
 # Genumerics
 Genumerics is a high-performance .NET library for generic numeric operations. It is compatible with .NET Framework 4.5+ and .NET Standard 2.0+.
 
