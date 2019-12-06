@@ -1,5 +1,6 @@
 ﻿using System;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using Genumerics;
 
@@ -8,6 +9,7 @@ public class Program
     static void Main() => BenchmarkRunner.Run<SumBenchmarks<int, DefaultNumericOperations>>();
 }
 
+[SimpleJob(RuntimeMoniker.Net461), SimpleJob(RuntimeMoniker.NetCoreApp30), LegacyJitX86Job]
 public class SumBenchmarks<T, TNumericOperations>
     where TNumericOperations : struct, INumericOperations<T>
 {

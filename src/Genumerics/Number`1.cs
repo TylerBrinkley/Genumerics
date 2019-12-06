@@ -221,7 +221,7 @@ namespace Genumerics
         /// <param name="right">The second value to add.</param>
         /// <returns>The sum of <paramref name="left"/> and <paramref name="right"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static Number<T> operator +(Number<T> left, Number<T> right) => Number.GetOperationsInternal<T>().Add(left, right);
+        public static Number<T> operator +(Number<T> left, Number<T> right) => Number.Add<T>(left, right);
 
         /// <summary>
         /// Negates a specified numeric value.
@@ -231,7 +231,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type doesn't support negative values.</exception>
-        public static Number<T> operator -(Number<T> value) => Number.GetOperationsInternal<T>().Negate(value);
+        public static Number<T> operator -(Number<T> value) => Number.Negate<T>(value);
 
         /// <summary>
         /// Subtracts a numeric value from another numeric value.
@@ -240,7 +240,7 @@ namespace Genumerics
         /// <param name="right">The value to subtract (the subtrahend).</param>
         /// <returns>The result of subtracting <paramref name="right"/> from <paramref name="left"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static Number<T> operator -(Number<T> left, Number<T> right) => Number.GetOperationsInternal<T>().Subtract(left, right);
+        public static Number<T> operator -(Number<T> left, Number<T> right) => Number.Subtract<T>(left, right);
 
         /// <summary>
         /// Returns the bitwise one's complement of a numeric value.
@@ -250,7 +250,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator ~(Number<T> value) => Number.GetOperationsInternal<T>().OnesComplement(value);
+        public static Number<T> operator ~(Number<T> value) => Number.OnesComplement<T>(value);
 
         /// <summary>
         /// Increments a numeric value by 1.
@@ -258,7 +258,7 @@ namespace Genumerics
         /// <param name="value">The value to increment.</param>
         /// <returns>The value of the <paramref name="value"/> parameter incremented by 1.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static Number<T> operator ++(Number<T> value) => Number.GetOperationsInternal<T>().Add(value, Number.GetOperationsInternal<T>().One);
+        public static Number<T> operator ++(Number<T> value) => Number.Add<T>(value, Number.One<T>());
 
         /// <summary>
         /// Decrements a numeric value by 1.
@@ -266,7 +266,7 @@ namespace Genumerics
         /// <param name="value">The value to decrement.</param>
         /// <returns>The value of the <paramref name="value"/> parameter decremented by 1.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static Number<T> operator --(Number<T> value) => Number.GetOperationsInternal<T>().Subtract(value, Number.GetOperationsInternal<T>().One);
+        public static Number<T> operator --(Number<T> value) => Number.Subtract<T>(value, Number.One<T>());
 
         /// <summary>
         /// Multiplies two specified numeric values.
@@ -275,7 +275,7 @@ namespace Genumerics
         /// <param name="right">The second value to multiply.</param>
         /// <returns>The product of <paramref name="left"/> and <paramref name="right"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static Number<T> operator *(Number<T> left, Number<T> right) => Number.GetOperationsInternal<T>().Multiply(left, right);
+        public static Number<T> operator *(Number<T> left, Number<T> right) => Number.Multiply<T>(left, right);
 
         /// <summary>
         /// Divides a specified numeric value by another specified numeric value.
@@ -285,7 +285,7 @@ namespace Genumerics
         /// <returns>The result of the division.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="DivideByZeroException"><paramref name="divisor"/> is zero (0).</exception>
-        public static Number<T> operator /(Number<T> dividend, Number<T> divisor) => Number.GetOperationsInternal<T>().Divide(dividend, divisor);
+        public static Number<T> operator /(Number<T> dividend, Number<T> divisor) => Number.Divide<T>(dividend, divisor);
 
         /// <summary>
         /// Returns the remainder that results from division with two specified numeric values.
@@ -295,7 +295,7 @@ namespace Genumerics
         /// <returns>The remainder that results from the division.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="DivideByZeroException"><paramref name="divisor"/> is zero (0).</exception>
-        public static Number<T> operator %(Number<T> dividend, Number<T> divisor) => Number.GetOperationsInternal<T>().Remainder(dividend, divisor);
+        public static Number<T> operator %(Number<T> dividend, Number<T> divisor) => Number.Remainder<T>(dividend, divisor);
 
         /// <summary>
         /// Performs a bitwise And operation on two integral values.
@@ -306,7 +306,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator &(Number<T> left, Number<T> right) => Number.GetOperationsInternal<T>().BitwiseAnd(left, right);
+        public static Number<T> operator &(Number<T> left, Number<T> right) => Number.BitwiseAnd<T>(left, right);
 
         /// <summary>
         /// Performs a bitwise Or operation on two integral values.
@@ -317,7 +317,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator |(Number<T> left, Number<T> right) => Number.GetOperationsInternal<T>().BitwiseOr(left, right);
+        public static Number<T> operator |(Number<T> left, Number<T> right) => Number.BitwiseOr<T>(left, right);
 
         /// <summary>
         /// Performs a bitwise exclusive Or operation on two integral values.
@@ -328,7 +328,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator ^(Number<T> left, Number<T> right) => Number.GetOperationsInternal<T>().Xor(left, right);
+        public static Number<T> operator ^(Number<T> left, Number<T> right) => Number.Xor<T>(left, right);
 
         /// <summary>
         /// Shifts an integral value a specified number of bits to the left.
@@ -339,7 +339,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator <<(Number<T> value, int shift) => Number.GetOperationsInternal<T>().LeftShift(value, shift);
+        public static Number<T> operator <<(Number<T> value, int shift) => Number.LeftShift<T>(value, shift);
 
         /// <summary>
         /// Shifts an integral value a specified number of bits to the right.
@@ -350,7 +350,7 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static Number<T> operator >>(Number<T> value, int shift) => Number.GetOperationsInternal<T>().RightShift(value, shift);
+        public static Number<T> operator >>(Number<T> value, int shift) => Number.RightShift<T>(value, shift);
 
         /// <summary>
         /// Returns a value that indicates whether the values of two numeric objects are equal.
@@ -359,7 +359,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if the <paramref name="left"/> and <paramref name="right"/> parameters have the same value; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool operator ==(Number<T> left, Number<T> right) => Number.GetOperationsInternal<T>().Equals(left, right);
+        public static bool operator ==(Number<T> left, Number<T> right) => Number.Equals<T>(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether two numeric objects have different values.
@@ -368,7 +368,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool operator !=(Number<T> left, Number<T> right) => Number.GetOperationsInternal<T>().NotEquals(left, right);
+        public static bool operator !=(Number<T> left, Number<T> right) => Number.NotEquals<T>(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a numeric value is less than another numeric value.
@@ -377,7 +377,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool operator <(Number<T> left, Number<T> right) => Number.GetOperationsInternal<T>().LessThan(left, right);
+        public static bool operator <(Number<T> left, Number<T> right) => Number.LessThan<T>(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a numeric value is greater than another numeric value.
@@ -386,7 +386,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool operator >(Number<T> left, Number<T> right) => Number.GetOperationsInternal<T>().GreaterThan(left, right);
+        public static bool operator >(Number<T> left, Number<T> right) => Number.GreaterThan<T>(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a numeric value is less than or equal to another numeric value.
@@ -395,7 +395,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool operator <=(Number<T> left, Number<T> right) => Number.GetOperationsInternal<T>().LessThanOrEqual(left, right);
+        public static bool operator <=(Number<T> left, Number<T> right) => Number.LessThanOrEqual<T>(left, right);
 
         /// <summary>
         /// Returns a value that indicates whether a numeric value is greater than or equal to another numeric value.
@@ -404,7 +404,7 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool operator >=(Number<T> left, Number<T> right) => Number.GetOperationsInternal<T>().GreaterThanOrEqual(left, right);
+        public static bool operator >=(Number<T> left, Number<T> right) => Number.GreaterThanOrEqual<T>(left, right);
 
         /// <summary>
         /// Defines an explicit conversion of an <see cref="byte"/> to a <see cref="Number{T}"/> value.

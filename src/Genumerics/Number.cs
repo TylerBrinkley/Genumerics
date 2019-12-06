@@ -27,6 +27,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
@@ -144,7 +145,62 @@ namespace Genumerics
         /// <typeparam name="T">The numeric type.</typeparam>
         /// <returns>An object whose value is zero (0).</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Zero<T>() => GetOperationsInternal<T>().Zero;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T Zero<T>()
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)0;
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return (T)(object)(byte)0;
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)0;
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return (T)(object)(ushort)0;
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)0;
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return (T)(object)0U;
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)0L;
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return (T)(object)0UL;
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return (T)(object)0F;
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return (T)(object)0D;
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return (T)(object)0M;
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)BigInteger.Zero;
+            }
+            else
+            {
+                return GetOperationsInternal<T>().Zero;
+            }
+        }
 
         /// <summary>
         /// Gets a value that represents the number one (1).
@@ -152,7 +208,62 @@ namespace Genumerics
         /// <typeparam name="T">The numeric type.</typeparam>
         /// <returns>An object whose value is one (1).</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T One<T>() => GetOperationsInternal<T>().One;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T One<T>()
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)1;
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return (T)(object)(byte)1;
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)1;
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return (T)(object)(ushort)1;
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)1;
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return (T)(object)1U;
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)1L;
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return (T)(object)1UL;
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return (T)(object)1F;
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return (T)(object)1D;
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return (T)(object)1M;
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)BigInteger.One;
+            }
+            else
+            {
+                return GetOperationsInternal<T>().One;
+            }
+        }
 
         /// <summary>
         /// Gets a value that represents the number negative one (-1).
@@ -162,7 +273,46 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type doesn't support negative values.</exception>
-        public static T MinusOne<T>() => GetOperationsInternal<T>().MinusOne;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T MinusOne<T>()
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)-1;
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)-1;
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)-1;
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)-1L;
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return (T)(object)-1F;
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return (T)(object)-1D;
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return (T)(object)-1M;
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)BigInteger.MinusOne;
+            }
+            else
+            {
+                return GetOperationsInternal<T>().MinusOne;
+            }
+        }
 
         /// <summary>
         /// Gets the largest possible value of <typeparamref name="T"/>.
@@ -200,7 +350,62 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if the <paramref name="left"/> and <paramref name="right"/> parameters have the same value; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool Equals<T>(T left, T right) => GetOperationsInternal<T>().Equals(left, right);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Equals<T>(T left, T right)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return ((sbyte)(object)left!) == ((sbyte)(object)right!);
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return ((byte)(object)left!) == ((byte)(object)right!);
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return ((short)(object)left!) == ((short)(object)right!);
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return ((ushort)(object)left!) == ((ushort)(object)right!);
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return ((int)(object)left!) == ((int)(object)right!);
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return ((uint)(object)left!) == ((uint)(object)right!);
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return ((long)(object)left!) == ((long)(object)right!);
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return ((ulong)(object)left!) == ((ulong)(object)right!);
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return ((float)(object)left!) == ((float)(object)right!);
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return ((double)(object)left!) == ((double)(object)right!);
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return ((decimal)(object)left!) == ((decimal)(object)right!);
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return ((BigInteger)(object)left!) == ((BigInteger)(object)right!);
+            }
+            else
+            {
+                return GetOperationsInternal<T>().Equals(left, right);
+            }
+        }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects have different values.
@@ -210,7 +415,62 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool NotEquals<T>(T left, T right) => GetOperationsInternal<T>().NotEquals(left, right);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool NotEquals<T>(T left, T right)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return ((sbyte)(object)left!) != ((sbyte)(object)right!);
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return ((byte)(object)left!) != ((byte)(object)right!);
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return ((short)(object)left!) != ((short)(object)right!);
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return ((ushort)(object)left!) != ((ushort)(object)right!);
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return ((int)(object)left!) != ((int)(object)right!);
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return ((uint)(object)left!) != ((uint)(object)right!);
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return ((long)(object)left!) != ((long)(object)right!);
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return ((ulong)(object)left!) != ((ulong)(object)right!);
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return ((float)(object)left!) != ((float)(object)right!);
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return ((double)(object)left!) != ((double)(object)right!);
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return ((decimal)(object)left!) != ((decimal)(object)right!);
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return ((BigInteger)(object)left!) != ((BigInteger)(object)right!);
+            }
+            else
+            {
+                return GetOperationsInternal<T>().NotEquals(left, right);
+            }
+        }
 
         /// <summary>
         /// Returns a value that indicates whether a value is less than another value.
@@ -220,7 +480,62 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool LessThan<T>(T left, T right) => GetOperationsInternal<T>().LessThan(left, right);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool LessThan<T>(T left, T right)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return ((sbyte)(object)left!) < ((sbyte)(object)right!);
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return ((byte)(object)left!) < ((byte)(object)right!);
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return ((short)(object)left!) < ((short)(object)right!);
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return ((ushort)(object)left!) < ((ushort)(object)right!);
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return ((int)(object)left!) < ((int)(object)right!);
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return ((uint)(object)left!) < ((uint)(object)right!);
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return ((long)(object)left!) < ((long)(object)right!);
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return ((ulong)(object)left!) < ((ulong)(object)right!);
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return ((float)(object)left!) < ((float)(object)right!);
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return ((double)(object)left!) < ((double)(object)right!);
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return ((decimal)(object)left!) < ((decimal)(object)right!);
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return ((BigInteger)(object)left!) < ((BigInteger)(object)right!);
+            }
+            else
+            {
+                return GetOperationsInternal<T>().LessThan(left, right);
+            }
+        }
 
         /// <summary>
         /// Returns a value that indicates whether a value is less than or equal to another value.
@@ -230,7 +545,62 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool LessThanOrEqual<T>(T left, T right) => GetOperationsInternal<T>().LessThanOrEqual(left, right);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool LessThanOrEqual<T>(T left, T right)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return ((sbyte)(object)left!) <= ((sbyte)(object)right!);
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return ((byte)(object)left!) <= ((byte)(object)right!);
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return ((short)(object)left!) <= ((short)(object)right!);
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return ((ushort)(object)left!) <= ((ushort)(object)right!);
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return ((int)(object)left!) <= ((int)(object)right!);
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return ((uint)(object)left!) <= ((uint)(object)right!);
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return ((long)(object)left!) <= ((long)(object)right!);
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return ((ulong)(object)left!) <= ((ulong)(object)right!);
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return ((float)(object)left!) <= ((float)(object)right!);
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return ((double)(object)left!) <= ((double)(object)right!);
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return ((decimal)(object)left!) <= ((decimal)(object)right!);
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return ((BigInteger)(object)left!) <= ((BigInteger)(object)right!);
+            }
+            else
+            {
+                return GetOperationsInternal<T>().LessThanOrEqual(left, right);
+            }
+        }
 
         /// <summary>
         /// Returns a value that indicates whether a value is greater than another value.
@@ -240,7 +610,62 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool GreaterThan<T>(T left, T right) => GetOperationsInternal<T>().GreaterThan(left, right);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool GreaterThan<T>(T left, T right)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return ((sbyte)(object)left!) > ((sbyte)(object)right!);
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return ((byte)(object)left!) > ((byte)(object)right!);
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return ((short)(object)left!) > ((short)(object)right!);
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return ((ushort)(object)left!) > ((ushort)(object)right!);
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return ((int)(object)left!) > ((int)(object)right!);
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return ((uint)(object)left!) > ((uint)(object)right!);
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return ((long)(object)left!) > ((long)(object)right!);
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return ((ulong)(object)left!) > ((ulong)(object)right!);
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return ((float)(object)left!) > ((float)(object)right!);
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return ((double)(object)left!) > ((double)(object)right!);
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return ((decimal)(object)left!) > ((decimal)(object)right!);
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return ((BigInteger)(object)left!) > ((BigInteger)(object)right!);
+            }
+            else
+            {
+                return GetOperationsInternal<T>().GreaterThan(left, right);
+            }
+        }
 
         /// <summary>
         /// Returns a value that indicates whether a value is greater than or equal to another value.
@@ -250,7 +675,62 @@ namespace Genumerics
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool GreaterThanOrEqual<T>(T left, T right) => GetOperationsInternal<T>().GreaterThanOrEqual(left, right);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool GreaterThanOrEqual<T>(T left, T right)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return ((sbyte)(object)left!) >= ((sbyte)(object)right!);
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return ((byte)(object)left!) >= ((byte)(object)right!);
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return ((short)(object)left!) >= ((short)(object)right!);
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return ((ushort)(object)left!) >= ((ushort)(object)right!);
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return ((int)(object)left!) >= ((int)(object)right!);
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return ((uint)(object)left!) >= ((uint)(object)right!);
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return ((long)(object)left!) >= ((long)(object)right!);
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return ((ulong)(object)left!) >= ((ulong)(object)right!);
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return ((float)(object)left!) >= ((float)(object)right!);
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return ((double)(object)left!) >= ((double)(object)right!);
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return ((decimal)(object)left!) >= ((decimal)(object)right!);
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return ((BigInteger)(object)left!) >= ((BigInteger)(object)right!);
+            }
+            else
+            {
+                return GetOperationsInternal<T>().GreaterThanOrEqual(left, right);
+            }
+        }
 
         /// <summary>
         /// Adds two values and returns the result.
@@ -260,7 +740,62 @@ namespace Genumerics
         /// <param name="right">The second value to add.</param>
         /// <returns>The sum of <paramref name="left"/> and <paramref name="right"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Add<T>(T left, T right) => GetOperationsInternal<T>().Add(left, right);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T Add<T>(T left, T right)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)(((sbyte)(object)left!) + ((sbyte)(object)right!));
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return (T)(object)(byte)(((byte)(object)left!) + ((byte)(object)right!));
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)(((short)(object)left!) + ((short)(object)right!));
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return (T)(object)(ushort)(((ushort)(object)left!) + ((ushort)(object)right!));
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)(((int)(object)left!) + ((int)(object)right!));
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return (T)(object)(((uint)(object)left!) + ((uint)(object)right!));
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)(((long)(object)left!) + ((long)(object)right!));
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return (T)(object)(((ulong)(object)left!) + ((ulong)(object)right!));
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return (T)(object)(((float)(object)left!) + ((float)(object)right!));
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return (T)(object)(((double)(object)left!) + ((double)(object)right!));
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return (T)(object)(((decimal)(object)left!) + ((decimal)(object)right!));
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)(((BigInteger)(object)left!) + ((BigInteger)(object)right!));
+            }
+            else
+            {
+                return GetOperationsInternal<T>().Add(left, right);
+            }
+        }
 
         /// <summary>
         /// Subtracts one value from another and returns the result.
@@ -270,7 +805,62 @@ namespace Genumerics
         /// <param name="right">The value to subtract (the subtrahend).</param>
         /// <returns>The result of subtracting <paramref name="right"/> from <paramref name="left"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Subtract<T>(T left, T right) => GetOperationsInternal<T>().Subtract(left, right);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T Subtract<T>(T left, T right)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)(((sbyte)(object)left!) - ((sbyte)(object)right!));
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return (T)(object)(byte)(((byte)(object)left!) - ((byte)(object)right!));
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)(((short)(object)left!) - ((short)(object)right!));
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return (T)(object)(ushort)(((ushort)(object)left!) - ((ushort)(object)right!));
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)(((int)(object)left!) - ((int)(object)right!));
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return (T)(object)(((uint)(object)left!) - ((uint)(object)right!));
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)(((long)(object)left!) - ((long)(object)right!));
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return (T)(object)(((ulong)(object)left!) - ((ulong)(object)right!));
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return (T)(object)(((float)(object)left!) - ((float)(object)right!));
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return (T)(object)(((double)(object)left!) - ((double)(object)right!));
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return (T)(object)(((decimal)(object)left!) - ((decimal)(object)right!));
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)(((BigInteger)(object)left!) - ((BigInteger)(object)right!));
+            }
+            else
+            {
+                return GetOperationsInternal<T>().Subtract(left, right);
+            }
+        }
 
         /// <summary>
         /// Returns the product of two values.
@@ -280,7 +870,62 @@ namespace Genumerics
         /// <param name="right">The second number to multiply.</param>
         /// <returns>The product of the <paramref name="left"/> and <paramref name="right"/> parameters.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static T Multiply<T>(T left, T right) => GetOperationsInternal<T>().Multiply(left, right);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T Multiply<T>(T left, T right)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)(((sbyte)(object)left!) * ((sbyte)(object)right!));
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return (T)(object)(byte)(((byte)(object)left!) * ((byte)(object)right!));
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)(((short)(object)left!) * ((short)(object)right!));
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return (T)(object)(ushort)(((ushort)(object)left!) * ((ushort)(object)right!));
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)(((int)(object)left!) * ((int)(object)right!));
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return (T)(object)(((uint)(object)left!) * ((uint)(object)right!));
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)(((long)(object)left!) * ((long)(object)right!));
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return (T)(object)(((ulong)(object)left!) * ((ulong)(object)right!));
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return (T)(object)(((float)(object)left!) * ((float)(object)right!));
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return (T)(object)(((double)(object)left!) * ((double)(object)right!));
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return (T)(object)(((decimal)(object)left!) * ((decimal)(object)right!));
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)(((BigInteger)(object)left!) * ((BigInteger)(object)right!));
+            }
+            else
+            {
+                return GetOperationsInternal<T>().Multiply(left, right);
+            }
+        }
 
         /// <summary>
         /// Divides one value by another and returns the result.
@@ -291,7 +936,62 @@ namespace Genumerics
         /// <returns>The quotient of the division.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="DivideByZeroException"><paramref name="divisor"/> is zero (0).</exception>
-        public static T Divide<T>(T dividend, T divisor) => GetOperationsInternal<T>().Divide(dividend, divisor);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T Divide<T>(T dividend, T divisor)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)(((sbyte)(object)dividend!) / ((sbyte)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return (T)(object)(byte)(((byte)(object)dividend!) / ((byte)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)(((short)(object)dividend!) / ((short)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return (T)(object)(ushort)(((ushort)(object)dividend!) / ((ushort)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)(((int)(object)dividend!) / ((int)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return (T)(object)(((uint)(object)dividend!) / ((uint)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)(((long)(object)dividend!) / ((long)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return (T)(object)(((ulong)(object)dividend!) / ((ulong)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return (T)(object)(((float)(object)dividend!) / ((float)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return (T)(object)(((double)(object)dividend!) / ((double)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return (T)(object)(((decimal)(object)dividend!) / ((decimal)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)(((BigInteger)(object)dividend!) / ((BigInteger)(object)divisor!));
+            }
+            else
+            {
+                return GetOperationsInternal<T>().Divide(dividend, divisor);
+            }
+        }
 
         /// <summary>
         /// Performs division on two values and returns the remainder.
@@ -302,7 +1002,62 @@ namespace Genumerics
         /// <returns>The remainder after dividing <paramref name="dividend"/> by <paramref name="divisor"/>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="DivideByZeroException"><paramref name="divisor"/> is zero (0).</exception>
-        public static T Remainder<T>(T dividend, T divisor) => GetOperationsInternal<T>().Remainder(dividend, divisor);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T Remainder<T>(T dividend, T divisor)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)(((sbyte)(object)dividend!) % ((sbyte)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return (T)(object)(byte)(((byte)(object)dividend!) % ((byte)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)(((short)(object)dividend!) % ((short)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return (T)(object)(ushort)(((ushort)(object)dividend!) % ((ushort)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)(((int)(object)dividend!) % ((int)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return (T)(object)(((uint)(object)dividend!) % ((uint)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)(((long)(object)dividend!) % ((long)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return (T)(object)(((ulong)(object)dividend!) % ((ulong)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return (T)(object)(((float)(object)dividend!) % ((float)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return (T)(object)(((double)(object)dividend!) % ((double)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return (T)(object)(((decimal)(object)dividend!) % ((decimal)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)(((BigInteger)(object)dividend!) % ((BigInteger)(object)divisor!));
+            }
+            else
+            {
+                return GetOperationsInternal<T>().Remainder(dividend, divisor);
+            }
+        }
 
         /// <summary>
         /// Calculates the quotient of two values and also returns the remainder in an output parameter.
@@ -325,7 +1080,46 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type doesn't support negative values.</exception>
-        public static T Negate<T>(T value) => GetOperationsInternal<T>().Negate(value);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T Negate<T>(T value)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)-(sbyte)(object)value!;
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)-(short)(object)value!;
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)-(int)(object)value!;
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)-(long)(object)value!;
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                return (T)(object)-(float)(object)value!;
+            }
+            else if (typeof(T) == typeof(double))
+            {
+                return (T)(object)-(double)(object)value!;
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                return (T)(object)-(decimal)(object)value!;
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)-(BigInteger)(object)value!;
+            }
+            else
+            {
+                return GetOperationsInternal<T>().Negate(value);
+            }
+        }
 
         /// <summary>
         /// Returns the larger of two values.
@@ -357,7 +1151,50 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T BitwiseAnd<T>(T left, T right) => GetOperationsInternal<T>().BitwiseAnd(left, right);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T BitwiseAnd<T>(T left, T right)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)(((sbyte)(object)left!) & ((sbyte)(object)right!));
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return (T)(object)(byte)(((byte)(object)left!) & ((byte)(object)right!));
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)(((short)(object)left!) & ((short)(object)right!));
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return (T)(object)(ushort)(((ushort)(object)left!) & ((ushort)(object)right!));
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)(((int)(object)left!) & ((int)(object)right!));
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return (T)(object)(((uint)(object)left!) & ((uint)(object)right!));
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)(((long)(object)left!) & ((long)(object)right!));
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return (T)(object)(((ulong)(object)left!) & ((ulong)(object)right!));
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)(((BigInteger)(object)left!) & ((BigInteger)(object)right!));
+            }
+            else
+            {
+                return GetOperationsInternal<T>().BitwiseAnd(left, right);
+            }
+        }
 
         /// <summary>
         /// Performs a bitwise Or operation on two values.
@@ -369,7 +1206,50 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T BitwiseOr<T>(T left, T right) => GetOperationsInternal<T>().BitwiseOr(left, right);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T BitwiseOr<T>(T left, T right)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)(((sbyte)(object)left!) | ((sbyte)(object)right!));
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return (T)(object)(byte)(((byte)(object)left!) | ((byte)(object)right!));
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)(((short)(object)left!) | ((short)(object)right!));
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return (T)(object)(ushort)(((ushort)(object)left!) | ((ushort)(object)right!));
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)(((int)(object)left!) | ((int)(object)right!));
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return (T)(object)(((uint)(object)left!) | ((uint)(object)right!));
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)(((long)(object)left!) | ((long)(object)right!));
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return (T)(object)(((ulong)(object)left!) | ((ulong)(object)right!));
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)(((BigInteger)(object)left!) | ((BigInteger)(object)right!));
+            }
+            else
+            {
+                return GetOperationsInternal<T>().BitwiseOr(left, right);
+            }
+        }
 
         /// <summary>
         /// Performs a bitwise exclusive Or operation on two values.
@@ -381,7 +1261,50 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T Xor<T>(T left, T right) => GetOperationsInternal<T>().Xor(left, right);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T Xor<T>(T left, T right)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)(((sbyte)(object)left!) ^ ((sbyte)(object)right!));
+            }
+            else if (typeof(T) == typeof(byte))
+            {
+                return (T)(object)(byte)(((byte)(object)left!) ^ ((byte)(object)right!));
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)(((short)(object)left!) ^ ((short)(object)right!));
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return (T)(object)(ushort)(((ushort)(object)left!) ^ ((ushort)(object)right!));
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)(((int)(object)left!) ^ ((int)(object)right!));
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return (T)(object)(((uint)(object)left!) ^ ((uint)(object)right!));
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)(((long)(object)left!) ^ ((long)(object)right!));
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return (T)(object)(((ulong)(object)left!) ^ ((ulong)(object)right!));
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)(((BigInteger)(object)left!) ^ ((BigInteger)(object)right!));
+            }
+            else
+            {
+                return GetOperationsInternal<T>().Xor(left, right);
+            }
+        }
 
         /// <summary>
         /// Returns the bitwise one's complement of a value.
@@ -392,7 +1315,50 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T OnesComplement<T>(T value) => GetOperationsInternal<T>().OnesComplement(value);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T OnesComplement<T>(T value)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)~(sbyte)(object)value!;
+            }
+            if (typeof(T) == typeof(byte))
+            {
+                return (T)(object)(byte)~(byte)(object)value!;
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)~(short)(object)value!;
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return (T)(object)(ushort)~(ushort)(object)value!;
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)~(int)(object)value!;
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return (T)(object)~(uint)(object)value!;
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)~(long)(object)value!;
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return (T)(object)~(ulong)(object)value!;
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)~(BigInteger)(object)value!;
+            }
+            else
+            {
+                return GetOperationsInternal<T>().OnesComplement(value);
+            }
+        }
 
         /// <summary>
         /// Shifts a value a specified number of bits to the left.
@@ -404,7 +1370,50 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T LeftShift<T>(T value, int shift) => GetOperationsInternal<T>().LeftShift(value, shift);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T LeftShift<T>(T value, int shift)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)((sbyte)(object)value! << shift);
+            }
+            if (typeof(T) == typeof(byte))
+            {
+                return (T)(object)(byte)((byte)(object)value! << shift);
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)((short)(object)value! << shift);
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return (T)(object)(ushort)((ushort)(object)value! << shift);
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)((int)(object)value! << shift);
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return (T)(object)((uint)(object)value! << shift);
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)((long)(object)value! << shift);
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return (T)(object)((ulong)(object)value! << shift);
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)((BigInteger)(object)value! << shift);
+            }
+            else
+            {
+                return GetOperationsInternal<T>().LeftShift(value, shift);
+            }
+        }
 
         /// <summary>
         /// Shifts a value a specified number of bits to the right.
@@ -416,7 +1425,50 @@ namespace Genumerics
         /// <exception cref="NotSupportedException">The type argument is not supported.
         /// -or-
         /// the numeric type is a floating point type.</exception>
-        public static T RightShift<T>(T value, int shift) => GetOperationsInternal<T>().RightShift(value, shift);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T RightShift<T>(T value, int shift)
+        {
+            if (typeof(T) == typeof(sbyte))
+            {
+                return (T)(object)(sbyte)((sbyte)(object)value! >> shift);
+            }
+            if (typeof(T) == typeof(byte))
+            {
+                return (T)(object)(byte)((byte)(object)value! >> shift);
+            }
+            else if (typeof(T) == typeof(short))
+            {
+                return (T)(object)(short)((short)(object)value! >> shift);
+            }
+            else if (typeof(T) == typeof(ushort))
+            {
+                return (T)(object)(ushort)((ushort)(object)value! >> shift);
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                return (T)(object)((int)(object)value! >> shift);
+            }
+            else if (typeof(T) == typeof(uint))
+            {
+                return (T)(object)((uint)(object)value! >> shift);
+            }
+            else if (typeof(T) == typeof(long))
+            {
+                return (T)(object)((long)(object)value! >> shift);
+            }
+            else if (typeof(T) == typeof(ulong))
+            {
+                return (T)(object)((ulong)(object)value! >> shift);
+            }
+            else if (typeof(T) == typeof(BigInteger))
+            {
+                return (T)(object)((BigInteger)(object)value! >> shift);
+            }
+            else
+            {
+                return GetOperationsInternal<T>().RightShift(value, shift);
+            }
+        }
 
         /// <summary>
         /// Converts the string representation of a number to its <typeparamref name="T"/> equivalent.

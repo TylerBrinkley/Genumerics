@@ -72,21 +72,22 @@ public class GenumericsDemo
 ```
 
 ## Performance Comparison
-The summation algorithms below were benchmarked in .NET Core to determine the relative performance of the library compared with an `int` specific algorithm. As can be seen in the results, the performance is equivalent when using the numeric operations as a `struct` interface generic type argument constraint but is almost an order of magnitude slower when only using the numeric type due to the interface method dispatch. In order to reach performance parity with the `int` specific algorithm the library makes use of an optimization for `struct` interface generic type argument constraints described in this [generic calculations article](https://www.codeproject.com/articles/8531/using-generics-for-calculations) that prevents the interface method dispatch.
+The summation algorithms below were benchmarked in .NET Core 3.0 and .NET 4.8 to determine the relative performance of the library compared with an `int` specific algorithm. As can be seen in the results, the performance is equivalent.
 
 ### Results
-|     Method |       Mean |     Error |     StdDev | Ratio | RatioSD |
-|----------- |-----------:|----------:|-----------:|------:|--------:|
-|        Sum |   419.9 ns |  1.120 ns |  0.8746 ns |  1.00 |    0.00 |
-|  SumNumber | 3,906.8 ns | 67.803 ns | 60.1055 ns |  9.34 |    0.13 |
-| SumNumber2 |   571.8 ns |  1.802 ns |  1.6852 ns |  1.36 |    0.01 |
-|     SumAdd | 3,962.1 ns | 38.933 ns | 36.4176 ns |  9.46 |    0.04 |
-|    SumAdd2 |   418.4 ns |  3.095 ns |  2.8952 ns |  1.00 |    0.00 |
+|     Method |       Mean |   Error |  StdDev | Ratio |
+|----------- |-----------:|--------:|--------:|------:|
+|        Sum |   531.0 ns | 1.40 ns | 1.31 ns |  1.00 |
+|  SumNumber |   521.2 ns | 1.41 ns | 1.32 ns |  0.98 |
+| SumNumber2 |   531.7 ns | 0.81 ns | 0.76 ns |  1.00 |
+|     SumAdd |   530.1 ns | 1.04 ns | 0.97 ns |  1.00 |
+|    SumAdd2 |   532.2 ns | 1.60 ns | 1.33 ns |  1.00 |
 
 ### Code
 ```c#
 using System;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using Genumerics;
 
@@ -95,6 +96,7 @@ public class Program
     static void Main() => BenchmarkRunner.Run<SumBenchmarks<int, DefaultNumericOperations>>();
 }
 
+[SimpleJob(RuntimeMoniker.Net461), SimpleJob(RuntimeMoniker.NetCoreApp30), LegacyJitX86Job]
 public class SumBenchmarks<T, TNumericOperations>
     where TNumericOperations : struct, INumericOperations<T>
 {
