@@ -74,6 +74,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(0D);
             yield return CreateTestCase<decimal>(0M);
             yield return CreateTestCase<BigInteger>(BigInteger.Zero);
+            yield return CreateTestCase<nint>((nint)0);
+            yield return CreateTestCase<nuint>((nuint)0);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(0));
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Sunday);
         }
@@ -102,6 +104,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(1D);
             yield return CreateTestCase<decimal>(1M);
             yield return CreateTestCase<BigInteger>(BigInteger.One);
+            yield return CreateTestCase<nint>((nint)1);
+            yield return CreateTestCase<nuint>((nuint)1);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(1));
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Monday);
         }
@@ -126,6 +130,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(-1D);
             yield return CreateTestCase<decimal>(-1M);
             yield return CreateTestCase<BigInteger>(BigInteger.MinusOne);
+            yield return CreateTestCase<nint>((nint)(-1));
             yield return CreateTestCase<IntWrapper>(new IntWrapper(-1));
             yield return CreateTestCase<DayOfWeek>((DayOfWeek)(-1));
         }
@@ -146,6 +151,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<ushort>();
             yield return CreateTestCase<uint>();
             yield return CreateTestCase<ulong>();
+            yield return CreateTestCase<nuint>();
         }
 
         [TestCaseSource(nameof(MaxValueCases))]
@@ -260,6 +266,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<float>(TypeCode.Single);
             yield return CreateTestCase<double>(TypeCode.Double);
             yield return CreateTestCase<decimal>(TypeCode.Decimal);
+            yield return CreateTestCase<nint>(TypeCode.Object);
+            yield return CreateTestCase<nuint>(TypeCode.Object);
             yield return CreateTestCase<BigInteger>(TypeCode.Object);
             yield return CreateTestCase<IntWrapper>(TypeCode.Int32);
             yield return CreateTestCase<DayOfWeek>(TypeCode.Int32);
@@ -311,6 +319,10 @@ namespace Genumerics.Tests
             yield return CreateTestCase<decimal>(false, decimal.MaxValue, decimal.MinValue);
             yield return CreateTestCase<BigInteger>(true, BigInteger.One, BigInteger.One);
             yield return CreateTestCase<BigInteger>(false, BigInteger.One, BigInteger.Zero);
+            yield return CreateTestCase<nint>(true, (nint)1, (nint)1);
+            yield return CreateTestCase<nint>(false, (nint)1, (nint)0);
+            yield return CreateTestCase<nuint>(true, (nuint)1, (nuint)1);
+            yield return CreateTestCase<nuint>(false, (nuint)1, (nuint)0);
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MaxValue), new IntWrapper(int.MaxValue));
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MaxValue), new IntWrapper(int.MinValue));
             yield return CreateTestCase<DayOfWeek>(true, DayOfWeek.Monday, DayOfWeek.Monday);
@@ -365,6 +377,10 @@ namespace Genumerics.Tests
             yield return CreateTestCase<decimal>(true, decimal.MaxValue, decimal.MinValue);
             yield return CreateTestCase<BigInteger>(false, BigInteger.One, BigInteger.One);
             yield return CreateTestCase<BigInteger>(true, BigInteger.One, BigInteger.Zero);
+            yield return CreateTestCase<nint>(false, (nint)1, (nint)1);
+            yield return CreateTestCase<nint>(true, (nint)1, (nint)0);
+            yield return CreateTestCase<nuint>(false, (nuint)1, (nuint)1);
+            yield return CreateTestCase<nuint>(true, (nuint)1, (nuint)0);
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MaxValue), new IntWrapper(int.MaxValue));
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MaxValue), new IntWrapper(int.MinValue));
             yield return CreateTestCase<DayOfWeek>(false, DayOfWeek.Monday, DayOfWeek.Monday);
@@ -419,6 +435,10 @@ namespace Genumerics.Tests
             yield return CreateTestCase<decimal>(true, decimal.MinValue, decimal.MaxValue);
             yield return CreateTestCase<BigInteger>(false, BigInteger.Zero, BigInteger.Zero);
             yield return CreateTestCase<BigInteger>(true, BigInteger.Zero, BigInteger.One);
+            yield return CreateTestCase<nint>(false, (nint)0, (nint)0);
+            yield return CreateTestCase<nint>(true, (nint)0, (nint)1);
+            yield return CreateTestCase<nuint>(false, (nuint)0, (nuint)0);
+            yield return CreateTestCase<nuint>(true, (nuint)0, (nuint)1);
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MinValue), new IntWrapper(int.MinValue));
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MinValue), new IntWrapper(int.MaxValue));
             yield return CreateTestCase<DayOfWeek>(false, DayOfWeek.Sunday, DayOfWeek.Sunday);
@@ -473,6 +493,10 @@ namespace Genumerics.Tests
             yield return CreateTestCase<decimal>(false, decimal.MaxValue, decimal.MinValue);
             yield return CreateTestCase<BigInteger>(true, BigInteger.One, BigInteger.One);
             yield return CreateTestCase<BigInteger>(false, BigInteger.One, BigInteger.Zero);
+            yield return CreateTestCase<nint>(true, (nint)1, (nint)1);
+            yield return CreateTestCase<nint>(false, (nint)1, (nint)0);
+            yield return CreateTestCase<nuint>(true, (nuint)1, (nuint)1);
+            yield return CreateTestCase<nuint>(false, (nuint)1, (nuint)0);
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MaxValue), new IntWrapper(int.MaxValue));
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MaxValue), new IntWrapper(int.MinValue));
             yield return CreateTestCase<DayOfWeek>(true, DayOfWeek.Monday, DayOfWeek.Monday);
@@ -527,6 +551,10 @@ namespace Genumerics.Tests
             yield return CreateTestCase<decimal>(true, decimal.MaxValue, decimal.MinValue);
             yield return CreateTestCase<BigInteger>(false, BigInteger.One, BigInteger.One);
             yield return CreateTestCase<BigInteger>(true, BigInteger.One, BigInteger.Zero);
+            yield return CreateTestCase<nint>(false, (nint)1, (nint)1);
+            yield return CreateTestCase<nint>(true, (nint)1, (nint)0);
+            yield return CreateTestCase<nuint>(false, (nuint)1, (nuint)1);
+            yield return CreateTestCase<nuint>(true, (nuint)1, (nuint)0);
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MaxValue), new IntWrapper(int.MaxValue));
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MaxValue), new IntWrapper(int.MinValue));
             yield return CreateTestCase<DayOfWeek>(false, DayOfWeek.Monday, DayOfWeek.Monday);
@@ -581,6 +609,10 @@ namespace Genumerics.Tests
             yield return CreateTestCase<decimal>(false, decimal.MinValue, decimal.MaxValue);
             yield return CreateTestCase<BigInteger>(true, BigInteger.Zero, BigInteger.Zero);
             yield return CreateTestCase<BigInteger>(false, BigInteger.Zero, BigInteger.One);
+            yield return CreateTestCase<nint>(true, (nint)0, (nint)0);
+            yield return CreateTestCase<nint>(false, (nint)0, (nint)1);
+            yield return CreateTestCase<nuint>(true, (nuint)0, (nuint)0);
+            yield return CreateTestCase<nuint>(false, (nuint)0, (nuint)1);
             yield return CreateTestCase<IntWrapper>(true, new IntWrapper(int.MinValue), new IntWrapper(int.MinValue));
             yield return CreateTestCase<IntWrapper>(false, new IntWrapper(int.MinValue), new IntWrapper(int.MaxValue));
             yield return CreateTestCase<DayOfWeek>(true, DayOfWeek.Sunday, DayOfWeek.Sunday);
@@ -623,6 +655,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(5D, 3D, 2D);
             yield return CreateTestCase<decimal>(5M, 3M, 2M);
             yield return CreateTestCase<BigInteger>(new BigInteger(5), new BigInteger(3), new BigInteger(2));
+            yield return CreateTestCase<nint>((nint)5, (nint)3, (nint)2);
+            yield return CreateTestCase<nuint>((nuint)5, (nuint)3, (nuint)2);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(5), new IntWrapper(3), new IntWrapper(2));
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Friday, DayOfWeek.Wednesday, DayOfWeek.Tuesday);
         }
@@ -663,6 +697,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(1D, 3D, 2D);
             yield return CreateTestCase<decimal>(1M, 3M, 2M);
             yield return CreateTestCase<BigInteger>(new BigInteger(1), new BigInteger(3), new BigInteger(2));
+            yield return CreateTestCase<nint>((nint)1, (nint)3, (nint)2);
+            yield return CreateTestCase<nuint>((nuint)1, (nuint)3, (nuint)2);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(1), new IntWrapper(3), new IntWrapper(2));
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Monday, DayOfWeek.Wednesday, DayOfWeek.Tuesday);
         }
@@ -703,6 +739,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(6D, 3D, 2D);
             yield return CreateTestCase<decimal>(6M, 3M, 2M);
             yield return CreateTestCase<BigInteger>(new BigInteger(6), new BigInteger(3), new BigInteger(2));
+            yield return CreateTestCase<nint>((nint)6, (nint)3, (nint)2);
+            yield return CreateTestCase<nuint>((nuint)6, (nuint)3, (nuint)2);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(6), new IntWrapper(3), new IntWrapper(2));
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Saturday, DayOfWeek.Wednesday, DayOfWeek.Tuesday);
         }
@@ -743,6 +781,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(3D, 6D, 2D);
             yield return CreateTestCase<decimal>(3M, 6M, 2M);
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(6), new BigInteger(2));
+            yield return CreateTestCase<nint>((nint)3, (nint)6, (nint)2);
+            yield return CreateTestCase<nuint>((nuint)3, (nuint)6, (nuint)2);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(6), new IntWrapper(2));
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Tuesday);
         }
@@ -783,6 +823,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(2D, 5D, 3D);
             yield return CreateTestCase<decimal>(2M, 5M, 3M);
             yield return CreateTestCase<BigInteger>(new BigInteger(2), new BigInteger(5), new BigInteger(3));
+            yield return CreateTestCase<nint>((nint)2, (nint)5, (nint)3);
+            yield return CreateTestCase<nuint>((nuint)2, (nuint)5, (nuint)3);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(5), new IntWrapper(3));
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Tuesday, DayOfWeek.Friday, DayOfWeek.Wednesday);
         }
@@ -824,6 +866,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(2.5, 5D, 2D, 1D);
             yield return CreateTestCase<decimal>(2.5M, 5M, 2M, 1M);
             yield return CreateTestCase<BigInteger>(new BigInteger(1), new BigInteger(5), new BigInteger(3), new BigInteger(2));
+            yield return CreateTestCase<nint>((nint)1, (nint)5, (nint)3, (nint)2);
+            yield return CreateTestCase<nuint>((nuint)1, (nuint)5, (nuint)3, (nuint)2);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(1), new IntWrapper(5), new IntWrapper(3), new IntWrapper(2));
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Monday, DayOfWeek.Friday, DayOfWeek.Wednesday, DayOfWeek.Tuesday);
         }
@@ -868,6 +912,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<decimal>(2M, -2M);
             yield return CreateTestCase<BigInteger>(new BigInteger(-3), new BigInteger(3));
             yield return CreateTestCase<BigInteger>(new BigInteger(2), new BigInteger(-2));
+            yield return CreateTestCase<nint>((nint)2, -(nint)2);
+            yield return CreateTestCase<nint>(-(nint)3, (nint)3);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(-3), new IntWrapper(3));
             yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(-2));
             yield return CreateTestCase<DayOfWeek>((DayOfWeek)(-3), DayOfWeek.Wednesday);
@@ -902,6 +948,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<ushort>(new object[] { (ushort)3 });
             yield return CreateTestCase<uint>(new object[] { (uint)3 });
             yield return CreateTestCase<ulong>(new object[] { (ulong)3 });
+            yield return CreateTestCase<nuint>(new object[] { (nuint)3 });
         }
 
         [TestCaseSource(nameof(MaxCases))]
@@ -928,6 +975,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(3D, 3D, 2D);
             yield return CreateTestCase<decimal>(3M, 3M, 2M);
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(3), new BigInteger(2));
+            yield return CreateTestCase<nint>((nint)3, (nint)3, (nint)2);
+            yield return CreateTestCase<nuint>((nuint)3, (nuint)3, (nuint)2);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3), new IntWrapper(2));
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Wednesday, DayOfWeek.Wednesday, DayOfWeek.Tuesday);
         }
@@ -958,6 +1007,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(2D, 3D, 2D);
             yield return CreateTestCase<decimal>(2M, 3M, 2M);
             yield return CreateTestCase<BigInteger>(new BigInteger(2), new BigInteger(3), new BigInteger(2));
+            yield return CreateTestCase<nint>((nint)2, (nint)3, (nint)2);
+            yield return CreateTestCase<nuint>((nuint)2, (nuint)3, (nuint)2);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(3), new IntWrapper(2));
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Tuesday);
         }
@@ -995,6 +1046,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<long>(2L, 3L, 6L);
             yield return CreateTestCase<ulong>(2UL, 3UL, 6UL);
             yield return CreateTestCase<BigInteger>(new BigInteger(2), new BigInteger(3), new BigInteger(6));
+            yield return CreateTestCase<nint>((nint)2, (nint)3, (nint)6);
+            yield return CreateTestCase<nuint>((nuint)2, (nuint)3, (nuint)6);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(3), new IntWrapper(6));
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Saturday);
         }
@@ -1052,6 +1105,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<long>(7L, 3L, 5L);
             yield return CreateTestCase<ulong>(7UL, 3UL, 5UL);
             yield return CreateTestCase<BigInteger>(new BigInteger(7), new BigInteger(3), new BigInteger(5));
+            yield return CreateTestCase<nint>((nint)7, (nint)3, (nint)5);
+            yield return CreateTestCase<nuint>((nuint)7, (nuint)3, (nuint)5);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(7), new IntWrapper(3), new IntWrapper(5));
             yield return CreateTestCase<DayOfWeek>((DayOfWeek)7, DayOfWeek.Wednesday, DayOfWeek.Friday);
         }
@@ -1109,6 +1164,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<long>(6L, 3L, 5L);
             yield return CreateTestCase<ulong>(6UL, 3UL, 5UL);
             yield return CreateTestCase<BigInteger>(new BigInteger(6), new BigInteger(3), new BigInteger(5));
+            yield return CreateTestCase<nint>((nint)6, (nint)3, (nint)5);
+            yield return CreateTestCase<nuint>((nuint)6, (nuint)3, (nuint)5);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(6), new IntWrapper(3), new IntWrapper(5));
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Saturday, DayOfWeek.Wednesday, DayOfWeek.Friday);
         }
@@ -1175,6 +1232,10 @@ namespace Genumerics.Tests
             yield return CreateTestCase<ulong>(1UL, 18446744073709551614UL);
             yield return CreateTestCase<BigInteger>(new BigInteger(-4), new BigInteger(3));
             yield return CreateTestCase<BigInteger>(new BigInteger(1), new BigInteger(-2));
+            yield return CreateTestCase<nint>(-(nint)4, (nint)3);
+            yield return CreateTestCase<nint>((nint)1, -(nint)2);
+            nuint native3complement = IntPtr.Size == 4 ? 4294967292U : unchecked((nuint)18446744073709551612UL);
+            yield return CreateTestCase<nuint>(native3complement, (nuint)3);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(-4), new IntWrapper(3));
             yield return CreateTestCase<IntWrapper>(new IntWrapper(1), new IntWrapper(-2));
             yield return CreateTestCase<DayOfWeek>((DayOfWeek)(-4), DayOfWeek.Wednesday);
@@ -1234,6 +1295,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<long>(12L, 3L, 2);
             yield return CreateTestCase<ulong>(12UL, 3UL, 2);
             yield return CreateTestCase<BigInteger>(new BigInteger(12), new BigInteger(3), 2);
+            yield return CreateTestCase<nint>((nint)12, (nint)3, 2);
+            yield return CreateTestCase<nuint>((nuint)12, (nuint)3, 2);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(12), new IntWrapper(3), 2);
             yield return CreateTestCase<DayOfWeek>((DayOfWeek)12, DayOfWeek.Wednesday, 2);
         }
@@ -1291,6 +1354,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<long>(3L, 13L, 2);
             yield return CreateTestCase<ulong>(3UL, 13UL, 2);
             yield return CreateTestCase<BigInteger>(new BigInteger(3), new BigInteger(13), 2);
+            yield return CreateTestCase<nint>((nint)3, (nint)13, 2);
+            yield return CreateTestCase<nuint>((nuint)3, (nuint)13, 2);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(13), 2);
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Wednesday, (DayOfWeek)13, 2);
         }
@@ -2456,8 +2521,10 @@ namespace Genumerics.Tests
         BigInteger = 2048,
         IntWrapper = 4096,
         DayOfWeek = 8192,
-        Integral = SByte | Byte | Int16 | UInt16 | Int32 | UInt32 | Int64 | UInt64 | BigInteger | IntWrapper | DayOfWeek,
-        Signed = SByte | Int16 | Int32 | Int64 | Floating | BigInteger | IntWrapper | DayOfWeek,
+        NativeInt = 0x4000,
+        NativeUInt = 0x8000,
+        Integral = SByte | Byte | Int16 | UInt16 | Int32 | UInt32 | Int64 | UInt64 | BigInteger | NativeInt | NativeUInt | IntWrapper | DayOfWeek,
+        Signed = SByte | Int16 | Int32 | Int64 | Floating | BigInteger | NativeInt | IntWrapper | DayOfWeek,
         All = Integral | Floating
     }
 
