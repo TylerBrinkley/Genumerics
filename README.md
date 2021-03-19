@@ -10,7 +10,7 @@ You may have come across while working in .NET where you would like to perform n
 
 This library fills that gap by providing most standard numeric operations for the following built-in numeric types and their nullable equivalents with the ability to add support for other numeric types.
 
-`sbyte`, `byte`, `short`, `ushort`, `int`, `uint`, `long`, `ulong`, `float`, `double`, `decimal`, and `BigInteger`
+`sbyte`, `byte`, `short`, `ushort`, `int`, `uint`, `long`, `ulong`, `float`, `double`, `decimal`, `nint`, `nuint`, and `BigInteger`
 
 ## Genumerics Demo
 Below is a demo of some basic uses of Genumerics in the form of unit tests.
