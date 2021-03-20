@@ -1367,10 +1367,10 @@ namespace Genumerics
         public sbyte ToSByte(BigInteger value) => (sbyte)value;
 
         /// <inheritdoc />
-        public sbyte ToSByte(nint value) => (sbyte)value;
+        public sbyte ToSByte(nint value) => checked((sbyte)value);
 
         /// <inheritdoc />
-        public sbyte ToSByte(nuint value) => (sbyte)value;
+        public sbyte ToSByte(nuint value) => checked((sbyte)value);
         #endregion
 
         #region ToByte
@@ -1411,10 +1411,10 @@ namespace Genumerics
         public byte ToByte(BigInteger value) => (byte)value;
 
         /// <inheritdoc />
-        public byte ToByte(nint value) => (byte)value;
+        public byte ToByte(nint value) => checked((byte)value);
 
         /// <inheritdoc />
-        public byte ToByte(nuint value) => (byte)value;
+        public byte ToByte(nuint value) => checked((byte)value);
         #endregion
 
         #region ToInt16
@@ -1455,10 +1455,10 @@ namespace Genumerics
         public short ToInt16(BigInteger value) => (short)value;
 
         /// <inheritdoc />
-        public short ToInt16(nint value) => (short)value;
+        public short ToInt16(nint value) => checked((short)value);
 
         /// <inheritdoc />
-        public short ToInt16(nuint value) => (short)value;
+        public short ToInt16(nuint value) => checked((short)value);
         #endregion
 
         #region ToUInt16
@@ -1499,10 +1499,10 @@ namespace Genumerics
         public ushort ToUInt16(BigInteger value) => (ushort)value;
 
         /// <inheritdoc />
-        public ushort ToUInt16(nint value) => (ushort)value;
+        public ushort ToUInt16(nint value) => checked((ushort)value);
 
         /// <inheritdoc />
-        public ushort ToUInt16(nuint value) => (ushort)value;
+        public ushort ToUInt16(nuint value) => checked((ushort)value);
         #endregion
 
         #region ToInt32
@@ -1543,10 +1543,10 @@ namespace Genumerics
         public int ToInt32(BigInteger value) => (int)value;
 
         /// <inheritdoc />
-        public int ToInt32(nint value) => (int)value;
+        public int ToInt32(nint value) => checked((int)value);
 
         /// <inheritdoc />
-        public int ToInt32(nuint value) => (int)value;
+        public int ToInt32(nuint value) => checked((int)value);
         #endregion
 
         #region ToUInt32
@@ -1587,10 +1587,10 @@ namespace Genumerics
         public uint ToUInt32(BigInteger value) => (uint)value;
 
         /// <inheritdoc />
-        public uint ToUInt32(nint value) => (uint)value;
+        public uint ToUInt32(nint value) => checked((uint)value);
 
         /// <inheritdoc />
-        public uint ToUInt32(nuint value) => (uint)value;
+        public uint ToUInt32(nuint value) => checked((uint)value);
         #endregion
 
         #region ToInt64
@@ -1634,7 +1634,7 @@ namespace Genumerics
         public long ToInt64(nint value) => (long)value;
 
         /// <inheritdoc />
-        public long ToInt64(nuint value) => (long)value;
+        public long ToInt64(nuint value) => checked((long)value);
         #endregion
 
         #region ToUInt64
@@ -1675,7 +1675,7 @@ namespace Genumerics
         public ulong ToUInt64(BigInteger value) => (ulong)value;
 
         /// <inheritdoc />
-        public ulong ToUInt64(nint value) => (ulong)value;
+        public ulong ToUInt64(nint value) => checked((ulong)value);
 
         /// <inheritdoc />
         public ulong ToUInt64(nuint value) => (ulong)value;
@@ -1719,10 +1719,10 @@ namespace Genumerics
         public float ToSingle(BigInteger value) => (float)value;
 
         /// <inheritdoc />
-        public float ToSingle(nint value) => (float)value;
+        public float ToSingle(nint value) => value;
 
         /// <inheritdoc />
-        public float ToSingle(nuint value) => (float)value;
+        public float ToSingle(nuint value) => value;
         #endregion
 
         #region ToDouble
@@ -1763,10 +1763,10 @@ namespace Genumerics
         public double ToDouble(BigInteger value) => (double)value;
 
         /// <inheritdoc />
-        public double ToDouble(nint value) => (double)value;
+        public double ToDouble(nint value) => value;
 
         /// <inheritdoc />
-        public double ToDouble(nuint value) => (double)value;
+        public double ToDouble(nuint value) => value;
         #endregion
 
         #region ToDecimal
