@@ -1122,9 +1122,17 @@ namespace Genumerics
 
         BigInteger INumericOperations<BigInteger>.Parse(string value, NumberStyles? style, IFormatProvider? provider) => BigInteger.Parse(value, style ?? NumberStyles.Integer, provider);
 
-        nint INumericOperations<nint>.Parse(string value, NumberStyles? style, IFormatProvider? provider) => throw new NotSupportedException();
+        nint INumericOperations<nint>.Parse(string value, NumberStyles? style, IFormatProvider? provider)
+        {
+            var styleValue = style ?? NumberStyles.Integer;
+            return IntPtr.Size == 4 ? int.Parse(value, styleValue, provider) : (nint)long.Parse(value, styleValue, provider);
+        }
 
-        nuint INumericOperations<nuint>.Parse(string value, NumberStyles? style, IFormatProvider? provider) => throw new NotSupportedException();
+        nuint INumericOperations<nuint>.Parse(string value, NumberStyles? style, IFormatProvider? provider)
+        {
+            var styleValue = style ?? NumberStyles.Integer;
+            return UIntPtr.Size == 4 ? uint.Parse(value, styleValue, provider) : (nuint)ulong.Parse(value, styleValue, provider);
+        }
         #endregion
 
         #region TryParse
