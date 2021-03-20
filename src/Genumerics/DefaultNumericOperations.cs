@@ -1125,13 +1125,21 @@ namespace Genumerics
         nint INumericOperations<nint>.Parse(string value, NumberStyles? style, IFormatProvider? provider)
         {
             var styleValue = style ?? NumberStyles.Integer;
-            return IntPtr.Size == 4 ? int.Parse(value, styleValue, provider) : (nint)long.Parse(value, styleValue, provider);
+            return IntPtr.Size switch {
+                4 => int.Parse(value, styleValue, provider),
+                8 => (nint)long.Parse(value, styleValue, provider),
+                _ => throw new NotSupportedException(),
+            };
         }
 
         nuint INumericOperations<nuint>.Parse(string value, NumberStyles? style, IFormatProvider? provider)
         {
             var styleValue = style ?? NumberStyles.Integer;
-            return UIntPtr.Size == 4 ? uint.Parse(value, styleValue, provider) : (nuint)ulong.Parse(value, styleValue, provider);
+            return UIntPtr.Size switch {
+                4 => uint.Parse(value, styleValue, provider),
+                8 => (nuint)ulong.Parse(value, styleValue, provider),
+                _ => throw new NotSupportedException(),
+            };
         }
         #endregion
 
@@ -1173,10 +1181,40 @@ namespace Genumerics
         public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out BigInteger result) => BigInteger.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
         /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out nint result) => throw new NotSupportedException();
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out nint result)
+        {
+            bool success;
+            switch (IntPtr.Size) {
+            case 4:
+                success = this.TryParse(value, style, provider, out int i32);
+                result = i32;
+                return success;
+            case 8:
+                success = this.TryParse(value, style, provider, out long i64);
+                result = (nint)i64;
+                return success;
+            default:
+                throw new NotSupportedException();
+            }
+        }
 
         /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out nuint result) => throw new NotSupportedException();
+        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out nuint result)
+        {
+            bool success;
+            switch (UIntPtr.Size) {
+            case 4:
+                success = this.TryParse(value, style, provider, out uint u32);
+                result = u32;
+                return success;
+            case 8:
+                success = this.TryParse(value, style, provider, out ulong u64);
+                result = (nuint)u64;
+                return success;
+            default:
+                throw new NotSupportedException();
+            }
+        }
         #endregion
 
 #if SPAN
@@ -1205,9 +1243,25 @@ namespace Genumerics
 
         BigInteger INumericOperations<BigInteger>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider) => BigInteger.Parse(value, style ?? NumberStyles.Integer, provider);
 
-        nint INumericOperations<nint>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider) => throw new NotSupportedException();
+        nint INumericOperations<nint>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider)
+        {
+            var styleValue = style ?? NumberStyles.Integer;
+            return IntPtr.Size switch {
+                4 => int.Parse(value, styleValue, provider),
+                8 => (nint)long.Parse(value, styleValue, provider),
+                _ => throw new NotSupportedException(),
+            };
+        }
 
-        nuint INumericOperations<nuint>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider) => throw new NotSupportedException();
+        nuint INumericOperations<nuint>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider)
+        {
+            var styleValue = style ?? NumberStyles.Integer;
+            return UIntPtr.Size switch {
+                4 => uint.Parse(value, styleValue, provider),
+                8 => (nuint)ulong.Parse(value, styleValue, provider),
+                _ => throw new NotSupportedException(),
+            };
+        }
         #endregion
 
         #region TryParse
@@ -1248,10 +1302,40 @@ namespace Genumerics
         public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out BigInteger result) => BigInteger.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
         /// <inheritdoc />
-        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out nint result) => throw new NotSupportedException();
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out nint result)
+        {
+            bool success;
+            switch (IntPtr.Size) {
+            case 4:
+                success = this.TryParse(value, style, provider, out int i32);
+                result = i32;
+                return success;
+            case 8:
+                success = this.TryParse(value, style, provider, out long i64);
+                result = (nint)i64;
+                return success;
+            default:
+                throw new NotSupportedException();
+            }
+        }
 
         /// <inheritdoc />
-        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out nuint result) => throw new NotSupportedException();
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out nuint result)
+        {
+            bool success;
+            switch (UIntPtr.Size) {
+            case 4:
+                success = this.TryParse(value, style, provider, out uint u32);
+                result = u32;
+                return success;
+            case 8:
+                success = this.TryParse(value, style, provider, out ulong u64);
+                result = (nuint)u64;
+                return success;
+            default:
+                throw new NotSupportedException();
+            }
+        }
         #endregion
 
         #region TryFormat
@@ -1292,10 +1376,12 @@ namespace Genumerics
         public bool TryFormat(BigInteger value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
 
         /// <inheritdoc />
-        public bool TryFormat(nint value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => throw new NotSupportedException();
+        public bool TryFormat(nint value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null)
+            => ((long)value).TryFormat(destination, out charsWritten, format, provider);
 
         /// <inheritdoc />
-        public bool TryFormat(nuint value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => throw new NotSupportedException();
+        public bool TryFormat(nuint value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null)
+            => ((ulong)value).TryFormat(destination, out charsWritten, format, provider);
         #endregion
 #endif
 
