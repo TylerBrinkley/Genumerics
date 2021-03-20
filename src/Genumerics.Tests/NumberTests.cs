@@ -179,7 +179,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<decimal>(decimal.MaxValue);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(int.MaxValue));
             yield return CreateTestCase<nint>(IntPtr.Size == 4 ? (nint)int.MaxValue : unchecked((nint)long.MaxValue));
-            yield return CreateTestCase<nuint>(UIntPtr.Size == 4 ? (nuint)int.MaxValue : unchecked((nuint)ulong.MaxValue));
+            yield return CreateTestCase<nuint>(UIntPtr.Size == 4 ? (nuint)uint.MaxValue : unchecked((nuint)ulong.MaxValue));
             yield return CreateTestCase<DayOfWeek>((DayOfWeek)int.MaxValue);
         }
 
@@ -1642,6 +1642,7 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(2), new BigInteger(-2));
             yield return CreateTestCase<nint>((nint)3, (nint)3);
             yield return CreateTestCase<nint>((nint)2, -(nint)2);
+            yield return CreateTestCase<nuint>((nuint)3, (nuint)3);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(3), new IntWrapper(3));
             yield return CreateTestCase<IntWrapper>(new IntWrapper(2), new IntWrapper(-2));
             yield return CreateTestCase<DayOfWeek>(DayOfWeek.Wednesday, DayOfWeek.Wednesday);
@@ -1855,10 +1856,10 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(-1, new BigInteger(3), new BigInteger(6));
             yield return CreateTestCase<BigInteger>(0, new BigInteger(3), new BigInteger(3));
             yield return CreateTestCase<nint>(1, (nint)3, (nint)2);
-            yield return CreateTestCase<nint>(-3, (nint)3, (nint)6);
+            yield return CreateTestCase<nint>(-1, (nint)3, (nint)6);
             yield return CreateTestCase<nint>(0, (nint)3, (nint)3);
             yield return CreateTestCase<nuint>(1, (nuint)3, (nuint)2);
-            yield return CreateTestCase<nuint>(-3, (nuint)3, (nuint)6);
+            yield return CreateTestCase<nuint>(-1, (nuint)3, (nuint)6);
             yield return CreateTestCase<nuint>(0, (nuint)3, (nuint)3);
             yield return CreateTestCase<IntWrapper>(1, new IntWrapper(3), new IntWrapper(2));
             yield return CreateTestCase<IntWrapper>(-1, new IntWrapper(3), new IntWrapper(6));
@@ -2163,11 +2164,13 @@ namespace Genumerics.Tests
             yield return CreateTestCase<BigInteger>(new BigInteger(-128), " -128 ", NumberStyles.Integer);
             yield return CreateTestCase<BigInteger>(new BigInteger(uint.MaxValue), " 00000000FFFFFFFF ", NumberStyles.HexNumber);
             yield return CreateTestCase<BigInteger>(new BigInteger(-1), " FFFFFFFF ", NumberStyles.HexNumber);
+            string nativeIntAllBits = IntPtr.Size == 4 ? " FFFFFFFF " : " FFFFFFFFFFFFFFFF ";
+            nuint nativeUIntMax = UIntPtr.Size == 4 ? uint.MaxValue : unchecked((nuint)ulong.MaxValue);
             yield return CreateTestCase<nint>((nint)8, "8", null);
             yield return CreateTestCase<nint>(-(nint)128, " -128 ", NumberStyles.Integer);
-            yield return CreateTestCase<nint>(-(nint)1, " FF ", NumberStyles.HexNumber);
+            yield return CreateTestCase<nint>(-(nint)1, nativeIntAllBits, NumberStyles.HexNumber);
             yield return CreateTestCase<nuint>((nuint)8, "8", null);
-            yield return CreateTestCase<nuint>((nuint)255, " FF ", NumberStyles.HexNumber);
+            yield return CreateTestCase<nuint>(nativeUIntMax, nativeIntAllBits, NumberStyles.HexNumber);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(8), "8", null);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(-128), " -128 ", NumberStyles.Integer);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(-1), " FFFFFFFF ", NumberStyles.HexNumber);
