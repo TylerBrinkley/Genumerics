@@ -196,6 +196,14 @@ namespace Genumerics
             {
                 return (T)(object)BigInteger.Zero;
             }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)(nint)0;
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return (T)(object)(nuint)0;
+            }
             else
             {
                 return GetOperationsInternal<T>().Zero;
@@ -259,6 +267,14 @@ namespace Genumerics
             {
                 return (T)(object)BigInteger.One;
             }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)(nint)1;
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return (T)(object)(nuint)1;
+            }
             else
             {
                 return GetOperationsInternal<T>().One;
@@ -307,6 +323,10 @@ namespace Genumerics
             else if (typeof(T) == typeof(BigInteger))
             {
                 return (T)(object)BigInteger.MinusOne;
+            }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)(nint)(-1);
             }
             else
             {
@@ -401,6 +421,14 @@ namespace Genumerics
             {
                 return ((BigInteger)(object)left!) == ((BigInteger)(object)right!);
             }
+            else if (typeof(T) == typeof(nint))
+            {
+                return ((nint)(object)left!) == ((nint)(object)right!);
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return ((nuint)(object)left!) == ((nuint)(object)right!);
+            }
             else
             {
                 return GetOperationsInternal<T>().Equals(left, right);
@@ -465,6 +493,14 @@ namespace Genumerics
             else if (typeof(T) == typeof(BigInteger))
             {
                 return ((BigInteger)(object)left!) != ((BigInteger)(object)right!);
+            }
+            else if (typeof(T) == typeof(nint))
+            {
+                return ((nint)(object)left!) != ((nint)(object)right!);
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return ((nuint)(object)left!) != ((nuint)(object)right!);
             }
             else
             {
@@ -531,6 +567,14 @@ namespace Genumerics
             {
                 return ((BigInteger)(object)left!) < ((BigInteger)(object)right!);
             }
+            else if (typeof(T) == typeof(nint))
+            {
+                return ((nint)(object)left!) < ((nint)(object)right!);
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return ((nuint)(object)left!) < ((nuint)(object)right!);
+            }
             else
             {
                 return GetOperationsInternal<T>().LessThan(left, right);
@@ -595,6 +639,14 @@ namespace Genumerics
             else if (typeof(T) == typeof(BigInteger))
             {
                 return ((BigInteger)(object)left!) <= ((BigInteger)(object)right!);
+            }
+            else if (typeof(T) == typeof(nint))
+            {
+                return ((nint)(object)left!) <= ((nint)(object)right!);
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return ((nuint)(object)left!) <= ((nuint)(object)right!);
             }
             else
             {
@@ -661,6 +713,14 @@ namespace Genumerics
             {
                 return ((BigInteger)(object)left!) > ((BigInteger)(object)right!);
             }
+            else if (typeof(T) == typeof(nint))
+            {
+                return ((nint)(object)left!) > ((nint)(object)right!);
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return ((nuint)(object)left!) > ((nuint)(object)right!);
+            }
             else
             {
                 return GetOperationsInternal<T>().GreaterThan(left, right);
@@ -725,6 +785,14 @@ namespace Genumerics
             else if (typeof(T) == typeof(BigInteger))
             {
                 return ((BigInteger)(object)left!) >= ((BigInteger)(object)right!);
+            }
+            else if (typeof(T) == typeof(nint))
+            {
+                return ((nint)(object)left!) >= ((nint)(object)right!);
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return ((nuint)(object)left!) >= ((nuint)(object)right!);
             }
             else
             {
@@ -791,6 +859,14 @@ namespace Genumerics
             {
                 return (T)(object)(((BigInteger)(object)left!) + ((BigInteger)(object)right!));
             }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)(((nint)(object)left!) + ((nint)(object)right!));
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return (T)(object)(((nuint)(object)left!) + ((nuint)(object)right!));
+            }
             else
             {
                 return GetOperationsInternal<T>().Add(left, right);
@@ -856,6 +932,14 @@ namespace Genumerics
             {
                 return (T)(object)(((BigInteger)(object)left!) - ((BigInteger)(object)right!));
             }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)(((nint)(object)left!) - ((nint)(object)right!));
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return (T)(object)(((nuint)(object)left!) - ((nuint)(object)right!));
+            }
             else
             {
                 return GetOperationsInternal<T>().Subtract(left, right);
@@ -920,6 +1004,14 @@ namespace Genumerics
             else if (typeof(T) == typeof(BigInteger))
             {
                 return (T)(object)(((BigInteger)(object)left!) * ((BigInteger)(object)right!));
+            }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)(((nint)(object)left!) * ((nint)(object)right!));
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return (T)(object)(((nuint)(object)left!) * ((nuint)(object)right!));
             }
             else
             {
@@ -987,6 +1079,14 @@ namespace Genumerics
             {
                 return (T)(object)(((BigInteger)(object)dividend!) / ((BigInteger)(object)divisor!));
             }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)(((nint)(object)dividend!) / ((nint)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return (T)(object)(((nuint)(object)dividend!) / ((nuint)(object)divisor!));
+            }
             else
             {
                 return GetOperationsInternal<T>().Divide(dividend, divisor);
@@ -1053,6 +1153,14 @@ namespace Genumerics
             {
                 return (T)(object)(((BigInteger)(object)dividend!) % ((BigInteger)(object)divisor!));
             }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)(((nint)(object)dividend!) % ((nint)(object)divisor!));
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return (T)(object)(((nuint)(object)dividend!) % ((nuint)(object)divisor!));
+            }
             else
             {
                 return GetOperationsInternal<T>().Remainder(dividend, divisor);
@@ -1114,6 +1222,10 @@ namespace Genumerics
             else if (typeof(T) == typeof(BigInteger))
             {
                 return (T)(object)-(BigInteger)(object)value!;
+            }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)-(nint)(object)value!;
             }
             else
             {
@@ -1190,6 +1302,14 @@ namespace Genumerics
             {
                 return (T)(object)(((BigInteger)(object)left!) & ((BigInteger)(object)right!));
             }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)(((nint)(object)left!) & ((nint)(object)right!));
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return (T)(object)(((nuint)(object)left!) & ((nuint)(object)right!));
+            }
             else
             {
                 return GetOperationsInternal<T>().BitwiseAnd(left, right);
@@ -1244,6 +1364,14 @@ namespace Genumerics
             else if (typeof(T) == typeof(BigInteger))
             {
                 return (T)(object)(((BigInteger)(object)left!) | ((BigInteger)(object)right!));
+            }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)(((nint)(object)left!) | ((nint)(object)right!));
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return (T)(object)(((nuint)(object)left!) | ((nuint)(object)right!));
             }
             else
             {
@@ -1300,6 +1428,14 @@ namespace Genumerics
             {
                 return (T)(object)(((BigInteger)(object)left!) ^ ((BigInteger)(object)right!));
             }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)(((nint)(object)left!) ^ ((nint)(object)right!));
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return (T)(object)(((nuint)(object)left!) ^ ((nuint)(object)right!));
+            }
             else
             {
                 return GetOperationsInternal<T>().Xor(left, right);
@@ -1353,6 +1489,14 @@ namespace Genumerics
             else if (typeof(T) == typeof(BigInteger))
             {
                 return (T)(object)~(BigInteger)(object)value!;
+            }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)~(nint)(object)value!;
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return (T)(object)~(nuint)(object)value!;
             }
             else
             {
@@ -1409,6 +1553,14 @@ namespace Genumerics
             {
                 return (T)(object)((BigInteger)(object)value! << shift);
             }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)((nint)(object)value! << shift);
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return (T)(object)((nuint)(object)value! << shift);
+            }
             else
             {
                 return GetOperationsInternal<T>().LeftShift(value, shift);
@@ -1463,6 +1615,14 @@ namespace Genumerics
             else if (typeof(T) == typeof(BigInteger))
             {
                 return (T)(object)((BigInteger)(object)value! >> shift);
+            }
+            else if (typeof(T) == typeof(nint))
+            {
+                return (T)(object)((nint)(object)value! >> shift);
+            }
+            else if (typeof(T) == typeof(nuint))
+            {
+                return (T)(object)((nuint)(object)value! >> shift);
             }
             else
             {
