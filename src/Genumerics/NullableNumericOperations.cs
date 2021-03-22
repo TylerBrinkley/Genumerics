@@ -58,13 +58,13 @@ namespace Genumerics
         public TypeCode TypeCode => default(TNumericOperations).TypeCode;
 
         /// <inheritdoc />
-        public T? Add(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Add(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? Add(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Add(left.GetValueOrDefault(), right.GetValueOrDefault()) : null;
 
         /// <inheritdoc />
-        public T? BitwiseAnd(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).BitwiseAnd(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? BitwiseAnd(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).BitwiseAnd(left.GetValueOrDefault(), right.GetValueOrDefault()) : null;
 
         /// <inheritdoc />
-        public T? Divide(T? dividend, T? divisor) => dividend.HasValue && divisor.HasValue ? default(TNumericOperations).Divide(dividend.GetValueOrDefault(), divisor.GetValueOrDefault()) : (T?)null;
+        public T? Divide(T? dividend, T? divisor) => dividend.HasValue && divisor.HasValue ? default(TNumericOperations).Divide(dividend.GetValueOrDefault(), divisor.GetValueOrDefault()) : null;
 
         /// <inheritdoc />
         public T? DivRem(T? dividend, T? divisor, out T? remainder)

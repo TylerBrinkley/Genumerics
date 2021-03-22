@@ -628,5 +628,41 @@ namespace Genumerics
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         public static explicit operator BigInteger(Number<T> value) => Number.GetOperationsInternal<T>().ToBigInteger(value);
+
+        /// <summary>
+        /// Defines an explicit conversion of a <see cref="IntPtr"/> to a <see cref="Number{T}"/> value.
+        /// </summary>
+        /// <param name="value">The value to convert to a <see cref="Number{T}"/>.</param>
+        /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
+        /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
+        /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
+        public static explicit operator Number<T>(nint value) => Number.GetOperationsInternal<T>().Convert(value);
+
+        /// <summary>
+        /// Defines an explicit conversion of a <see cref="Number{T}"/> object to an <see cref="IntPtr"/> value.
+        /// </summary>
+        /// <param name="value">The value to convert to an <see cref="IntPtr"/>.</param>
+        /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
+        /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
+        public static explicit operator nint(Number<T> value) => Number.GetOperationsInternal<nint>().Convert(value.Value);
+
+        /// <summary>
+        /// Defines an explicit conversion of a <see cref="UIntPtr"/> to a <see cref="Number{T}"/> value.
+        /// </summary>
+        /// <param name="value">The value to convert to a <see cref="Number{T}"/>.</param>
+        /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
+        /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
+        /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
+        [CLSCompliant(false)]
+        public static explicit operator Number<T>(nuint value) => Number.GetOperationsInternal<T>().Convert(value);
+
+        /// <summary>
+        /// Defines an explicit conversion of a <see cref="Number{T}"/> object to an <see cref="UIntPtr"/> value.
+        /// </summary>
+        /// <param name="value">The value to convert to an <see cref="UIntPtr"/>.</param>
+        /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
+        /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
+        [CLSCompliant(false)]
+        public static explicit operator nuint(Number<T> value) => Number.GetOperationsInternal<nuint>().Convert(value.Value);
     }
 }

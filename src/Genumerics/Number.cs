@@ -80,7 +80,7 @@ namespace Genumerics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static INumericOperations<T> GetOperationsInternal<T>()
         {
-            return NumericOperationsCache<T>.s_operations ?? GetOperations<T>() ?? throw new NotSupportedException($"Generic numeric operations on {typeof(T)} are not supported. The only built-in supported types are SByte, Byte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, and BigInteger as well as the nullable versions of each of these types. You can register support for a non-built-in type using the Number.RegisterOperations method.");
+            return NumericOperationsCache<T>.s_operations ?? GetOperations<T>() ?? throw new NotSupportedException($"Generic numeric operations on {typeof(T)} are not supported. The only built-in supported types are SByte, Byte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, IntPtr, UIntPtr, and BigInteger as well as the nullable versions of each of these types. You can register support for a non-built-in type using the Number.RegisterOperations method.");
         }
 
         /// <summary>
