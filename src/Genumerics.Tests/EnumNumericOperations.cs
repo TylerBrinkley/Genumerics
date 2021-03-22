@@ -234,7 +234,7 @@ namespace Genumerics
 #endif
 
         /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out TEnum result)
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out TEnum result)
         {
             if (style.HasValue)
             {

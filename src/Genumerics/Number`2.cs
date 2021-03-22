@@ -174,9 +174,9 @@ namespace Genumerics
 
         float IConvertible.ToSingle(IFormatProvider? provider) => default(TNumericOperations).ToSingle(Value);
 
-#pragma warning disable CS8616 // Nullability of reference types in return type doesn't match implemented member.
+#pragma warning disable CS8768 // Nullability of reference types in return type doesn't match implemented member (possibly because of nullability attributes).
         object? IConvertible.ToType(Type conversionType, IFormatProvider? provider) => Convert.ChangeType(Value, conversionType, provider);
-#pragma warning restore CS8616 // Nullability of reference types in return type doesn't match implemented member.
+#pragma warning restore CS8768 // Nullability of reference types in return type doesn't match implemented member (possibly because of nullability attributes).
 
         ushort IConvertible.ToUInt16(IFormatProvider? provider) => default(TNumericOperations).ToUInt16(Value);
 
@@ -188,7 +188,7 @@ namespace Genumerics
         /// Defines an implicit conversion of a <typeparamref name="T"/> to a <see cref="Number{T, TNumericOperations}"/>.
         /// </summary>
         /// <param name="value">The value to convert to a <see cref="Number{T, TNumericOperations}"/>.</param>
-        public static implicit operator Number<T, TNumericOperations>(T value) => new Number<T, TNumericOperations>(value);
+        public static implicit operator Number<T, TNumericOperations>(T value) => new(value);
 
         /// <summary>
         /// Defines an implicit conversion of a <see cref="Number{T, TNumericOperations}"/> to a <typeparamref name="T"/>.
@@ -566,5 +566,41 @@ namespace Genumerics
         /// <param name="value">The value to convert to a <see cref="BigInteger"/>.</param>
         /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
         public static explicit operator BigInteger(Number<T, TNumericOperations> value) => default(TNumericOperations).ToBigInteger(value);
+
+        /// <summary>
+        /// Defines an explicit conversion of a <see cref="IntPtr"/> to a <see cref="Number{T, TNumericOperations}"/> value.
+        /// </summary>
+        /// <param name="value">The value to convert to a <see cref="Number{T, TNumericOperations}"/>.</param>
+        /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
+        /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
+        /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
+        public static explicit operator Number<T, TNumericOperations>(nint value) => default(TNumericOperations).Convert(value);
+
+        /// <summary>
+        /// Defines an explicit conversion of a <see cref="Number{T, TNumericOperations}"/> object to an <see cref="IntPtr"/> value.
+        /// </summary>
+        /// <param name="value">The value to convert to an <see cref="IntPtr"/>.</param>
+        /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
+        /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
+        public static explicit operator nint(Number<T, TNumericOperations> value) => Number.GetOperationsInternal<nint>().Convert(value.Value);
+
+        /// <summary>
+        /// Defines an explicit conversion of a <see cref="UIntPtr"/> to a <see cref="Number{T, TNumericOperations}"/> value.
+        /// </summary>
+        /// <param name="value">The value to convert to a <see cref="Number{T, TNumericOperations}"/>.</param>
+        /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
+        /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
+        /// <exception cref="OverflowException"><paramref name="value"/> is greater than <typeparamref name="T"/>'s MaxValue or less than <typeparamref name="T"/>'s MinValue.</exception>
+        [CLSCompliant(false)]
+        public static explicit operator Number<T, TNumericOperations>(nuint value) => default(TNumericOperations).Convert(value);
+
+        /// <summary>
+        /// Defines an explicit conversion of a <see cref="Number{T, TNumericOperations}"/> object to an <see cref="UIntPtr"/> value.
+        /// </summary>
+        /// <param name="value">The value to convert to an <see cref="UIntPtr"/>.</param>
+        /// <returns>An object that contains the value of the <paramref name="value"/> parameter.</returns>
+        /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
+        [CLSCompliant(false)]
+        public static explicit operator nuint(Number<T, TNumericOperations> value) => Number.GetOperationsInternal<nuint>().Convert(value.Value);
     }
 }

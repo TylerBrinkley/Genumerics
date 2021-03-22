@@ -58,13 +58,13 @@ namespace Genumerics
         public TypeCode TypeCode => default(TNumericOperations).TypeCode;
 
         /// <inheritdoc />
-        public T? Add(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Add(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? Add(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Add(left.GetValueOrDefault(), right.GetValueOrDefault()) : null;
 
         /// <inheritdoc />
-        public T? BitwiseAnd(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).BitwiseAnd(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? BitwiseAnd(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).BitwiseAnd(left.GetValueOrDefault(), right.GetValueOrDefault()) : null;
 
         /// <inheritdoc />
-        public T? Divide(T? dividend, T? divisor) => dividend.HasValue && divisor.HasValue ? default(TNumericOperations).Divide(dividend.GetValueOrDefault(), divisor.GetValueOrDefault()) : (T?)null;
+        public T? Divide(T? dividend, T? divisor) => dividend.HasValue && divisor.HasValue ? default(TNumericOperations).Divide(dividend.GetValueOrDefault(), divisor.GetValueOrDefault()) : null;
 
         /// <inheritdoc />
         public T? DivRem(T? dividend, T? divisor, out T? remainder)
@@ -83,22 +83,22 @@ namespace Genumerics
         public bool Equals(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Equals(left.GetValueOrDefault(), right.GetValueOrDefault()) : !left.HasValue && !right.HasValue;
 
         /// <inheritdoc />
-        public bool GreaterThan(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).GreaterThan(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
+        public bool GreaterThan(T? left, T? right) => left.HasValue && right.HasValue && default(TNumericOperations).GreaterThan(left.GetValueOrDefault(), right.GetValueOrDefault());
 
         /// <inheritdoc />
-        public bool GreaterThanOrEqual(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).GreaterThanOrEqual(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
+        public bool GreaterThanOrEqual(T? left, T? right) => left.HasValue && right.HasValue && default(TNumericOperations).GreaterThanOrEqual(left.GetValueOrDefault(), right.GetValueOrDefault());
 
         /// <inheritdoc />
         public T? LeftShift(T? value, int shift) => value.HasValue ? default(TNumericOperations).LeftShift(value.GetValueOrDefault(), shift) : value;
 
         /// <inheritdoc />
-        public bool LessThan(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).LessThan(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
+        public bool LessThan(T? left, T? right) => left.HasValue && right.HasValue && default(TNumericOperations).LessThan(left.GetValueOrDefault(), right.GetValueOrDefault());
 
         /// <inheritdoc />
-        public bool LessThanOrEqual(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).LessThanOrEqual(left.GetValueOrDefault(), right.GetValueOrDefault()) : false;
+        public bool LessThanOrEqual(T? left, T? right) => left.HasValue && right.HasValue && default(TNumericOperations).LessThanOrEqual(left.GetValueOrDefault(), right.GetValueOrDefault());
 
         /// <inheritdoc />
-        public T? Multiply(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Multiply(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? Multiply(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Multiply(left.GetValueOrDefault(), right.GetValueOrDefault()) : null;
 
         /// <inheritdoc />
         public T? Negate(T? value) => value.HasValue ? default(TNumericOperations).Negate(value.GetValueOrDefault()) : value;
@@ -110,22 +110,22 @@ namespace Genumerics
         public bool NotEquals(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).NotEquals(left.GetValueOrDefault(), right.GetValueOrDefault()) : left.HasValue || right.HasValue;
 
         /// <inheritdoc />
-        public T? BitwiseOr(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).BitwiseOr(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? BitwiseOr(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).BitwiseOr(left.GetValueOrDefault(), right.GetValueOrDefault()) : null;
 
         /// <inheritdoc />
         public T? Parse(string value, NumberStyles? styles, IFormatProvider? provider) => default(TNumericOperations).Parse(value, styles, provider);
 
         /// <inheritdoc />
-        public T? Remainder(T? dividend, T? divisor) => dividend.HasValue && divisor.HasValue ? default(TNumericOperations).Remainder(dividend.GetValueOrDefault(), divisor.GetValueOrDefault()) : (T?)null;
+        public T? Remainder(T? dividend, T? divisor) => dividend.HasValue && divisor.HasValue ? default(TNumericOperations).Remainder(dividend.GetValueOrDefault(), divisor.GetValueOrDefault()) : null;
 
         /// <inheritdoc />
         public T? RightShift(T? value, int shift) => value.HasValue ? default(TNumericOperations).RightShift(value.GetValueOrDefault(), shift) : value;
 
         /// <inheritdoc />
-        public T? Subtract(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Subtract(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? Subtract(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Subtract(left.GetValueOrDefault(), right.GetValueOrDefault()) : null;
 
         /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? styles, IFormatProvider? provider, out T? result)
+        public bool TryParse(string? value, NumberStyles? styles, IFormatProvider? provider, out T? result)
         {
             var success = default(TNumericOperations).TryParse(value, styles, provider, out var r);
             result = r;
@@ -157,10 +157,10 @@ namespace Genumerics
 #endif
 
         /// <inheritdoc />
-        public T? Xor(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Xor(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? Xor(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Xor(left.GetValueOrDefault(), right.GetValueOrDefault()) : null;
 
         /// <inheritdoc />
-        public T? Convert<TFrom>(TFrom value) => value != null ? default(TNumericOperations).Convert(value) : (T?)null;
+        public T? Convert<TFrom>(TFrom value) => value != null ? default(TNumericOperations).Convert(value) : null;
 
         /// <inheritdoc />
         public T? Round(T? value, int digits, MidpointRounding mode) => value.HasValue ? default(TNumericOperations).Round(value.GetValueOrDefault(), digits, mode) : value;
@@ -181,10 +181,10 @@ namespace Genumerics
         public T? Abs(T? value) => value.HasValue ? default(TNumericOperations).Abs(value.GetValueOrDefault()) : value;
 
         /// <inheritdoc />
-        public T? Max(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Max(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? Max(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Max(left.GetValueOrDefault(), right.GetValueOrDefault()) : null;
 
         /// <inheritdoc />
-        public T? Min(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Min(left.GetValueOrDefault(), right.GetValueOrDefault()) : (T?)null;
+        public T? Min(T? left, T? right) => left.HasValue && right.HasValue ? default(TNumericOperations).Min(left.GetValueOrDefault(), right.GetValueOrDefault()) : null;
 
         /// <inheritdoc />
         public int Sign(T? value) => value.HasValue ? default(TNumericOperations).Sign(value.GetValueOrDefault()) : -2;
@@ -229,16 +229,16 @@ namespace Genumerics
         public BigInteger ToBigInteger(T? value) => value.HasValue ? default(TNumericOperations).ToBigInteger(value.GetValueOrDefault()) : default;
 
         /// <inheritdoc />
-        public bool IsEven(T? value) => value.HasValue ? default(TNumericOperations).IsEven(value.GetValueOrDefault()) : false;
+        public bool IsEven(T? value) => value.HasValue && default(TNumericOperations).IsEven(value.GetValueOrDefault());
 
         /// <inheritdoc />
-        public bool IsOdd(T? value) => value.HasValue ? default(TNumericOperations).IsOdd(value.GetValueOrDefault()) : false;
+        public bool IsOdd(T? value) => value.HasValue && default(TNumericOperations).IsOdd(value.GetValueOrDefault());
 
         /// <inheritdoc />
-        public bool IsPowerOfTwo(T? value) => value.HasValue ? default(TNumericOperations).IsPowerOfTwo(value.GetValueOrDefault()) : false;
+        public bool IsPowerOfTwo(T? value) => value.HasValue && default(TNumericOperations).IsPowerOfTwo(value.GetValueOrDefault());
 
         /// <inheritdoc />
-        public T? Clamp(T? value, T? min, T? max) => value.HasValue && min.HasValue && max.HasValue ? default(TNumericOperations).Clamp(value.GetValueOrDefault(), min.GetValueOrDefault(), max.GetValueOrDefault()) : (T?)null;
+        public T? Clamp(T? value, T? min, T? max) => value.HasValue && min.HasValue && max.HasValue ? default(TNumericOperations).Clamp(value.GetValueOrDefault(), min.GetValueOrDefault(), max.GetValueOrDefault()) : null;
 
         /// <inheritdoc />
         public override bool Equals(object? obj) => obj is NullableNumericOperations<T, TNumericOperations>;
@@ -247,7 +247,7 @@ namespace Genumerics
         public override int GetHashCode() => nameof(NullableNumericOperations<T, TNumericOperations>).GetHashCode();
 
 #pragma warning disable IDE0060 // Remove unused parameter
-                               /// <inheritdoc />
+        /// <inheritdoc />
         public static bool operator ==(NullableNumericOperations<T, TNumericOperations> left, NullableNumericOperations<T, TNumericOperations> right) => true;
 
         /// <inheritdoc />

@@ -52,7 +52,7 @@ namespace Genumerics
         public override Type? GetOperationsType<T>()
         {
             var numericType = typeof(T);
-            if (default(T)! == null && numericType.IsValueType)
+            if (default(T) == null && numericType.IsValueType)
             {
                 var underlyingType = numericType.GetGenericArguments()[0];
                 var underlyingOperations = typeof(Number)

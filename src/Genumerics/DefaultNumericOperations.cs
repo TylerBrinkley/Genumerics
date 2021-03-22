@@ -150,6 +150,10 @@ namespace Genumerics
 
         ulong INumericOperations<ulong>.MaxValue => ulong.MaxValue;
 
+        nint INumericOperations<nint>.MaxValue => IntPtr.Size == 4 ? int.MaxValue : unchecked((nint)long.MaxValue);
+
+        nuint INumericOperations<nuint>.MaxValue => unchecked((nuint)0 - 1);
+
         float INumericOperations<float>.MaxValue => float.MaxValue;
 
         double INumericOperations<double>.MaxValue => double.MaxValue;
@@ -157,10 +161,6 @@ namespace Genumerics
         decimal INumericOperations<decimal>.MaxValue => decimal.MaxValue;
 
         BigInteger INumericOperations<BigInteger>.MaxValue => throw new NotSupportedException("there is no MaxValue for BigInteger");
-
-        nint INumericOperations<nint>.MaxValue => IntPtr.Size == 4 ? int.MaxValue : unchecked((nint)long.MaxValue);
-
-        nuint INumericOperations<nuint>.MaxValue => unchecked((nuint)0 - 1);
         #endregion
 
         #region MinValue
@@ -180,6 +180,10 @@ namespace Genumerics
 
         ulong INumericOperations<ulong>.MinValue => ulong.MinValue;
 
+        nint INumericOperations<nint>.MinValue => IntPtr.Size == 4 ? int.MinValue : unchecked((nint)long.MinValue);
+
+        nuint INumericOperations<nuint>.MinValue => 0;
+
         float INumericOperations<float>.MinValue => float.MinValue;
 
         double INumericOperations<double>.MinValue => double.MinValue;
@@ -187,10 +191,6 @@ namespace Genumerics
         decimal INumericOperations<decimal>.MinValue => decimal.MinValue;
 
         BigInteger INumericOperations<BigInteger>.MinValue => throw new NotSupportedException("there is no MinValue for BigInteger");
-
-        nint INumericOperations<nint>.MinValue => IntPtr.Size == 4 ? int.MinValue : unchecked((nint)long.MinValue);
-
-        nuint INumericOperations<nuint>.MinValue => 0;
         #endregion
 
         #region TypeCode
@@ -210,6 +210,10 @@ namespace Genumerics
 
         TypeCode INumericOperations<ulong>.TypeCode => TypeCode.UInt64;
 
+        TypeCode INumericOperations<nint>.TypeCode => TypeCode.Object;
+
+        TypeCode INumericOperations<nuint>.TypeCode => TypeCode.Object;
+
         TypeCode INumericOperations<float>.TypeCode => TypeCode.Single;
 
         TypeCode INumericOperations<double>.TypeCode => TypeCode.Double;
@@ -217,10 +221,6 @@ namespace Genumerics
         TypeCode INumericOperations<decimal>.TypeCode => TypeCode.Decimal;
 
         TypeCode INumericOperations<BigInteger>.TypeCode => TypeCode.Object;
-
-        TypeCode INumericOperations<nint>.TypeCode => TypeCode.Object;
-
-        TypeCode INumericOperations<nuint>.TypeCode => TypeCode.Object;
         #endregion
 
         #region Equals
@@ -249,6 +249,12 @@ namespace Genumerics
         public bool Equals(ulong left, ulong right) => left == right;
 
         /// <inheritdoc />
+        public bool Equals(nint left, nint right) => left == right;
+
+        /// <inheritdoc />
+        public bool Equals(nuint left, nuint right) => left == right;
+
+        /// <inheritdoc />
         public bool Equals(float left, float right) => left == right;
 
         /// <inheritdoc />
@@ -259,11 +265,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public bool Equals(BigInteger left, BigInteger right) => left == right;
-
-        /// <inheritdoc />
-        public bool Equals(nint left, nint right) => left == right;
-        /// <inheritdoc />
-        public bool Equals(nuint left, nuint right) => left == right;
         #endregion
 
         #region NotEquals
@@ -292,6 +293,12 @@ namespace Genumerics
         public bool NotEquals(ulong left, ulong right) => left != right;
 
         /// <inheritdoc />
+        public bool NotEquals(nint left, nint right) => left != right;
+
+        /// <inheritdoc />
+        public bool NotEquals(nuint left, nuint right) => left != right;
+
+        /// <inheritdoc />
         public bool NotEquals(float left, float right) => left != right;
 
         /// <inheritdoc />
@@ -302,11 +309,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public bool NotEquals(BigInteger left, BigInteger right) => left != right;
-
-        /// <inheritdoc />
-        public bool NotEquals(nint left, nint right) => left != right;
-        /// <inheritdoc />
-        public bool NotEquals(nuint left, nuint right) => left != right;
         #endregion
 
         #region LessThan
@@ -335,6 +337,12 @@ namespace Genumerics
         public bool LessThan(ulong left, ulong right) => left < right;
 
         /// <inheritdoc />
+        public bool LessThan(nint left, nint right) => left < right;
+
+        /// <inheritdoc />
+        public bool LessThan(nuint left, nuint right) => left < right;
+
+        /// <inheritdoc />
         public bool LessThan(float left, float right) => left < right;
 
         /// <inheritdoc />
@@ -345,11 +353,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public bool LessThan(BigInteger left, BigInteger right) => left < right;
-
-        /// <inheritdoc />
-        public bool LessThan(nint left, nint right) => left < right;
-        /// <inheritdoc />
-        public bool LessThan(nuint left, nuint right) => left < right;
         #endregion
 
         #region LessThanOrEqual
@@ -378,6 +381,12 @@ namespace Genumerics
         public bool LessThanOrEqual(ulong left, ulong right) => left <= right;
 
         /// <inheritdoc />
+        public bool LessThanOrEqual(nint left, nint right) => left <= right;
+
+        /// <inheritdoc />
+        public bool LessThanOrEqual(nuint left, nuint right) => left <= right;
+
+        /// <inheritdoc />
         public bool LessThanOrEqual(float left, float right) => left <= right;
 
         /// <inheritdoc />
@@ -388,11 +397,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public bool LessThanOrEqual(BigInteger left, BigInteger right) => left <= right;
-
-        /// <inheritdoc />
-        public bool LessThanOrEqual(nint left, nint right) => left <= right;
-        /// <inheritdoc />
-        public bool LessThanOrEqual(nuint left, nuint right) => left <= right;
         #endregion
 
         #region GreaterThan
@@ -421,6 +425,12 @@ namespace Genumerics
         public bool GreaterThan(ulong left, ulong right) => left > right;
 
         /// <inheritdoc />
+        public bool GreaterThan(nint left, nint right) => left > right;
+
+        /// <inheritdoc />
+        public bool GreaterThan(nuint left, nuint right) => left > right;
+
+        /// <inheritdoc />
         public bool GreaterThan(float left, float right) => left > right;
 
         /// <inheritdoc />
@@ -431,11 +441,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public bool GreaterThan(BigInteger left, BigInteger right) => left > right;
-
-        /// <inheritdoc />
-        public bool GreaterThan(nint left, nint right) => left > right;
-        /// <inheritdoc />
-        public bool GreaterThan(nuint left, nuint right) => left > right;
         #endregion
 
         #region GreaterThanOrEqual
@@ -464,6 +469,12 @@ namespace Genumerics
         public bool GreaterThanOrEqual(ulong left, ulong right) => left >= right;
 
         /// <inheritdoc />
+        public bool GreaterThanOrEqual(nint left, nint right) => left >= right;
+
+        /// <inheritdoc />
+        public bool GreaterThanOrEqual(nuint left, nuint right) => left >= right;
+
+        /// <inheritdoc />
         public bool GreaterThanOrEqual(float left, float right) => left >= right;
 
         /// <inheritdoc />
@@ -474,11 +485,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public bool GreaterThanOrEqual(BigInteger left, BigInteger right) => left >= right;
-
-        /// <inheritdoc />
-        public bool GreaterThanOrEqual(nint left, nint right) => left >= right;
-        /// <inheritdoc />
-        public bool GreaterThanOrEqual(nuint left, nuint right) => left >= right;
         #endregion
 
         #region Add
@@ -507,6 +513,12 @@ namespace Genumerics
         public ulong Add(ulong left, ulong right) => left + right;
 
         /// <inheritdoc />
+        public nint Add(nint left, nint right) => left + right;
+
+        /// <inheritdoc />
+        public nuint Add(nuint left, nuint right) => left + right;
+
+        /// <inheritdoc />
         public float Add(float left, float right) => left + right;
 
         /// <inheritdoc />
@@ -517,12 +529,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger Add(BigInteger left, BigInteger right) => left + right;
-
-        /// <inheritdoc />
-        public nint Add(nint left, nint right) => left + right;
-
-        /// <inheritdoc />
-        public nuint Add(nuint left, nuint right) => left + right;
         #endregion
 
         #region Subtract
@@ -551,6 +557,12 @@ namespace Genumerics
         public ulong Subtract(ulong left, ulong right) => left - right;
 
         /// <inheritdoc />
+        public nint Subtract(nint left, nint right) => left - right;
+
+        /// <inheritdoc />
+        public nuint Subtract(nuint left, nuint right) => left - right;
+
+        /// <inheritdoc />
         public float Subtract(float left, float right) => left - right;
 
         /// <inheritdoc />
@@ -561,12 +573,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger Subtract(BigInteger left, BigInteger right) => left - right;
-
-        /// <inheritdoc />
-        public nint Subtract(nint left, nint right) => left - right;
-
-        /// <inheritdoc />
-        public nuint Subtract(nuint left, nuint right) => left - right;
         #endregion
 
         #region Multiply
@@ -595,6 +601,12 @@ namespace Genumerics
         public ulong Multiply(ulong left, ulong right) => left * right;
 
         /// <inheritdoc />
+        public nint Multiply(nint left, nint right) => left * right;
+
+        /// <inheritdoc />
+        public nuint Multiply(nuint left, nuint right) => left * right;
+
+        /// <inheritdoc />
         public float Multiply(float left, float right) => left * right;
 
         /// <inheritdoc />
@@ -605,12 +617,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger Multiply(BigInteger left, BigInteger right) => left * right;
-
-        /// <inheritdoc />
-        public nint Multiply(nint left, nint right) => left * right;
-
-        /// <inheritdoc />
-        public nuint Multiply(nuint left, nuint right) => left * right;
         #endregion
 
         #region Divide
@@ -639,6 +645,12 @@ namespace Genumerics
         public ulong Divide(ulong dividend, ulong divisor) => dividend / divisor;
 
         /// <inheritdoc />
+        public nint Divide(nint left, nint right) => left / right;
+
+        /// <inheritdoc />
+        public nuint Divide(nuint left, nuint right) => left / right;
+
+        /// <inheritdoc />
         public float Divide(float dividend, float divisor) => dividend / divisor;
 
         /// <inheritdoc />
@@ -649,12 +661,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger Divide(BigInteger dividend, BigInteger divisor) => dividend / divisor;
-
-        /// <inheritdoc />
-        public nint Divide(nint left, nint right) => left / right;
-
-        /// <inheritdoc />
-        public nuint Divide(nuint left, nuint right) => left / right;
         #endregion
 
         #region Remainder
@@ -683,6 +689,12 @@ namespace Genumerics
         public ulong Remainder(ulong dividend, ulong divisor) => dividend % divisor;
 
         /// <inheritdoc />
+        public nint Remainder(nint dividend, nint divisor) => dividend % divisor;
+
+        /// <inheritdoc />
+        public nuint Remainder(nuint dividend, nuint divisor) => dividend % divisor;
+
+        /// <inheritdoc />
         public float Remainder(float dividend, float divisor) => dividend % divisor;
 
         /// <inheritdoc />
@@ -693,12 +705,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger Remainder(BigInteger dividend, BigInteger divisor) => dividend % divisor;
-
-        /// <inheritdoc />
-        public nint Remainder(nint dividend, nint divisor) => dividend % divisor;
-
-        /// <inheritdoc />
-        public nuint Remainder(nuint dividend, nuint divisor) => dividend % divisor;
         #endregion
 
         #region DivRem
@@ -751,6 +757,20 @@ namespace Genumerics
         }
 
         /// <inheritdoc />
+        public nint DivRem(nint dividend, nint divisor, out nint remainder)
+        {
+            remainder = dividend % divisor;
+            return dividend / divisor;
+        }
+
+        /// <inheritdoc />
+        public nuint DivRem(nuint dividend, nuint divisor, out nuint remainder)
+        {
+            remainder = dividend % divisor;
+            return dividend / divisor;
+        }
+
+        /// <inheritdoc />
         public float DivRem(float dividend, float divisor, out float remainder)
         {
             remainder = dividend % divisor;
@@ -773,20 +793,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger DivRem(BigInteger dividend, BigInteger divisor, out BigInteger remainder) => BigInteger.DivRem(dividend, divisor, out remainder);
-
-        /// <inheritdoc />
-        public nint DivRem(nint dividend, nint divisor, out nint remainder)
-        {
-            remainder = dividend % divisor;
-            return dividend / divisor;
-        }
-
-        /// <inheritdoc />
-        public nuint DivRem(nuint dividend, nuint divisor, out nuint remainder)
-        {
-            remainder = dividend % divisor;
-            return dividend / divisor;
-        }
         #endregion
 
         #region Negate
@@ -815,6 +821,12 @@ namespace Genumerics
         public ulong Negate(ulong value) => throw new NotSupportedException("cannot negate unsigned integral type");
 
         /// <inheritdoc />
+        public nint Negate(nint value) => -value;
+
+        /// <inheritdoc />
+        public nuint Negate(nuint value) => throw new NotSupportedException("cannot negate unsigned integral type");
+
+        /// <inheritdoc />
         public float Negate(float value) => -value;
 
         /// <inheritdoc />
@@ -825,12 +837,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger Negate(BigInteger value) => -value;
-
-        /// <inheritdoc />
-        public nint Negate(nint value) => -value;
-
-        /// <inheritdoc />
-        public nuint Negate(nuint value) => throw new NotSupportedException("cannot negate unsigned integral type");
         #endregion
 
         #region BitwiseAnd
@@ -859,6 +865,12 @@ namespace Genumerics
         public ulong BitwiseAnd(ulong left, ulong right) => left & right;
 
         /// <inheritdoc />
+        public nint BitwiseAnd(nint left, nint right) => left & right;
+
+        /// <inheritdoc />
+        public nuint BitwiseAnd(nuint left, nuint right) => left & right;
+
+        /// <inheritdoc />
         public float BitwiseAnd(float left, float right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
 
         /// <inheritdoc />
@@ -869,12 +881,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger BitwiseAnd(BigInteger left, BigInteger right) => left & right;
-
-        /// <inheritdoc />
-        public nint BitwiseAnd(nint left, nint right) => left & right;
-
-        /// <inheritdoc />
-        public nuint BitwiseAnd(nuint left, nuint right) => left & right;
         #endregion
 
         #region BitwiseOr
@@ -903,6 +909,12 @@ namespace Genumerics
         public ulong BitwiseOr(ulong left, ulong right) => left | right;
 
         /// <inheritdoc />
+        public nint BitwiseOr(nint left, nint right) => left | right;
+
+        /// <inheritdoc />
+        public nuint BitwiseOr(nuint left, nuint right) => left | right;
+
+        /// <inheritdoc />
         public float BitwiseOr(float left, float right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
 
         /// <inheritdoc />
@@ -913,12 +925,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger BitwiseOr(BigInteger left, BigInteger right) => left | right;
-
-        /// <inheritdoc />
-        public nint BitwiseOr(nint left, nint right) => left | right;
-
-        /// <inheritdoc />
-        public nuint BitwiseOr(nuint left, nuint right) => left | right;
         #endregion
 
         #region Xor
@@ -947,6 +953,12 @@ namespace Genumerics
         public ulong Xor(ulong left, ulong right) => left ^ right;
 
         /// <inheritdoc />
+        public nint Xor(nint left, nint right) => left ^ right;
+
+        /// <inheritdoc />
+        public nuint Xor(nuint left, nuint right) => left ^ right;
+
+        /// <inheritdoc />
         public float Xor(float left, float right) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
 
         /// <inheritdoc />
@@ -957,12 +969,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger Xor(BigInteger left, BigInteger right) => left ^ right;
-
-        /// <inheritdoc />
-        public nint Xor(nint left, nint right) => left ^ right;
-
-        /// <inheritdoc />
-        public nuint Xor(nuint left, nuint right) => left ^ right;
         #endregion
 
         #region OnesComplement
@@ -991,6 +997,12 @@ namespace Genumerics
         public ulong OnesComplement(ulong value) => ~value;
 
         /// <inheritdoc />
+        public nint OnesComplement(nint value) => ~value;
+
+        /// <inheritdoc />
+        public nuint OnesComplement(nuint value) => ~value;
+
+        /// <inheritdoc />
         public float OnesComplement(float value) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
 
         /// <inheritdoc />
@@ -1001,12 +1013,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger OnesComplement(BigInteger value) => ~value;
-
-        /// <inheritdoc />
-        public nint OnesComplement(nint value) => ~value;
-
-        /// <inheritdoc />
-        public nuint OnesComplement(nuint value) => ~value;
         #endregion
 
         #region LeftShift
@@ -1035,6 +1041,12 @@ namespace Genumerics
         public ulong LeftShift(ulong value, int shift) => value << shift;
 
         /// <inheritdoc />
+        public nint LeftShift(nint value, int shift) => value << shift;
+
+        /// <inheritdoc />
+        public nuint LeftShift(nuint value, int shift) => value << shift;
+
+        /// <inheritdoc />
         public float LeftShift(float value, int shift) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
 
         /// <inheritdoc />
@@ -1045,12 +1057,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger LeftShift(BigInteger value, int shift) => value << shift;
-
-        /// <inheritdoc />
-        public nint LeftShift(nint value, int shift) => value << shift;
-
-        /// <inheritdoc />
-        public nuint LeftShift(nuint value, int shift) => value << shift;
         #endregion
 
         #region RightShift
@@ -1079,6 +1085,12 @@ namespace Genumerics
         public ulong RightShift(ulong value, int shift) => value >> shift;
 
         /// <inheritdoc />
+        public nint RightShift(nint value, int shift) => value >> shift;
+
+        /// <inheritdoc />
+        public nuint RightShift(nuint value, int shift) => value >> shift;
+
+        /// <inheritdoc />
         public float RightShift(float value, int shift) => throw new NotSupportedException("bitwise operations are not supported for floating point types");
 
         /// <inheritdoc />
@@ -1089,12 +1101,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger RightShift(BigInteger value, int shift) => value >> shift;
-
-        /// <inheritdoc />
-        public nint RightShift(nint value, int shift) => value >> shift;
-
-        /// <inheritdoc />
-        public nuint RightShift(nuint value, int shift) => value >> shift;
         #endregion
 
         #region Parse
@@ -1114,6 +1120,10 @@ namespace Genumerics
 
         ulong INumericOperations<ulong>.Parse(string value, NumberStyles? style, IFormatProvider? provider) => ulong.Parse(value, style ?? NumberStyles.Integer, provider);
 
+        nint INumericOperations<nint>.Parse(string value, NumberStyles? style, IFormatProvider? provider) => IntPtr.Size == 4 ? int.Parse(value, style ?? NumberStyles.Integer, provider) : (nint)long.Parse(value, style ?? NumberStyles.Integer, provider);
+
+        nuint INumericOperations<nuint>.Parse(string value, NumberStyles? style, IFormatProvider? provider) => UIntPtr.Size == 4 ? uint.Parse(value, style ?? NumberStyles.Integer, provider) : (nuint)ulong.Parse(value, style ?? NumberStyles.Integer, provider);
+
         float INumericOperations<float>.Parse(string value, NumberStyles? style, IFormatProvider? provider) => float.Parse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider);
 
         double INumericOperations<double>.Parse(string value, NumberStyles? style, IFormatProvider? provider) => double.Parse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider);
@@ -1121,100 +1131,78 @@ namespace Genumerics
         decimal INumericOperations<decimal>.Parse(string value, NumberStyles? style, IFormatProvider? provider) => decimal.Parse(value, style ?? NumberStyles.Number, provider);
 
         BigInteger INumericOperations<BigInteger>.Parse(string value, NumberStyles? style, IFormatProvider? provider) => BigInteger.Parse(value, style ?? NumberStyles.Integer, provider);
-
-        nint INumericOperations<nint>.Parse(string value, NumberStyles? style, IFormatProvider? provider)
-        {
-            var styleValue = style ?? NumberStyles.Integer;
-            return IntPtr.Size switch {
-                4 => int.Parse(value, styleValue, provider),
-                8 => (nint)long.Parse(value, styleValue, provider),
-                _ => throw new NotSupportedException(),
-            };
-        }
-
-        nuint INumericOperations<nuint>.Parse(string value, NumberStyles? style, IFormatProvider? provider)
-        {
-            var styleValue = style ?? NumberStyles.Integer;
-            return UIntPtr.Size switch {
-                4 => uint.Parse(value, styleValue, provider),
-                8 => (nuint)ulong.Parse(value, styleValue, provider),
-                _ => throw new NotSupportedException(),
-            };
-        }
         #endregion
 
         #region TryParse
         /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out sbyte result) => sbyte.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out sbyte result) => sbyte.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
         /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out byte result) => byte.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out byte result) => byte.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
         /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out short result) => short.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out short result) => short.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
         /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out ushort result) => ushort.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out ushort result) => ushort.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
         /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out int result) => int.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out int result) => int.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
         /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out uint result) => uint.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out uint result) => uint.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
         /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out long result) => long.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out long result) => long.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
         /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out ulong result) => ulong.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out ulong result) => ulong.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
         /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out float result) => float.TryParse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
-
-        /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out double result) => double.TryParse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
-
-        /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out decimal result) => decimal.TryParse(value, style ?? NumberStyles.Number, provider, out result);
-
-        /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out BigInteger result) => BigInteger.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
-
-        /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out nint result)
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out nint result)
         {
             bool success;
-            switch (IntPtr.Size) {
-            case 4:
-                success = this.TryParse(value, style, provider, out int i32);
+            if (IntPtr.Size == 4)
+            {
+                success = TryParse(value, style, provider, out int i32);
                 result = i32;
-                return success;
-            case 8:
-                success = this.TryParse(value, style, provider, out long i64);
-                result = (nint)i64;
-                return success;
-            default:
-                throw new NotSupportedException();
             }
+            else
+            {
+                success = TryParse(value, style, provider, out long i64);
+                result = (nint)i64;
+            }
+            return success;
         }
 
         /// <inheritdoc />
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out nuint result)
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out nuint result)
         {
             bool success;
-            switch (UIntPtr.Size) {
-            case 4:
-                success = this.TryParse(value, style, provider, out uint u32);
+            if (UIntPtr.Size == 4)
+            {
+                success = TryParse(value, style, provider, out uint u32);
                 result = u32;
-                return success;
-            case 8:
-                success = this.TryParse(value, style, provider, out ulong u64);
-                result = (nuint)u64;
-                return success;
-            default:
-                throw new NotSupportedException();
             }
+            else
+            {
+                success = TryParse(value, style, provider, out ulong u64);
+                result = (nuint)u64;
+            }
+            return success;
         }
+
+        /// <inheritdoc />
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out float result) => float.TryParse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
+
+        /// <inheritdoc />
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out double result) => double.TryParse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
+
+        /// <inheritdoc />
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out decimal result) => decimal.TryParse(value, style ?? NumberStyles.Number, provider, out result);
+
+        /// <inheritdoc />
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out BigInteger result) => BigInteger.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
         #endregion
 
 #if SPAN
@@ -1235,6 +1223,10 @@ namespace Genumerics
 
         ulong INumericOperations<ulong>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider) => ulong.Parse(value, style ?? NumberStyles.Integer, provider);
 
+        nint INumericOperations<nint>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider) => IntPtr.Size == 4 ? int.Parse(value, style ?? NumberStyles.Integer, provider) : (nint)long.Parse(value, style ?? NumberStyles.Integer, provider);
+
+        nuint INumericOperations<nuint>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider) => UIntPtr.Size == 4 ? uint.Parse(value, style ?? NumberStyles.Integer, provider) : (nuint)ulong.Parse(value, style ?? NumberStyles.Integer, provider);
+
         float INumericOperations<float>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider) => float.Parse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider);
 
         double INumericOperations<double>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider) => double.Parse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider);
@@ -1242,26 +1234,6 @@ namespace Genumerics
         decimal INumericOperations<decimal>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider) => decimal.Parse(value, style ?? NumberStyles.Number, provider);
 
         BigInteger INumericOperations<BigInteger>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider) => BigInteger.Parse(value, style ?? NumberStyles.Integer, provider);
-
-        nint INumericOperations<nint>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider)
-        {
-            var styleValue = style ?? NumberStyles.Integer;
-            return IntPtr.Size switch {
-                4 => int.Parse(value, styleValue, provider),
-                8 => (nint)long.Parse(value, styleValue, provider),
-                _ => throw new NotSupportedException(),
-            };
-        }
-
-        nuint INumericOperations<nuint>.Parse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider)
-        {
-            var styleValue = style ?? NumberStyles.Integer;
-            return UIntPtr.Size switch {
-                4 => uint.Parse(value, styleValue, provider),
-                8 => (nuint)ulong.Parse(value, styleValue, provider),
-                _ => throw new NotSupportedException(),
-            };
-        }
         #endregion
 
         #region TryParse
@@ -1290,6 +1262,40 @@ namespace Genumerics
         public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out ulong result) => ulong.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
 
         /// <inheritdoc />
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out nint result)
+        {
+            bool success;
+            if (IntPtr.Size == 4)
+            {
+                success = TryParse(value, style, provider, out int i32);
+                result = i32;
+            }
+            else
+            {
+                success = TryParse(value, style, provider, out long i64);
+                result = (nint)i64;
+            }
+            return success;
+        }
+
+        /// <inheritdoc />
+        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out nuint result)
+        {
+            bool success;
+            if (UIntPtr.Size == 4)
+            {
+                success = TryParse(value, style, provider, out uint u32);
+                result = u32;
+            }
+            else
+            {
+                success = TryParse(value, style, provider, out ulong u64);
+                result = (nuint)u64;
+            }
+            return success;
+        }
+
+        /// <inheritdoc />
         public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out float result) => float.TryParse(value, style ?? NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
 
         /// <inheritdoc />
@@ -1300,42 +1306,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out BigInteger result) => BigInteger.TryParse(value, style ?? NumberStyles.Integer, provider, out result);
-
-        /// <inheritdoc />
-        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out nint result)
-        {
-            bool success;
-            switch (IntPtr.Size) {
-            case 4:
-                success = this.TryParse(value, style, provider, out int i32);
-                result = i32;
-                return success;
-            case 8:
-                success = this.TryParse(value, style, provider, out long i64);
-                result = (nint)i64;
-                return success;
-            default:
-                throw new NotSupportedException();
-            }
-        }
-
-        /// <inheritdoc />
-        public bool TryParse(ReadOnlySpan<char> value, NumberStyles? style, IFormatProvider? provider, out nuint result)
-        {
-            bool success;
-            switch (UIntPtr.Size) {
-            case 4:
-                success = this.TryParse(value, style, provider, out uint u32);
-                result = u32;
-                return success;
-            case 8:
-                success = this.TryParse(value, style, provider, out ulong u64);
-                result = (nuint)u64;
-                return success;
-            default:
-                throw new NotSupportedException();
-            }
-        }
         #endregion
 
         #region TryFormat
@@ -1364,6 +1334,12 @@ namespace Genumerics
         public bool TryFormat(ulong value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
 
         /// <inheritdoc />
+        public bool TryFormat(nint value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => ((long)value).TryFormat(destination, out charsWritten, format, provider);
+
+        /// <inheritdoc />
+        public bool TryFormat(nuint value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => ((ulong)value).TryFormat(destination, out charsWritten, format, provider);
+
+        /// <inheritdoc />
         public bool TryFormat(float value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
 
         /// <inheritdoc />
@@ -1374,14 +1350,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public bool TryFormat(BigInteger value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => value.TryFormat(destination, out charsWritten, format, provider);
-
-        /// <inheritdoc />
-        public bool TryFormat(nint value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null)
-            => ((long)value).TryFormat(destination, out charsWritten, format, provider);
-
-        /// <inheritdoc />
-        public bool TryFormat(nuint value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null)
-            => ((ulong)value).TryFormat(destination, out charsWritten, format, provider);
         #endregion
 #endif
 
@@ -1402,6 +1370,10 @@ namespace Genumerics
 
         ulong INumericOperations<ulong>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToUInt64(value) ?? Convert.ToUInt64(value);
 
+        nint INumericOperations<nint>.Convert<TFrom>(TFrom value) => IntPtr.Size == 4 ? Number.GetOperations<TFrom>()?.ToInt32(value) ?? Convert.ToInt32(value) : (nint)(Number.GetOperations<TFrom>()?.ToInt64(value) ?? Convert.ToInt64(value));
+
+        nuint INumericOperations<nuint>.Convert<TFrom>(TFrom value) => UIntPtr.Size == 4 ? Number.GetOperations<TFrom>()?.ToUInt32(value) ?? Convert.ToUInt32(value) : (nuint)(Number.GetOperations<TFrom>()?.ToUInt64(value) ?? Convert.ToUInt64(value));
+
         float INumericOperations<float>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToSingle(value) ?? Convert.ToSingle(value);
 
         double INumericOperations<double>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToDouble(value) ?? Convert.ToDouble(value);
@@ -1409,10 +1381,6 @@ namespace Genumerics
         decimal INumericOperations<decimal>.Convert<TFrom>(TFrom value) => Number.GetOperations<TFrom>()?.ToDecimal(value) ?? Convert.ToDecimal(value);
 
         BigInteger INumericOperations<BigInteger>.Convert<TFrom>(TFrom value) => value != null ? Number.GetOperationsInternal<TFrom>().ToBigInteger(value) : default;
-
-        nint INumericOperations<nint>.Convert<TFrom>(TFrom value) => throw new NotSupportedException();
-
-        nuint INumericOperations<nuint>.Convert<TFrom>(TFrom value) => throw new NotSupportedException();
         #endregion
 
         #region ToSByte
@@ -1441,6 +1409,12 @@ namespace Genumerics
         public sbyte ToSByte(ulong value) => Convert.ToSByte(value);
 
         /// <inheritdoc />
+        public sbyte ToSByte(nint value) => checked((sbyte)value);
+
+        /// <inheritdoc />
+        public sbyte ToSByte(nuint value) => checked((sbyte)value);
+
+        /// <inheritdoc />
         public sbyte ToSByte(float value) => Convert.ToSByte(value);
 
         /// <inheritdoc />
@@ -1451,12 +1425,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public sbyte ToSByte(BigInteger value) => (sbyte)value;
-
-        /// <inheritdoc />
-        public sbyte ToSByte(nint value) => checked((sbyte)value);
-
-        /// <inheritdoc />
-        public sbyte ToSByte(nuint value) => checked((sbyte)value);
         #endregion
 
         #region ToByte
@@ -1485,6 +1453,12 @@ namespace Genumerics
         public byte ToByte(ulong value) => Convert.ToByte(value);
 
         /// <inheritdoc />
+        public byte ToByte(nint value) => checked((byte)value);
+
+        /// <inheritdoc />
+        public byte ToByte(nuint value) => checked((byte)value);
+
+        /// <inheritdoc />
         public byte ToByte(float value) => Convert.ToByte(value);
 
         /// <inheritdoc />
@@ -1495,12 +1469,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public byte ToByte(BigInteger value) => (byte)value;
-
-        /// <inheritdoc />
-        public byte ToByte(nint value) => checked((byte)value);
-
-        /// <inheritdoc />
-        public byte ToByte(nuint value) => checked((byte)value);
         #endregion
 
         #region ToInt16
@@ -1529,6 +1497,12 @@ namespace Genumerics
         public short ToInt16(ulong value) => Convert.ToInt16(value);
 
         /// <inheritdoc />
+        public short ToInt16(nint value) => checked((short)value);
+
+        /// <inheritdoc />
+        public short ToInt16(nuint value) => checked((short)value);
+
+        /// <inheritdoc />
         public short ToInt16(float value) => Convert.ToInt16(value);
 
         /// <inheritdoc />
@@ -1539,12 +1513,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public short ToInt16(BigInteger value) => (short)value;
-
-        /// <inheritdoc />
-        public short ToInt16(nint value) => checked((short)value);
-
-        /// <inheritdoc />
-        public short ToInt16(nuint value) => checked((short)value);
         #endregion
 
         #region ToUInt16
@@ -1573,6 +1541,12 @@ namespace Genumerics
         public ushort ToUInt16(ulong value) => Convert.ToUInt16(value);
 
         /// <inheritdoc />
+        public ushort ToUInt16(nint value) => checked((ushort)value);
+
+        /// <inheritdoc />
+        public ushort ToUInt16(nuint value) => checked((ushort)value);
+
+        /// <inheritdoc />
         public ushort ToUInt16(float value) => Convert.ToUInt16(value);
 
         /// <inheritdoc />
@@ -1583,12 +1557,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public ushort ToUInt16(BigInteger value) => (ushort)value;
-
-        /// <inheritdoc />
-        public ushort ToUInt16(nint value) => checked((ushort)value);
-
-        /// <inheritdoc />
-        public ushort ToUInt16(nuint value) => checked((ushort)value);
         #endregion
 
         #region ToInt32
@@ -1617,6 +1585,12 @@ namespace Genumerics
         public int ToInt32(ulong value) => Convert.ToInt32(value);
 
         /// <inheritdoc />
+        public int ToInt32(nint value) => checked((int)value);
+
+        /// <inheritdoc />
+        public int ToInt32(nuint value) => checked((int)value);
+
+        /// <inheritdoc />
         public int ToInt32(float value) => Convert.ToInt32(value);
 
         /// <inheritdoc />
@@ -1627,12 +1601,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public int ToInt32(BigInteger value) => (int)value;
-
-        /// <inheritdoc />
-        public int ToInt32(nint value) => checked((int)value);
-
-        /// <inheritdoc />
-        public int ToInt32(nuint value) => checked((int)value);
         #endregion
 
         #region ToUInt32
@@ -1661,6 +1629,12 @@ namespace Genumerics
         public uint ToUInt32(ulong value) => Convert.ToUInt32(value);
 
         /// <inheritdoc />
+        public uint ToUInt32(nint value) => checked((uint)value);
+
+        /// <inheritdoc />
+        public uint ToUInt32(nuint value) => checked((uint)value);
+
+        /// <inheritdoc />
         public uint ToUInt32(float value) => Convert.ToUInt32(value);
 
         /// <inheritdoc />
@@ -1671,12 +1645,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public uint ToUInt32(BigInteger value) => (uint)value;
-
-        /// <inheritdoc />
-        public uint ToUInt32(nint value) => checked((uint)value);
-
-        /// <inheritdoc />
-        public uint ToUInt32(nuint value) => checked((uint)value);
         #endregion
 
         #region ToInt64
@@ -1705,6 +1673,12 @@ namespace Genumerics
         public long ToInt64(ulong value) => Convert.ToInt64(value);
 
         /// <inheritdoc />
+        public long ToInt64(nint value) => value;
+
+        /// <inheritdoc />
+        public long ToInt64(nuint value) => checked((long)value);
+
+        /// <inheritdoc />
         public long ToInt64(float value) => Convert.ToInt64(value);
 
         /// <inheritdoc />
@@ -1715,12 +1689,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public long ToInt64(BigInteger value) => (long)value;
-
-        /// <inheritdoc />
-        public long ToInt64(nint value) => (long)value;
-
-        /// <inheritdoc />
-        public long ToInt64(nuint value) => checked((long)value);
         #endregion
 
         #region ToUInt64
@@ -1752,6 +1720,12 @@ namespace Genumerics
         public ulong ToUInt64(float value) => Convert.ToUInt64(value);
 
         /// <inheritdoc />
+        public ulong ToUInt64(nint value) => checked((ulong)value);
+
+        /// <inheritdoc />
+        public ulong ToUInt64(nuint value) => value;
+
+        /// <inheritdoc />
         public ulong ToUInt64(double value) => Convert.ToUInt64(value);
 
         /// <inheritdoc />
@@ -1759,12 +1733,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public ulong ToUInt64(BigInteger value) => (ulong)value;
-
-        /// <inheritdoc />
-        public ulong ToUInt64(nint value) => checked((ulong)value);
-
-        /// <inheritdoc />
-        public ulong ToUInt64(nuint value) => (ulong)value;
         #endregion
 
         #region ToSingle
@@ -1793,6 +1761,12 @@ namespace Genumerics
         public float ToSingle(ulong value) => Convert.ToSingle(value);
 
         /// <inheritdoc />
+        public float ToSingle(nint value) => value;
+
+        /// <inheritdoc />
+        public float ToSingle(nuint value) => value;
+
+        /// <inheritdoc />
         public float ToSingle(float value) => Convert.ToSingle(value);
 
         /// <inheritdoc />
@@ -1803,12 +1777,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public float ToSingle(BigInteger value) => (float)value;
-
-        /// <inheritdoc />
-        public float ToSingle(nint value) => value;
-
-        /// <inheritdoc />
-        public float ToSingle(nuint value) => value;
         #endregion
 
         #region ToDouble
@@ -1837,6 +1805,12 @@ namespace Genumerics
         public double ToDouble(ulong value) => Convert.ToDouble(value);
 
         /// <inheritdoc />
+        public double ToDouble(nint value) => value;
+
+        /// <inheritdoc />
+        public double ToDouble(nuint value) => value;
+
+        /// <inheritdoc />
         public double ToDouble(float value) => Convert.ToDouble(value);
 
         /// <inheritdoc />
@@ -1847,12 +1821,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public double ToDouble(BigInteger value) => (double)value;
-
-        /// <inheritdoc />
-        public double ToDouble(nint value) => value;
-
-        /// <inheritdoc />
-        public double ToDouble(nuint value) => value;
         #endregion
 
         #region ToDecimal
@@ -1881,6 +1849,12 @@ namespace Genumerics
         public decimal ToDecimal(ulong value) => Convert.ToDecimal(value);
 
         /// <inheritdoc />
+        public decimal ToDecimal(nint value) => value;
+
+        /// <inheritdoc />
+        public decimal ToDecimal(nuint value) => value;
+
+        /// <inheritdoc />
         public decimal ToDecimal(float value) => Convert.ToDecimal(value);
 
         /// <inheritdoc />
@@ -1891,12 +1865,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public decimal ToDecimal(BigInteger value) => (decimal)value;
-
-        /// <inheritdoc />
-        public decimal ToDecimal(nint value) => (decimal)value;
-
-        /// <inheritdoc />
-        public decimal ToDecimal(nuint value) => (decimal)value;
         #endregion
 
         #region ToBigInteger
@@ -1925,6 +1893,12 @@ namespace Genumerics
         public BigInteger ToBigInteger(ulong value) => value;
 
         /// <inheritdoc />
+        public BigInteger ToBigInteger(nint value) => new(value);
+
+        /// <inheritdoc />
+        public BigInteger ToBigInteger(nuint value) => new(value);
+
+        /// <inheritdoc />
         public BigInteger ToBigInteger(float value) => (BigInteger)value;
 
         /// <inheritdoc />
@@ -1935,12 +1909,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger ToBigInteger(BigInteger value) => value;
-
-        /// <inheritdoc />
-        public BigInteger ToBigInteger(nint value) => new (value);
-
-        /// <inheritdoc />
-        public BigInteger ToBigInteger(nuint value) => new (value);
         #endregion
 
         #region Round
@@ -1969,6 +1937,12 @@ namespace Genumerics
         public ulong Round(ulong value, int digits, MidpointRounding mode) => value;
 
         /// <inheritdoc />
+        public nint Round(nint value, int digits, MidpointRounding mode) => value;
+
+        /// <inheritdoc />
+        public nuint Round(nuint value, int digits, MidpointRounding mode) => value;
+
+        /// <inheritdoc />
         public float Round(float value, int digits, MidpointRounding mode)
         {
 #if MATHF
@@ -1986,12 +1960,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger Round(BigInteger value, int digits, MidpointRounding mode) => value;
-
-        /// <inheritdoc />
-        public nint Round(nint value, int digits, MidpointRounding mode) => value;
-
-        /// <inheritdoc />
-        public nuint Round(nuint value, int digits, MidpointRounding mode) => value;
         #endregion
 
         #region Floor
@@ -2020,6 +1988,12 @@ namespace Genumerics
         public ulong Floor(ulong value) => value;
 
         /// <inheritdoc />
+        public nint Floor(nint value) => value;
+
+        /// <inheritdoc />
+        public nuint Floor(nuint value) => value;
+
+        /// <inheritdoc />
         public float Floor(float value)
         {
 #if MATHF
@@ -2037,12 +2011,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger Floor(BigInteger value) => value;
-
-        /// <inheritdoc />
-        public nint Floor(nint value) => value;
-
-        /// <inheritdoc />
-        public nuint Floor(nuint value) => value;
         #endregion
 
         #region Ceiling
@@ -2071,6 +2039,12 @@ namespace Genumerics
         public ulong Ceiling(ulong value) => value;
 
         /// <inheritdoc />
+        public nint Ceiling(nint value) => value;
+
+        /// <inheritdoc />
+        public nuint Ceiling(nuint value) => value;
+
+        /// <inheritdoc />
         public float Ceiling(float value)
         {
 #if MATHF
@@ -2088,12 +2062,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger Ceiling(BigInteger value) => value;
-
-        /// <inheritdoc />
-        public nint Ceiling(nint value) => value;
-
-        /// <inheritdoc />
-        public nuint Ceiling(nuint value) => value;
         #endregion
 
         #region Truncate
@@ -2122,6 +2090,12 @@ namespace Genumerics
         public ulong Truncate(ulong value) => value;
 
         /// <inheritdoc />
+        public nint Truncate(nint value) => value;
+
+        /// <inheritdoc />
+        public nuint Truncate(nuint value) => value;
+
+        /// <inheritdoc />
         public float Truncate(float value)
         {
 #if MATHF
@@ -2139,12 +2113,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger Truncate(BigInteger value) => value;
-
-        /// <inheritdoc />
-        public nint Truncate(nint value) => value;
-
-        /// <inheritdoc />
-        public nuint Truncate(nuint value) => value;
         #endregion
 
         #region Compare
@@ -2173,6 +2141,12 @@ namespace Genumerics
         public int Compare(ulong left, ulong right) => left.CompareTo(right);
 
         /// <inheritdoc />
+        public int Compare(nint left, nint right) => ((long)left).CompareTo(right);
+
+        /// <inheritdoc />
+        public int Compare(nuint left, nuint right) => ((ulong)left).CompareTo(right);
+
+        /// <inheritdoc />
         public int Compare(float left, float right) => left.CompareTo(right);
 
         /// <inheritdoc />
@@ -2183,12 +2157,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public int Compare(BigInteger left, BigInteger right) => left.CompareTo(right);
-
-        /// <inheritdoc />
-        public int Compare(nint left, nint right) => ((long)left).CompareTo((long)right);
-
-        /// <inheritdoc />
-        public int Compare(nuint left, nuint right) => ((ulong)left).CompareTo((ulong)right);
         #endregion
 
         #region Abs
@@ -2217,6 +2185,23 @@ namespace Genumerics
         public ulong Abs(ulong value) => value;
 
         /// <inheritdoc />
+        public nint Abs(nint value)
+        {
+            if (value < 0)
+            {
+                value = -value;
+                if (value < 0)
+                {
+                    throw new OverflowException("Negating the minimum value of a twos complement number is invalid.");
+                }
+            }
+            return value;
+        }
+
+        /// <inheritdoc />
+        public nuint Abs(nuint value) => value;
+
+        /// <inheritdoc />
         public float Abs(float value) => Math.Abs(value);
 
         /// <inheritdoc />
@@ -2227,18 +2212,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger Abs(BigInteger value) => BigInteger.Abs(value);
-
-        /// <inheritdoc />
-        public nint Abs(nint value)
-        {
-            nint neg = -value;
-            if (neg >= 0) return neg;
-            if (value == neg) throw new OverflowException();
-            return value;
-        }
-
-        /// <inheritdoc />
-        public nuint Abs(nuint value) => value;
         #endregion
 
         #region Max
@@ -2267,6 +2240,12 @@ namespace Genumerics
         public ulong Max(ulong left, ulong right) => Math.Max(left, right);
 
         /// <inheritdoc />
+        public nint Max(nint left, nint right) => left > right ? left : right;
+
+        /// <inheritdoc />
+        public nuint Max(nuint left, nuint right) => left > right ? left : right;
+
+        /// <inheritdoc />
         public float Max(float left, float right) => Math.Max(left, right);
 
         /// <inheritdoc />
@@ -2277,12 +2256,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger Max(BigInteger left, BigInteger right) => BigInteger.Max(left, right);
-
-        /// <inheritdoc />
-        public nint Max(nint left, nint right) => left > right ? left : right;
-
-        /// <inheritdoc />
-        public nuint Max(nuint left, nuint right) => left > right ? left : right;
         #endregion
 
         #region Min
@@ -2311,6 +2284,12 @@ namespace Genumerics
         public ulong Min(ulong left, ulong right) => Math.Min(left, right);
 
         /// <inheritdoc />
+        public nint Min(nint left, nint right) => left < right ? left : right;
+
+        /// <inheritdoc />
+        public nuint Min(nuint left, nuint right) => left < right ? left : right;
+
+        /// <inheritdoc />
         public float Min(float left, float right) => Math.Min(left, right);
 
         /// <inheritdoc />
@@ -2321,12 +2300,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public BigInteger Min(BigInteger left, BigInteger right) => BigInteger.Min(left, right);
-
-        /// <inheritdoc />
-        public nint Min(nint left, nint right) => left < right ? left : right;
-
-        /// <inheritdoc />
-        public nuint Min(nuint left, nuint right) => left < right ? left : right;
         #endregion
 
         #region Sign
@@ -2355,6 +2328,12 @@ namespace Genumerics
         public int Sign(ulong value) => value == 0UL ? 0 : 1;
 
         /// <inheritdoc />
+        public int Sign(nint value) => Math.Sign(value);
+
+        /// <inheritdoc />
+        public int Sign(nuint value) => value == 0 ? 0 : 1;
+
+        /// <inheritdoc />
         public int Sign(float value) => Math.Sign(value);
 
         /// <inheritdoc />
@@ -2365,12 +2344,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public int Sign(BigInteger value) => value.Sign;
-
-        /// <inheritdoc />
-        public int Sign(nint value) => Math.Sign(value);
-
-        /// <inheritdoc />
-        public int Sign(nuint value) => value == 0 ? 0 : 1;
         #endregion
 
         #region ToString
@@ -2399,6 +2372,12 @@ namespace Genumerics
         public string ToString(ulong value, string? format, IFormatProvider? provider) => value.ToString(format, provider);
 
         /// <inheritdoc />
+        public string ToString(nint value, string? format, IFormatProvider? provider) => ((long)value).ToString(format, provider);
+
+        /// <inheritdoc />
+        public string ToString(nuint value, string? format, IFormatProvider? provider) => ((ulong)value).ToString(format, provider);
+
+        /// <inheritdoc />
         public string ToString(float value, string? format, IFormatProvider? provider) => value.ToString(format, provider);
 
         /// <inheritdoc />
@@ -2409,12 +2388,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public string ToString(BigInteger value, string? format, IFormatProvider? provider) => value.ToString(format, provider);
-
-        /// <inheritdoc />
-        public string ToString(nint value, string? format, IFormatProvider? provider) => ((long)value).ToString(format, provider);
-
-        /// <inheritdoc />
-        public string ToString(nuint value, string? format, IFormatProvider? provider) => ((ulong)value).ToString(format, provider);
         #endregion
 
         #region IsEven
@@ -2443,6 +2416,12 @@ namespace Genumerics
         public bool IsEven(ulong value) => (value % 2UL) == 0UL;
 
         /// <inheritdoc />
+        public bool IsEven(nint value) => (value % 2) == 0;
+
+        /// <inheritdoc />
+        public bool IsEven(nuint value) => (value % 2U) == 0U;
+
+        /// <inheritdoc />
         public bool IsEven(float value) => throw new NotSupportedException("IsEven is not supported for floating point types");
 
         /// <inheritdoc />
@@ -2453,12 +2432,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public bool IsEven(BigInteger value) => value.IsEven;
-
-        /// <inheritdoc />
-        public bool IsEven(nint value) => (value % 2) == 0;
-
-        /// <inheritdoc />
-        public bool IsEven(nuint value) => (value % 2U) == 0U;
         #endregion
 
         #region IsOdd
@@ -2487,6 +2460,12 @@ namespace Genumerics
         public bool IsOdd(ulong value) => (value % 2UL) == 1UL;
 
         /// <inheritdoc />
+        public bool IsOdd(nint value) => (value % 2) == 1;
+
+        /// <inheritdoc />
+        public bool IsOdd(nuint value) => (value % 2U) == 1U;
+
+        /// <inheritdoc />
         public bool IsOdd(float value) => throw new NotSupportedException("IsOdd is not supported for floating point types");
 
         /// <inheritdoc />
@@ -2497,12 +2476,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public bool IsOdd(BigInteger value) => !value.IsEven;
-
-        /// <inheritdoc />
-        public bool IsOdd(nint value) => (value % 2) == 1;
-
-        /// <inheritdoc />
-        public bool IsOdd(nuint value) => (value % 2U) == 1U;
         #endregion
 
         #region IsPowerOfTwo
@@ -2531,6 +2504,12 @@ namespace Genumerics
         public bool IsPowerOfTwo(ulong value) => (value & (value - 1UL)) == 0UL;
 
         /// <inheritdoc />
+        public bool IsPowerOfTwo(nint value) => (value & (value - 1)) == 0;
+
+        /// <inheritdoc />
+        public bool IsPowerOfTwo(nuint value) => (value & (value - 1U)) == 0U;
+
+        /// <inheritdoc />
         public bool IsPowerOfTwo(float value) => throw new NotSupportedException("IsPowerOfTwo is not supported for floating point types");
 
         /// <inheritdoc />
@@ -2541,12 +2520,6 @@ namespace Genumerics
 
         /// <inheritdoc />
         public bool IsPowerOfTwo(BigInteger value) => value.IsPowerOfTwo;
-
-        /// <inheritdoc />
-        public bool IsPowerOfTwo(nint value) => (value & (value - 1)) == 0;
-
-        /// <inheritdoc />
-        public bool IsPowerOfTwo(nuint value) => (value & (value - 1U)) == 0U;
         #endregion
 
         #region Clamp
@@ -2695,46 +2668,6 @@ namespace Genumerics
         }
 
         /// <inheritdoc />
-        public nint Clamp(nint value, nint min, nint max)
-        {
-            if (min > max)
-            {
-                ThrowMinMaxException(min, max);
-            }
-
-            if (value < min)
-            {
-                return min;
-            }
-            else if (value > max)
-            {
-                return max;
-            }
-
-            return value;
-        }
-
-        /// <inheritdoc />
-        public nuint Clamp(nuint value, nuint min, nuint max)
-        {
-            if (min > max)
-            {
-                ThrowMinMaxException(min, max);
-            }
-
-            if (value < min)
-            {
-                return min;
-            }
-            else if (value > max)
-            {
-                return max;
-            }
-
-            return value;
-        }
-
-        /// <inheritdoc />
         public long Clamp(long value, long min, long max)
         {
 #if CLAMP
@@ -2780,6 +2713,47 @@ namespace Genumerics
 
             return value;
 #endif
+        }
+
+
+        /// <inheritdoc />
+        public nint Clamp(nint value, nint min, nint max)
+        {
+            if (min > max)
+            {
+                ThrowMinMaxException(min, max);
+            }
+
+            if (value < min)
+            {
+                return min;
+            }
+            else if (value > max)
+            {
+                return max;
+            }
+
+            return value;
+        }
+
+        /// <inheritdoc />
+        public nuint Clamp(nuint value, nuint min, nuint max)
+        {
+            if (min > max)
+            {
+                ThrowMinMaxException(min, max);
+            }
+
+            if (value < min)
+            {
+                return min;
+            }
+            else if (value > max)
+            {
+                return max;
+            }
+
+            return value;
         }
 
         /// <inheritdoc />

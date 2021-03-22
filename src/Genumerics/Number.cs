@@ -80,7 +80,7 @@ namespace Genumerics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static INumericOperations<T> GetOperationsInternal<T>()
         {
-            return NumericOperationsCache<T>.s_operations ?? GetOperations<T>() ?? throw new NotSupportedException($"Generic numeric operations on {typeof(T)} are not supported. The only built-in supported types are SByte, Byte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, and BigInteger as well as the nullable versions of each of these types. You can register support for a non-built-in type using the Number.RegisterOperations method.");
+            return NumericOperationsCache<T>.s_operations ?? GetOperations<T>() ?? throw new NotSupportedException($"Generic numeric operations on {typeof(T)} are not supported. The only built-in supported types are SByte, Byte, Int16, UInt16, Int32, UInt32, Int64, UInt64, Single, Double, Decimal, IntPtr, UIntPtr, and BigInteger as well as the nullable versions of each of these types. You can register support for a non-built-in type using the Number.RegisterOperations method.");
         }
 
         /// <summary>
@@ -1695,7 +1695,7 @@ namespace Genumerics
         /// format. This parameter is passed uninitialized.</param>
         /// <returns><c>true</c> if value was converted successfully; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool TryParse<T>(string value, out T result) => GetOperationsInternal<T>().TryParse(value, null, NumberFormatInfo.CurrentInfo, out result);
+        public static bool TryParse<T>(string? value, out T result) => GetOperationsInternal<T>().TryParse(value, null, NumberFormatInfo.CurrentInfo, out result);
 
         /// <summary>
         /// Tries to convert the string representation of a number in a culture-specific format to its <typeparamref name="T"/> equivalent, and returns a value that indicates whether the conversion succeeded.
@@ -1709,7 +1709,7 @@ namespace Genumerics
         /// format. This parameter is passed uninitialized.</param>
         /// <returns><c>true</c> if value was converted successfully; otherwise, <c>false</c>.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-        public static bool TryParse<T>(string value, IFormatProvider? provider, out T result) => GetOperationsInternal<T>().TryParse(value, null, provider, out result);
+        public static bool TryParse<T>(string? value, IFormatProvider? provider, out T result) => GetOperationsInternal<T>().TryParse(value, null, provider, out result);
 
         /// <summary>
         /// Tries to convert the string representation of a number in a specified <paramref name="style"/> to its <typeparamref name="T"/> equivalent, and returns
@@ -1728,7 +1728,7 @@ namespace Genumerics
         /// <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="NumberStyles"/> value.
         /// -or-
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
-        public static bool TryParse<T>(string value, NumberStyles? style, out T result) => GetOperationsInternal<T>().TryParse(value, style, NumberFormatInfo.CurrentInfo, out result);
+        public static bool TryParse<T>(string? value, NumberStyles? style, out T result) => GetOperationsInternal<T>().TryParse(value, style, NumberFormatInfo.CurrentInfo, out result);
 
         /// <summary>
         /// Tries to convert the string representation of a number in a specified <paramref name="style"/> and
@@ -1749,7 +1749,7 @@ namespace Genumerics
         /// <exception cref="ArgumentException"><paramref name="style"/> is not a <see cref="NumberStyles"/> value.
         /// -or-
         /// <paramref name="style"/> includes the <see cref="NumberStyles.AllowHexSpecifier"/> or <see cref="NumberStyles.HexNumber"/> flag along with another value.</exception>
-        public static bool TryParse<T>(string value, NumberStyles? style, IFormatProvider? provider, out T result) => GetOperationsInternal<T>().TryParse(value, style, provider, out result);
+        public static bool TryParse<T>(string? value, NumberStyles? style, IFormatProvider? provider, out T result) => GetOperationsInternal<T>().TryParse(value, style, provider, out result);
 
 #if SPAN
         /// <summary>
@@ -2043,6 +2043,6 @@ namespace Genumerics
         /// <typeparam name="T">The numeric type.</typeparam>
         /// <param name="value">The value.</param>
         /// <returns>A <see cref="Number{T}"/> value.</returns>
-        public static Number<T> Create<T>(T value) => new Number<T>(value);
+        public static Number<T> Create<T>(T value) => new(value);
     }
 }

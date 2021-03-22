@@ -13,7 +13,7 @@ namespace Genumerics.Tests
             Value = value;
         }
 
-        public static implicit operator IntWrapper(int value) => new IntWrapper(value);
+        public static implicit operator IntWrapper(int value) => new(value);
 
         public static implicit operator int(IntWrapper value) => value.Value;
     }
@@ -89,7 +89,7 @@ namespace Genumerics.Tests
 #if SPAN
         public bool TryFormat(IntWrapper value, Span<char> destination, out int charsWritten, ReadOnlySpan<char> format = default, IFormatProvider? provider = null) => Number.GetOperations<int>()!.TryFormat(value, destination, out charsWritten, format, provider);
 #endif
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out IntWrapper result)
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out IntWrapper result)
         {
             var success = Number.GetOperations<int>()!.TryParse(value, style, provider, out var intResult);
             result = intResult;
