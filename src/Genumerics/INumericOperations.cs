@@ -241,7 +241,7 @@ namespace Genumerics
         /// or is not in a format that is compliant with <paramref name="style"/>. This parameter is passed
         /// uninitialized.</param>
         /// <returns><c>true</c> if the value parameter was converted successfully; otherwise, <c>false</c>.</returns>
-        bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out T result);
+        bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out T result);
 
 #if SPAN
         /// <summary>

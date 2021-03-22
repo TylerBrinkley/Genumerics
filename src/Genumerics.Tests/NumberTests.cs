@@ -41,11 +41,11 @@ namespace Genumerics.Tests
             Number.RegisterOperationsProvider(t => t.IsEnum ? typeof(EnumNumericOperations<,,>).MakeGenericType(t, Enum.GetUnderlyingType(t), typeof(DefaultNumericOperations)) : null);
         }
 
-        private static TestCaseData CreateTestCase<T>(object? expectedResult, params object?[] args) => new TestCaseData(new[] { (object?)default(T)! }.Concat(args ?? new object?[] { null }).ToArray()) { ExpectedResult = expectedResult };
+        private static TestCaseData CreateTestCase<T>(object? expectedResult, params object?[] args) => new(new[] { (object?)default(T)! }.Concat(args ?? new object?[] { null }).ToArray()) { ExpectedResult = expectedResult };
 
-        private static TestCaseData CreateTestCase<T>() => new TestCaseData(default(T)!);
+        private static TestCaseData CreateTestCase<T>() => new(default(T)!);
 
-        private static TestCaseData CreateTestCase<T>(object?[] args) => new TestCaseData(new[] { (object?)default(T)! }.Concat(args).ToArray());
+        private static TestCaseData CreateTestCase<T>(object?[] args) => new(new[] { (object?)default(T)! }.Concat(args).ToArray());
 
         [Test]
         public void UnsupportedType() => Assert.Throws<NotSupportedException>(() => Number.Zero<string>());
@@ -178,8 +178,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(double.MaxValue);
             yield return CreateTestCase<decimal>(decimal.MaxValue);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(int.MaxValue));
-            yield return CreateTestCase<nint>(IntPtr.Size == 4 ? (nint)int.MaxValue : unchecked((nint)long.MaxValue));
-            yield return CreateTestCase<nuint>(UIntPtr.Size == 4 ? (nuint)uint.MaxValue : unchecked((nuint)ulong.MaxValue));
+            yield return CreateTestCase<nint>(IntPtr.Size == 4 ? int.MaxValue : unchecked((nint)long.MaxValue));
+            yield return CreateTestCase<nuint>(UIntPtr.Size == 4 ? uint.MaxValue : unchecked((nuint)ulong.MaxValue));
             yield return CreateTestCase<DayOfWeek>((DayOfWeek)int.MaxValue);
         }
 
@@ -222,8 +222,8 @@ namespace Genumerics.Tests
             yield return CreateTestCase<double>(double.MinValue);
             yield return CreateTestCase<decimal>(decimal.MinValue);
             yield return CreateTestCase<IntWrapper>(new IntWrapper(int.MinValue));
-            yield return CreateTestCase<nint>(IntPtr.Size == 4 ? (nint)int.MinValue : unchecked((nint)long.MinValue));
-            yield return CreateTestCase<nuint>(UIntPtr.Size == 4 ? (nuint)uint.MinValue : unchecked((nuint)ulong.MinValue));
+            yield return CreateTestCase<nint>(IntPtr.Size == 4 ? int.MinValue : unchecked((nint)long.MinValue));
+            yield return CreateTestCase<nuint>(UIntPtr.Size == 4 ? uint.MinValue : unchecked((nuint)ulong.MinValue));
             yield return CreateTestCase<DayOfWeek>((DayOfWeek)int.MinValue);
         }
 
@@ -1915,7 +1915,7 @@ namespace Genumerics.Tests
         public TTo? ConvertNullable3Number<TFrom, TTo>(TFrom valueToInferFromType, TTo valueToInferToType, TFrom value) where TTo : struct => Number.Create(value).To<TTo?>();
 #pragma warning restore IDE0060 // Remove unused parameter
 
-        private static readonly TypeAndValue[] s_conversionTypes = { TypeAndValue.Create((sbyte)1), TypeAndValue.Create((byte)1), TypeAndValue.Create((short)1), TypeAndValue.Create((ushort)1), TypeAndValue.Create(1), TypeAndValue.Create(1U), TypeAndValue.Create(1L), TypeAndValue.Create(1UL), TypeAndValue.Create(1F), TypeAndValue.Create(1D), TypeAndValue.Create(1M), TypeAndValue.Create(new BigInteger(1)), TypeAndValue.Create(new IntWrapper(1)), TypeAndValue.Create(DayOfWeek.Monday)
+        private static readonly TypeAndValue[] s_conversionTypes = { TypeAndValue.Create((sbyte)1), TypeAndValue.Create((byte)1), TypeAndValue.Create((short)1), TypeAndValue.Create((ushort)1), TypeAndValue.Create(1), TypeAndValue.Create(1U), TypeAndValue.Create(1L), TypeAndValue.Create(1UL), TypeAndValue.Create((nint)1), TypeAndValue.Create((nuint)1), TypeAndValue.Create(1F), TypeAndValue.Create(1D), TypeAndValue.Create(1M), TypeAndValue.Create(new BigInteger(1)), TypeAndValue.Create(new IntWrapper(1)), TypeAndValue.Create(DayOfWeek.Monday)
         };
 
         public static IEnumerable<TestCaseData> ConvertCases()
@@ -1929,7 +1929,7 @@ namespace Genumerics.Tests
             }
         }
 
-        public static TestCaseData CreateConvertCase(Type fromType, Type toType, object? value, object? expectedValue) => new TestCaseData(new object?[] { Activator.CreateInstance(fromType), Activator.CreateInstance(toType), value }) { ExpectedResult = expectedValue };
+        public static TestCaseData CreateConvertCase(Type fromType, Type toType, object? value, object? expectedValue) => new(new object?[] { Activator.CreateInstance(fromType), Activator.CreateInstance(toType), value }) { ExpectedResult = expectedValue };
 
         public static IEnumerable<TestCaseData> ConvertNullableCases1()
         {
@@ -2606,7 +2606,7 @@ namespace Genumerics.Tests
 
     public sealed class TypeAndValue
     {
-        public static TypeAndValue Create<T>(T value) => new TypeAndValue(typeof(T), value);
+        public static TypeAndValue Create<T>(T value) => new(typeof(T), value);
 
         public Type Type { get; }
 

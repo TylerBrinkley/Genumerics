@@ -76,9 +76,9 @@ namespace Genumerics
         /// <param name="provider">An object that supplies culture-specific formatting information.</param>
         /// <returns>The string representation of the current numeric value in the format specified by the <paramref name="provider"/> parameter.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
-#pragma warning disable CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
+#pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
         public string? ToString(IFormatProvider? provider) => Number.GetOperationsInternal<T>().ToString(Value, null, provider);
-#pragma warning restore CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
+#pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
 
         /// <summary>
         /// Converts the numeric value of the current numeric object to its equivalent string representation by using the specified format and culture-specific format information.
@@ -88,9 +88,9 @@ namespace Genumerics
         /// <returns>The string representation of the current numeric value as specified by the <paramref name="format"/> and <paramref name="provider"/> parameters.</returns>
         /// <exception cref="NotSupportedException">The type argument is not supported.</exception>
         /// <exception cref="FormatException"><paramref name="format"/> is not a valid format string.</exception>
-#pragma warning disable CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
+#pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
         public string? ToString(string? format, IFormatProvider? provider) => Number.GetOperationsInternal<T>().ToString(Value, format, provider);
-#pragma warning restore CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
+#pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
 
 #if SPAN
         /// <summary>
@@ -184,9 +184,9 @@ namespace Genumerics
 
         float IConvertible.ToSingle(IFormatProvider? provider) => Number.GetOperationsInternal<T>().ToSingle(Value);
 
-#pragma warning disable CS8616 // Nullability of reference types in return type doesn't match implemented member.
+#pragma warning disable CS8768 // Nullability of reference types in return type doesn't match implemented member (possibly because of nullability attributes).
         object? IConvertible.ToType(Type conversionType, IFormatProvider? provider) => Convert.ChangeType(Value, conversionType, provider);
-#pragma warning restore CS8616 // Nullability of reference types in return type doesn't match implemented member.
+#pragma warning restore CS8768 // Nullability of reference types in return type doesn't match implemented member (possibly because of nullability attributes).
 
         ushort IConvertible.ToUInt16(IFormatProvider? provider) => Number.GetOperationsInternal<T>().ToUInt16(Value);
 
@@ -198,7 +198,7 @@ namespace Genumerics
         /// Defines an implicit conversion of a <typeparamref name="T"/> to a <see cref="Number{T}"/>.
         /// </summary>
         /// <param name="value">The value to convert to a <see cref="Number{T}"/>.</param>
-        public static implicit operator Number<T>(T value) => new Number<T>(value);
+        public static implicit operator Number<T>(T value) => new(value);
 
         /// <summary>
         /// Defines an implicit conversion of a <see cref="Number{T}"/> to a <typeparamref name="T"/>.

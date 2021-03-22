@@ -174,9 +174,9 @@ namespace Genumerics
 
         float IConvertible.ToSingle(IFormatProvider? provider) => default(TNumericOperations).ToSingle(Value);
 
-#pragma warning disable CS8616 // Nullability of reference types in return type doesn't match implemented member.
+#pragma warning disable CS8768 // Nullability of reference types in return type doesn't match implemented member (possibly because of nullability attributes).
         object? IConvertible.ToType(Type conversionType, IFormatProvider? provider) => Convert.ChangeType(Value, conversionType, provider);
-#pragma warning restore CS8616 // Nullability of reference types in return type doesn't match implemented member.
+#pragma warning restore CS8768 // Nullability of reference types in return type doesn't match implemented member (possibly because of nullability attributes).
 
         ushort IConvertible.ToUInt16(IFormatProvider? provider) => default(TNumericOperations).ToUInt16(Value);
 
@@ -188,7 +188,7 @@ namespace Genumerics
         /// Defines an implicit conversion of a <typeparamref name="T"/> to a <see cref="Number{T, TNumericOperations}"/>.
         /// </summary>
         /// <param name="value">The value to convert to a <see cref="Number{T, TNumericOperations}"/>.</param>
-        public static implicit operator Number<T, TNumericOperations>(T value) => new Number<T, TNumericOperations>(value);
+        public static implicit operator Number<T, TNumericOperations>(T value) => new(value);
 
         /// <summary>
         /// Defines an implicit conversion of a <see cref="Number{T, TNumericOperations}"/> to a <typeparamref name="T"/>.

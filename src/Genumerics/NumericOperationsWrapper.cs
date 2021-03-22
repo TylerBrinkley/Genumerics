@@ -137,7 +137,7 @@ namespace Genumerics
 
         public T Truncate(T value) => default(TNumericOperations).Truncate(value);
 
-        public bool TryParse(string value, NumberStyles? style, IFormatProvider? provider, out T result) => default(TNumericOperations).TryParse(value, style, provider, out result);
+        public bool TryParse(string? value, NumberStyles? style, IFormatProvider? provider, out T result) => default(TNumericOperations).TryParse(value, style, provider, out result);
 
         public T Xor(T left, T right) => default(TNumericOperations).Xor(left, right);
 
